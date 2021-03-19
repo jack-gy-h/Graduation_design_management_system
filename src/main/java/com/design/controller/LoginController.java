@@ -62,6 +62,9 @@ public class LoginController {
             } else if (identity.equals("STUDENT")) {
                 System.out.println("执行了第三个if");
                 return "redirect:/studentloginPage";
+            }else if (identity.equals("SUPERADMIN")){
+                System.out.println("执行了第四个if");
+                return "redirect:/superadminPage";
             }
 //            TestUtil.Test("1");
 //            session.setAttribute("Identity", Identity);

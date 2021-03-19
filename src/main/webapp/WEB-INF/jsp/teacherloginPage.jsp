@@ -7,6 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<head>
+    <title>
+        teacherloginPage
+    </title>
+</head>
 <body>
 <h2>teacherloginPage</h2>
 </body>

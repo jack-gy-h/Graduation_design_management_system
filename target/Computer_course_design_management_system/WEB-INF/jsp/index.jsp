@@ -12,7 +12,7 @@
 <%--    <link href="/static/css/bootstrap.min.css" rel="stylesheet">--%>
 <%--    --%>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="canonical" href="/static/html/index.html">
+    <link rel="canonical" href="/static/html/jumbotron-index.html">
     <link href="/static/css/jumbotron.css" rel="stylesheet">
     <link href="/static/css/floating-labels.css" rel="stylesheet">
     <style>

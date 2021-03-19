@@ -26,4 +26,9 @@ public class PageController {
     public String studentloginPage() {
         return "studentloginPage";
     }
+
+    @RequestMapping("/superadminPage")
+    public String superadminPage() {
+        return "superadminPage";
+    }
 }
