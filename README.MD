@@ -1,5 +1,7 @@
 #v1.0
 
+##有空需要复现一下在有代码突然用git时变为main(初始版本)时按了rebase出错的解决方案
+
 #body {
 
 #display: -ms-flexbox;
@@ -28,7 +30,7 @@
 
 #少了service注释，主要原因还是底层原理不熟
 
-#数据库那边string类型的数据不要填null，要选择EMPTY STRING
+###数据库那边string类型的数据不要填null，要选择EMPTY STRING
 
-#可以实现三个角色的登陆跳转
+###可以实现三个角色的登陆跳转
 
