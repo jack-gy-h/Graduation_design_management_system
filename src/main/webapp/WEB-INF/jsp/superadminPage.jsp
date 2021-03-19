@@ -33,6 +33,7 @@
         .button-style-for-light {
             width: 100%;
             text-align: left;
+            padding-left: 30px;
 
         }
     </style>

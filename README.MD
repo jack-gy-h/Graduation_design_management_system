@@ -34,3 +34,11 @@
 
 ###可以实现三个角色的登陆跳转
 
+#v2.0
+
+#设计的界面改变有：
+
+#superadminPage中的126行中的card-body中的padding调为0(目的是为了将button和父容器的边距变为0)
+
+#还有就是superadminPage中的128行中的button-style-for-light中添加padding-left: 30px(目的是为了调整子菜单和父菜单的纵向的文字的位置)
+
