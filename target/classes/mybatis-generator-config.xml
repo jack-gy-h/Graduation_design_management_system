@@ -55,6 +55,8 @@
 <!--               enableUpdateByExample="true"/>-->
         <table tableName="user" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                enableUpdateByExample="true"/>
+        <table tableName="menu" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true"/>
 
 
 
