@@ -32,8 +32,8 @@
 </head>
 <body>
 <ul class="nav nav-tabs">
-    <li class="active"><a href="">菜单列表</a></li>
-        <li><a href="">菜单添加</a></li>
+    <li class="active"><a href="/menu">菜单列表</a></li>
+        <li><a href="/menu/form">菜单添加</a></li>
 </ul>
 <%--<sys:message content="${message}"/>--%>
 <form id="listForm" method="post">
@@ -50,7 +50,7 @@
         <tbody><c:forEach items="${list}" var="menu">
             <tr id="${menu.id}" pId="${menu.parent.id ne '1'?menu.parent.id:'0'}">
                 <td nowrap><i class="icon-${not empty menu.icon?menu.icon:' hide'}"></i><a
-                        href="">${menu.name}</a></td>
+                        href="/menu/form?id=${menu.id}">${menu.name}</a></td>
                 <td title="${menu.href}">${menu.href}</td>
                 <td style="text-align:center;">
                         <input type="hidden" name="ids" value="${menu.id}"/>
@@ -61,10 +61,10 @@
                 <td>${menu.isShow eq '1'?'显示':'隐藏'}</td>
 <%--                <td title="${menu.permission}">${menu.permission}</td>--%>
                     <td nowrap>
-                        <a href="">修改</a>
+                        <a href="/menu/form?id=${menu.id}">修改</a>
                         <a href=""
                            onclick="">删除</a>
-                        <a href="">添加下级菜单</a>
+                        <a href="/menu/form?pid=${menu.id}">添加下级菜单</a>
                     </td>
             </tr>
         </c:forEach></tbody>

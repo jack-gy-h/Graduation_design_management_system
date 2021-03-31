@@ -19,6 +19,11 @@ public class MenuServiceImp implements MenuService {
         return menuMapper.findAllMenu();
     }
 
+    @Override
+    public Menu getMenu(String id) {
+        return menuMapper.get(id);
+    }
+
 //    @Override
 //    public Menu selectById(String i) {
 //        return menuMapper.selectByPrimaryKey(i);

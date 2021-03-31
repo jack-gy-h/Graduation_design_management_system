@@ -9,5 +9,7 @@ public interface MenuService {
 
     List<Menu> findAllMenu();
 
+    Menu getMenu(String id);
+
 //    Menu selectById(String i);
 }

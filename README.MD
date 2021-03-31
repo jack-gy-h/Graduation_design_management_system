@@ -55,5 +55,22 @@
 #以及需要注意到$该符号的引用需要正确指向jquery文件。
 
 
+#v4.0
+
+#完成了菜单的跳转功能
+
+#要注意在使用
+
+#<form:form id="inputForm" modelAttribute="menu" action="/menu/form/save" method="post" class="form-horizontal">
+
+#时modelAttribute="menu" 
+
+#用到了?id、?pid的写法
+
+#已经做好了菜单的添加、修改的跳转
+
+#未解决的问题：ztree的构造问题
+
+
 
 
