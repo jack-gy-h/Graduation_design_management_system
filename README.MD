@@ -82,7 +82,17 @@
 
 #在$.post的url中，返回数据时，需要在方法的上面加上@ResponseBody才能自动返回json数据给jsp
 
-#模仿Menu.sortList的方法，构造侧边框。
+###模仿Menu.sortList的方法，构造侧边框:
+
+#首先遍历获取到的菜单列表menus，当他(menu)的父id(menu.parent.id)为1时（根据预设，parentid为1的都是父节点):
+
+#加入父节点菜单内容，并将menu.id赋值给新变量parentid.
+
+#在此基础上，再将菜单列表遍历一次：当它的父id(menuchild.parent.id)等于新变量parentid时:
+
+#加入子节点菜单内容。
+
+#在结束子节点遍历后，补全标记尾。
 
 #$('.accordion').append(result);以定位class名的方式，将侧边框加入。
 
