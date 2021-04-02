@@ -34,6 +34,76 @@
 			});
 		});
 	</script>
+
+	<script>
+
+		$(function () {
+
+			var isEnd = false;
+
+			$.ajaxSettings.async = false ;
+
+			$.post("/menu/listData",{},
+			function (data) {
+				var menus = data;
+				var length = menus.length;
+				var result = '';
+				var parentid = '';
+				var num = 1 ;
+
+				for (var i = 0; i < length; i++) {
+					result += '<div class="card">';
+					var menu = menus[i];
+					//获取父节点，parentid为1的都是父节点
+					if (menu.parentid == 1) {
+						result += '                        <div class="card-header" id="heading' + num + '">\n' +
+								'                            <h2 class="mb-0">\n' +
+								'                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"\n' +
+								'                                        data-target="#collapseOne" aria-expanded="false" aria-controls="collapse' + num + '">\n' +
+								'                                    ' + menu.name + '\n' +
+								'                                </button>\n' +
+								'                            </h2>\n' +
+								'                        </div>' +
+								'                        <div id="collapse' + num + '" class="collapse" aria-labelledby="heading' + num + '"\n' +
+								'                             data-parent="#accordionExample">\n' +
+								'                            <div class="card-body">\n' +
+								'                                <div style="width:100%">'
+						;
+						parentid = menu.id;
+						for (var j = 0; j < length; j++) {
+							var menuchild = menus[j];
+							if (menuchild.parentid == parentid) {
+								result += '<button type="button" class="btn btn-light button-style-for-light"\n' +
+										'                                            onclick="opentable(\'' + menu.href + '\')">\n' +
+										'                                        ' + menu.name + '\n' +
+										'                                    </button>\n' +
+										'                                    <br>'
+								;
+
+							}
+
+						}
+						result += '                                </div>\n' +
+								'                            </div>\n' +
+								'                        </div>\n' +
+								'                    </div>'
+						;
+
+					}
+
+
+				}
+				$('.accordionExample').append(result);
+
+
+			}
+			,"json");
+
+
+			$.ajaxSettings.async = false;
+
+		});
+	</script>
 </head>
 <body>
 	<ul class="nav nav-tabs">

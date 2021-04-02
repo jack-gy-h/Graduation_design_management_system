@@ -72,5 +72,25 @@
 #未解决的问题：ztree的构造问题
 
 
+#v5.0
+
+#需要注意的是由于script是按顺序加载的，后面加载的会覆盖前面加载的script。
+
+#要防范jquery-3.5.1.slim.min.js类的slim文件，可能会造成无法识别$.post的情况
+
+#在$.post的url中，返回数据时，需要在方法的上面加上@ResponseBody才能自动返回json数据给jsp
+
+#模仿Menu.sortList的方法，构造侧边框。
+
+#$('.accordion').append(result);以定位class名的方式，将侧边框加入。
+
+#遇到jsp页面也不刷新时，可以复制内容到一个新的jsp页面中重新运行可以后再跑。
+
+
+
+
+
+
+
 
 

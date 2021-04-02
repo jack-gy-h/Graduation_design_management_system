@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -20,7 +22,7 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    @RequestMapping(value = {"list", ""})
+    @RequestMapping(value = {""})
     public String list(Model model) {
         List<Menu> list = Lists.newArrayList();
         List<Menu> sourcelist = menuService.findAllMenu();
@@ -197,6 +199,22 @@ public class MenuController {
         System.out.println("UUID:"+UUID);
         return "success";
 
+
+    }
+
+//获取菜单数据实现动态加载
+    @RequestMapping(value = "/listData")
+    @ResponseBody
+    public List<Menu> listData(){
+        List<Menu> list = Lists.newArrayList();
+
+        List<Menu> sourcelist = menuService.findAllMenu();
+
+        Menu.sortList(list, sourcelist, Menu.getRootId(), true);
+
+        System.out.println("list.get(0).getId():"+list.get(0).getId());
+
+        return list;
 
     }
 

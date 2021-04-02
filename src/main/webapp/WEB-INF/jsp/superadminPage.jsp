@@ -39,6 +39,21 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="/static/css/dashboard.css" rel="stylesheet">
+    <%--    <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>--%>
+
+    <%--    <script src="/static/js/jquery-1.8.3.js" type="text/javascript"></script>--%>
+
+    <script src="/static/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+
+    <%--    <script type="text/javascript" src="/static/js/jquery-3.6.0.js"></script>--%>
+
+    <%--    <script type="text/javascript" src="/static/js/jquery-3.3.1.min.js"></script>--%>
+
+    <%--    <script type="text/javascript" src="/static/js/easyui-lang-zh_CN.js"></script>--%>
+
+    <%--    <script type="text/javascript" src="/static/js/editormd.min.js"></script>--%>
+
+
     <script type="text/javascript">
         //登出操作
         function showsignoutmodal() {
@@ -64,6 +79,87 @@
 
 
     </script>
+
+    <script>
+
+        $(function () {
+
+            // var isEnd = false;
+            //
+            // $.ajaxSettings.async = true;
+
+            $.post("/menu/listData", {},
+                function (data) {
+                    var menus = data;
+                    // alert(data[0].parent.id);
+                    var length = menus.length;
+                    var result = '';
+                    var parentid = '';
+                    var num = 1;
+                    // alert("menu.name:"+menu[0].name)
+
+                    for (var i = 0; i < length; i++) {
+                        // result += '<div class="card">';
+                        var menu = menus[i];
+                        // alert("menu.id:"+menu.id);
+                        //获取父节点，parentid为1的都是父节点
+                        if (menu.parent.id == 1) {
+                            result += '<div class="card">\n' +
+                                '                        <div class="card-header" id="heading' + num + '">\n' +
+                                '                            <h2 class="mb-0">\n' +
+                                '                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"\n' +
+                                '                                        data-target="#collapse' + num + '" aria-expanded="false" aria-controls="collapse' + num + '">\n' +
+                                '                                    ' + menu.name + '\n' +
+                                '                                </button>\n' +
+                                '                            </h2>\n' +
+                                '                        </div>' +
+                                '                        <div id="collapse' + num + '" class="collapse" aria-labelledby="heading' + num + '"\n' +
+                                '                             data-parent="#accordionExample">\n' +
+                                '                            <div class="card-body">\n' +
+                                '                                <div style="width:100%">'
+                            ;
+                            parentid = menu.id;
+                            // alert("parentname::" + menu.name);
+                            for (var j = 0; j < length; j++) {
+                                var menuchild = menus[j];
+                                // alert("menuchild.parent.id:" + menuchild.parent.id);
+                                // alert("parentid:" + parentid);
+                                if (menuchild.parent.id == parentid) {
+                                    // alert("menuchild.parent.id:" + menuchild.parent.id);
+                                    // alert("parentid:" + parentid);
+                                    // alert("menuchild.name:" + menuchild.name);
+                                    result += '<button type="button" class="btn btn-light button-style-for-light"\n' +
+                                        '                                            onclick="opentable(\'' + menuchild.href + '\')">\n' +
+                                        '                                        ' + menuchild.name + '\n' +
+                                        '                                    </button>\n' +
+                                        '                                    <br>'
+                                    ;
+
+                                }
+
+                            }
+                            result += '                                </div>\n' +
+                                '                            </div>\n' +
+                                '                        </div>\n' +
+                                '                    </div>'
+                            ;
+                            // alert(result);
+
+                            num = num + 1;
+
+                        }
+
+
+                    }
+                    $('.accordion').append(result);
+
+
+                }
+                , "json");
+
+        });
+    </script>
+
 
 </head>
 <body>
@@ -93,7 +189,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body">1
                 您确定要退出系统吗？
             </div>
             <div class="modal-footer">
@@ -111,71 +207,71 @@
             <div class="sidebar-sticky pt-3">
                 <%--       单击后的下弹框         --%>
                 <div class="accordion" id="accordionExample">
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-                                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    系统管理
-                                </button>
-                            </h2>
-                        </div>
-                        <%--对于不需要一加载就显示的框来说--%>
-                        <%--     class="collapse show"要变成class="collapse"--%>
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                             data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div style="width:100%">
-                                    <button type="button" class="btn btn-light button-style-for-light"
-                                            onclick="opentable('semestermanage')">
-                                        学期管理
-                                    </button>
-                                    <br>
-                                    <button type="button" class="btn btn-light button-style-for-light"
-                                            onclick="opentable('usermanage')">
-                                        用户信息管理
-                                    </button>
-                                    <br>
-                                    <button type="button" class="btn btn-light button-style-for-light"
-                                            onclick="opentable('classmanage')">班级信息管理
-                                    </button>
-                                    <br>
-                                    <button type="button" class="btn btn-light button-style-for-light"
-                                            onclick="opentable('coursemanage')">课程信息管理
-                                    </button>
-                                    <br>
-                                    <%--                                    <button type="button" class="btn btn-light button-style-for-light" onclick="opentable()">Secondary</button>--%>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <%--                    <div class="card">--%>
+                    <%--                        <div class="card-header" id="headingOne">--%>
+                    <%--                            <h2 class="mb-0">--%>
+                    <%--                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"--%>
+                    <%--                                        data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">--%>
+                    <%--                                    系统管理--%>
+                    <%--                                </button>--%>
+                    <%--                            </h2>--%>
+                    <%--                        </div>--%>
+                    <%--                        &lt;%&ndash;对于不需要一加载就显示的框来说&ndash;%&gt;--%>
+                    <%--                        &lt;%&ndash;     class="collapse show"要变成class="collapse"&ndash;%&gt;--%>
+                    <%--                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne"--%>
+                    <%--                             data-parent="#accordionExample">--%>
+                    <%--                            <div class="card-body">--%>
+                    <%--                                <div style="width:100%">--%>
+                    <%--                                    <button type="button" class="btn btn-light button-style-for-light"--%>
+                    <%--                                            onclick="opentable('semestermanage')">--%>
+                    <%--                                        学期管理--%>
+                    <%--                                    </button>--%>
+                    <%--                                    <br>--%>
+                    <%--                                    <button type="button" class="btn btn-light button-style-for-light"--%>
+                    <%--                                            onclick="opentable('usermanage')">--%>
+                    <%--                                        用户信息管理--%>
+                    <%--                                    </button>--%>
+                    <%--                                    <br>--%>
+                    <%--                                    <button type="button" class="btn btn-light button-style-for-light"--%>
+                    <%--                                            onclick="opentable('classmanage')">班级信息管理--%>
+                    <%--                                    </button>--%>
+                    <%--                                    <br>--%>
+                    <%--                                    <button type="button" class="btn btn-light button-style-for-light"--%>
+                    <%--                                            onclick="opentable('coursemanage')">课程信息管理--%>
+                    <%--                                    </button>--%>
+                    <%--                                    <br>--%>
+                    <%--                                    &lt;%&ndash;                                    <button type="button" class="btn btn-light button-style-for-light" onclick="opentable()">Secondary</button>&ndash;%&gt;--%>
+                    <%--                                </div>--%>
+                    <%--                            </div>--%>
+                    <%--                        </div>--%>
+                    <%--                    </div>--%>
 
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link btn-block text-left collapsed" type="button"
-                                        data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
-                                        aria-controls="collapseTwo">
-                                    选题管理
-                                </button>
-                            </h2>
-                        </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                             data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div style="width:100%">
-                                    <button type="button" class="btn btn-light button-style-for-light"
-                                            onclick="opentable('alltopic')">
-                                        所有课题选择
-                                    </button>
-                                    <br>
-                                    <button type="button" class="btn btn-light button-style-for-light"
-                                            onclick="opentable('topicaudit')">课题审核
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <%--                    <div class="card">--%>
+                    <%--                        <div class="card-header" id="headingTwo">--%>
+                    <%--                            <h2 class="mb-0">--%>
+                    <%--                                <button class="btn btn-link btn-block text-left collapsed" type="button"--%>
+                    <%--                                        data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"--%>
+                    <%--                                        aria-controls="collapseTwo">--%>
+                    <%--                                    选题管理--%>
+                    <%--                                </button>--%>
+                    <%--                            </h2>--%>
+                    <%--                        </div>--%>
+                    <%--                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"--%>
+                    <%--                             data-parent="#accordionExample">--%>
+                    <%--                            <div class="card-body">--%>
+                    <%--                                <div style="width:100%">--%>
+                    <%--                                    <button type="button" class="btn btn-light button-style-for-light"--%>
+                    <%--                                            onclick="opentable('alltopic')">--%>
+                    <%--                                        所有课题选择--%>
+                    <%--                                    </button>--%>
+                    <%--                                    <br>--%>
+                    <%--                                    <button type="button" class="btn btn-light button-style-for-light"--%>
+                    <%--                                            onclick="opentable('topicaudit')">课题审核--%>
+                    <%--                                    </button>--%>
+                    <%--                                </div>--%>
+                    <%--                            </div>--%>
+                    <%--                        </div>--%>
+                    <%--                    </div>--%>
 
                     <%--                    <div class="card">--%>
                     <%--                        <div class="card-header" id="headingThree">--%>
@@ -211,7 +307,6 @@
                     <%--                        </div>--%>
                     <%--                    </div>--%>
 
-
                 </div>
         </nav>
 
@@ -224,7 +319,7 @@
         </main>
     </div>
 </div>
-<script src="/static/js/jquery-3.5.1.slim.min.js"></script>
+<%--<script src="/static/js/jquery-3.5.1.slim.min.js"></script>--%>
 <script>window.jQuery || document.write('<script src="/static/bootstrap-4.5.3-examples/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
 <script src="/static/js/bootstrap.bundle.min.js"></script>
 <script src="/static/js/feather.min.js"></script>
