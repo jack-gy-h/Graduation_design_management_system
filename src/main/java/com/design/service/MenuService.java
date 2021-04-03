@@ -11,5 +11,9 @@ public interface MenuService {
 
     Menu getMenu(String id);
 
+    int insertmenu(Menu menu);
+
+    int updatemenu(Menu menu);
+
 //    Menu selectById(String i);
 }

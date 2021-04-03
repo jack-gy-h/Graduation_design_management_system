@@ -24,6 +24,17 @@ public class MenuServiceImp implements MenuService {
         return menuMapper.get(id);
     }
 
+    @Override
+    public int insertmenu(Menu menu) {
+        return menuMapper.insert(menu);
+
+    }
+
+    @Override
+    public int updatemenu(Menu menu) {
+       return menuMapper.updateByPrimaryKey(menu);
+    }
+
 //    @Override
 //    public Menu selectById(String i) {
 //        return menuMapper.selectByPrimaryKey(i);

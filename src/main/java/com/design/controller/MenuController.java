@@ -2,9 +2,12 @@ package com.design.controller;
 
 import com.design.Util.UUIDUtil;
 import com.design.entity.Menu;
+import com.design.entity.User;
 import com.design.service.MenuService;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -53,14 +57,14 @@ public class MenuController {
 
 
         Menu.sortList(list, sourcelist, Menu.getRootId(), true);
-        for (int i = 0; i < sourcelist.size(); i++) {
-            System.out.println("sourcelist.get(" + i + ").getName():" + sourcelist.get(i).getName());
-
-        }
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println("list.get(" + i + ").getName():" + list.get(i).getName());
-
-        }
+//        for (int i = 0; i < sourcelist.size(); i++) {
+//            System.out.println("sourcelist.get(" + i + ").getName():" + sourcelist.get(i).getName());
+//
+//        }
+//        for (int i = 0; i < list.size(); i++) {
+//            System.out.println("list.get(" + i + ").getName():" + list.get(i).getName());
+//
+//        }
 
 //        System.out.println("list.get(0):" + list.get(0).getIsShow());
 //        System.out.println("list.get(1):" + list.get(1).getIsShow());
@@ -85,6 +89,7 @@ public class MenuController {
 //        System.out.println("list.get(61).getCreateDate():" + list.get(61).getCreateDate());
 //        System.out.println("list.get(61).getSort():" + list.get(61).getSort());
 //        System.out.println("list.get(61).getUpdateDate():" + list.get(61).getUpdateDate());
+//        System.out.println("UUIDUtil.getUUID():"+UUIDUtil.getUUID());
         model.addAttribute("list", list);
         return "menuList";
     }
@@ -147,6 +152,9 @@ public class MenuController {
                     menu.setParent(menuService.getMenu(menu.getParent().getId()));
                 }
             }
+//            System.out.println("menu.getSort():"+menu.getSort());
+//            System.out.println("menu.getIsShow():" + menu.getIsShow());
+//            System.out.println("menu.getDelFlag():" + menu.getDelFlag());
 
 //      Menu.getRootId()获取到的是数值1
 //      new Menu(Menu.getRootId())指的是构造了一个id为1的Menu
@@ -188,16 +196,77 @@ public class MenuController {
     @RequestMapping(value = "/form/save")
     public String form(Menu menu, HttpServletRequest request){
 //        主要有两种形式的提交：
-//         一种是只获取到了menu的parent,相当于新插入一个menu到数据库中
+//         一种是只获取到了menu的parent,相当于新插入一个menu到数据库中(insert操作)
 //        另外一种是获取到了整个menu，相当于update menu
-        if(menu.getId() != null){
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
+        String userId = user.getId().toString();
+
+        Date date = new Date();
+
+        String oldIds = menuService.getMenu(menu.getParent().getId()).getParentIds();
+
+        System.out.println("oldIds:"+oldIds);
+
+        String newIds = oldIds + menu.getParent().getId() + ",";
+
+        System.out.println(newIds);
+
+        menu.setParentIds(newIds);
+
+        System.out.println("menu.getId():"+menu.getId());
+
+
+//        如果id是空的，说明是一个新插入操作(insert操作)
+        if(menu.getId().equals("")){
+            String Id = UUIDUtil.getUUID();
+
+            menu.setId(Id);
+
+            menu.setUpdateBy(userId);
+
+            menu.setCreateBy(userId);
+
+            menu.setUpdateDate(date);
+
+            menu.setCreateDate(date);
+
+            menuService.insertmenu(menu);
+
+
+        }else{
+            menu.setUpdateBy(userId);
+
+            System.out.println("1111111111111111111111");
+
+            menu.setUpdateDate(date);
+
+            System.out.println("2222222222222222222222222");
+
+            if(menu.getCreateBy() == null){
+
+                System.out.println("33333333333333333333333");
+
+                menu.setCreateBy(userId);
+
+            }
+            if(menu.getCreateDate() == null){
+
+                System.out.println("44444444444444444444444");
+
+                menu.setCreateDate(date);
+
+            }
+
+            menuService.updatemenu(menu);
+
+            System.out.println("5555555555555555555555555555");
 
         }
 
         String UUID = UUIDUtil.getUUID();
         System.out.println("UUID:"+UUID);
-        return "success";
+        return "redirect:/menu";
 
 
     }

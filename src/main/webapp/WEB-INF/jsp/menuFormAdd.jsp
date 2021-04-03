@@ -112,12 +112,14 @@
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="menu" action="/menu/form/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
+
+		<form:hidden path="parent.id"/>
 <%--		<sys:message content="${message}"/>--%>
 		<div class="control-group">
 			<label class="control-label">上级菜单:</label>
 			<div class="controls">
 <%--				<form:input path="parent.name" htmlEscape="false" maxlength="50" class="required input-xlarge" readonly="true "/>--%>
-				<input id="name" name="parent.id" style="width: 270px;height: 20px" readonly value="${menu.parent.name}">
+				<input id="name"  style="width: 270px;height: 20px" readonly value="${menu.parent.name}">
 <%--	            <button></button>--%>
 	            <a href="/menu/form/parentMenuSelect">选择<a>
 <%--                <sys:treeselect id="menu" name="parent.id" value="${menu.parent.id}" labelName="parent.name" labelValue="${menu.parent.name}"--%>
