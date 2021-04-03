@@ -73,7 +73,7 @@
         //封裝好打開界面操作
         function opentable(url) {
             // $("#home")[0].innerHTML = "<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='/index'></iframe>"
-            document.getElementById("home").innerHTML = "<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='/" + url + "'></iframe>"
+            document.getElementById("home").innerHTML = "<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='" + url + "'></iframe>"
 
         }
 
@@ -311,7 +311,7 @@
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            <div style="height: 1250px;width: 100%;" id="home">
+            <div style="height: 2000px;width: 100%;" id="home">
 
             </div>
 

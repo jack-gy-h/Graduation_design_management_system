@@ -272,6 +272,7 @@ public class MenuController {
     }
 
 //获取菜单数据实现动态加载
+//    需要返回json数据时，记得加上@ResponseBody
     @RequestMapping(value = "/listData")
     @ResponseBody
     public List<Menu> listData(){

@@ -112,6 +112,8 @@
 
 #通过传输parent_id的方式，用parent_id获取到完整的Menu parent后，进行相应的更新parentIds的操作
 
+#还更新了登录后的界面。
+
 #缺陷：1.parent直绑操作； 2.子节点更新问题。 
 
 ![Image text](https://github.com/jack-gy-h/Graduation_design_management_system/blob/v6.0/src/main/webapp/static/noteimage/v6.0%20notpicture1.png)
