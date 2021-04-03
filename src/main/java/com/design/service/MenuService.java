@@ -15,5 +15,7 @@ public interface MenuService {
 
     int updatemenu(Menu menu);
 
+    Menu selectByPrimaryKey(String id);
+
 //    Menu selectById(String i);
 }

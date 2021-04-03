@@ -25,7 +25,7 @@
 
         function updateSort() {
             loading('正在提交，请稍等...');
-            $("#listForm").attr("action", "");
+            $("#listForm").attr("action", "/menu/updateSort");
             $("#listForm").submit();
         }
     </script>
@@ -36,7 +36,7 @@
         <li><a href="/menu/form">菜单添加</a></li>
 </ul>
 <%--<sys:message content="${message}"/>--%>
-<form id="listForm" method="post">
+<form id="listForm" method="post" action="/menu/updateSort">
     <table id="treeTable" class="table table-striped table-bordered table-condensed">
         <thead>
         <tr>
@@ -62,15 +62,14 @@
 <%--                <td title="${menu.permission}">${menu.permission}</td>--%>
                     <td nowrap>
                         <a href="/menu/form?id=${menu.id}">修改</a>
-                        <a href=""
-                           onclick="">删除</a>
+                        <a href="/menu/delete?id=${menu.id}">删除</a>
                         <a href="/menu/form?pid=${menu.id}">添加下级菜单</a>
                     </td>
             </tr>
         </c:forEach></tbody>
     </table>
         <div class="form-actions pagination-left">
-            <input id="btnSubmit" class="btn btn-primary" type="button" value="保存排序" onclick="updateSort();"/>
+            <input id="btnSubmit" class="btn btn-primary" type="submit" value="保存排序" />
         </div>
 </form>
 </body>

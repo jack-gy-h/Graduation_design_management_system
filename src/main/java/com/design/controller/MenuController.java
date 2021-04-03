@@ -235,6 +235,7 @@ public class MenuController {
 
 
         }else{
+//            如果不是空，则说明是修改操作
             menu.setUpdateBy(userId);
 
             System.out.println("1111111111111111111111");
@@ -286,6 +287,70 @@ public class MenuController {
 
         return list;
 
+    }
+
+
+    @RequestMapping(value = "delete")
+
+    public String delete(HttpServletRequest request){
+
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user.getId().toString();
+
+        Date date = new Date();
+
+        System.out.println();
+
+        String id = request.getParameter("id");
+
+        System.out.println("menuService.selectByPrimaryKey(id).getParentId():"+menuService.selectByPrimaryKey(id).getParentId());
+
+        Menu menu = menuService.getMenu(id);
+
+        menu.setDelFlag("1");
+
+        System.out.println("menu.getDelFlag():"+menu.getDelFlag());
+        System.out.println("menu.getIsShow():" + menu.getIsShow());
+        System.out.println("menu.getCreateBy():" + menu.getCreateBy());
+        System.out.println("menu.getDelFlag():" + menu.getDelFlag());
+        System.out.println("menu.getHref():" + menu.getHref());
+        System.out.println("menu.getIcon():" + menu.getIcon());
+        System.out.println("menu.getId():" + menu.getId());
+        System.out.println("menu.getName():" + menu.getName());
+        System.out.println("menu.getParentId():" + menu.getParentId());
+        System.out.println("menu.getParent():" + menu.getParent());
+        System.out.println("menu.getParentIds():" + menu.getParentIds());
+        System.out.println("menu.getPermission():" + menu.getPermission());
+        System.out.println("menu.getRemarks():" + menu.getRemarks());
+        System.out.println("menu.getTarget():" + menu.getTarget());
+        System.out.println("menu.getUpdateBy():" + menu.getUpdateBy());
+        System.out.println("menu.getCreateDate():" + menu.getCreateDate());
+        System.out.println("menu.getSort():" + menu.getSort());
+        System.out.println("menu.getUpdateDate():" + menu.getUpdateDate());
+//        if(menu.getCreateDate() == null){
+//
+//            menu.setCreateDate();
+//
+//        }
+
+        menuService.updatemenu(menu);
+
+        return "redirect:/menu";
+
+    }
+
+    @RequestMapping(value = "updateSort")
+    public String updateSort(String[] ids,Integer[] sorts){
+
+        System.out.println("ids[0]:"+ids[0]);
+
+        for (int i = 0;i < ids.length;i++){
+            Menu menu = menuService.getMenu(ids[i]);
+            menu.setSort(sorts[i]);
+            menuService.updatemenu(menu);
+        }
+        return "redirect:/menu" ;
     }
 
 

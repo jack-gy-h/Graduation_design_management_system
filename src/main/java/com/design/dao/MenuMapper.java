@@ -102,4 +102,8 @@ public interface MenuMapper<T> {
     List<Menu> findAllMenu();
 
     Menu get(String id);
+
+    Menu get1(String id);
+
+
 }

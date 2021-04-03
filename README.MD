@@ -122,7 +122,11 @@
 
 ![Image text](https://github.com/jack-gy-h/Graduation_design_management_system/blob/v6.0/src/main/webapp/static/noteimage/v6.0%20notpicture3.png)
 
+#v7.0
 
+#完成了菜单的删除和保存排序的内容
+
+#没有解决的内容：mybatis的表的映射和数据库as语句与取数、实体类之间的对应关系
 
 
 
