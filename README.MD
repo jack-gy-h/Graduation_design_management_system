@@ -112,7 +112,7 @@
 
 #通过传输parent_id的方式，用parent_id获取到完整的Menu parent后，进行相应的更新parentIds的操作
 
-#缺陷：1.parent直绑操作； 2.子节点更新问题。
+#缺陷：1.parent直绑操作； 2.子节点更新问题。 
 
 
 
