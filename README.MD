@@ -114,6 +114,8 @@
 
 #缺陷：1.parent直绑操作； 2.子节点更新问题。 
 
+![Image text](https://github.com/jack-gy-h/Graduation_design_management_system/blob/v6.0/src/main/webapp/static/noteimage/v6.0%20notpicture1.png)
+
 
 
 
