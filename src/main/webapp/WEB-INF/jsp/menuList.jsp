@@ -28,14 +28,49 @@
             $("#listForm").attr("action", "/menu/updateSort");
             $("#listForm").submit();
         }
+
+        // function showdelete(id) {
+        //
+        //
+        //     //这里将Modal连接/显示出来
+        //     $("#delete").modal('show')
+        //     //绑定Modal中提交键中的内容
+        //     $('#btn_submit1').click(function () {
+        //         //如果触发了该按键则执行logout操作
+        //         window.location.href = '/menu/delete?id='+id;
+        //
+        //     })
+        //
+        //
+        // }
     </script>
 </head>
 <body>
+
 <ul class="nav nav-tabs">
     <li class="active"><a href="/menu">菜单列表</a></li>
         <li><a href="/menu/form">菜单添加</a></li>
 </ul>
-<%--<sys:message content="${message}"/>--%>
+<%--<div class="modal fade" id="delete" data-backdrop="static" data-keyboard="false" tabindex="-1"--%>
+<%--     aria-labelledby="logoutLabel" aria-hidden="true">--%>
+<%--    <div class="modal-dialog">--%>
+<%--        <div class="modal-content">--%>
+<%--            <div class="modal-header">--%>
+<%--                <h5 class="modal-title" id="staticBackdropLabel">系统提示</h5>--%>
+<%--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
+<%--                    <span aria-hidden="true">&times;</span>--%>
+<%--                </button>--%>
+<%--            </div>--%>
+<%--            <div class="modal-body">1--%>
+<%--                您确定要删除这个菜单吗？--%>
+<%--            </div>--%>
+<%--            <div class="modal-footer">--%>
+<%--                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>--%>
+<%--                <button type="button" class="btn btn-primary" id="btn_submit1">确定</button>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>&lt;%&ndash;<sys:message content="${message}"/>&ndash;%&gt;--%>
 <form id="listForm" method="post" action="/menu/updateSort">
     <table id="treeTable" class="table table-striped table-bordered table-condensed">
         <thead>

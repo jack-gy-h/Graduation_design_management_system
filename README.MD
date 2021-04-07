@@ -130,6 +130,48 @@
 
 #没有解决的内容：mybatis的表的映射和数据库as语句与取数、实体类之间的对应关系
 
+#缺陷：删除要做一个确定键
+
+#v8.0
+
+#做一个ztree的要诀：
+
+#正确引用zTreeStyle.min.css、jquery-1.8.3.js和jquery.ztree.all-3.5.js.
+
+#var tree = $.fn.zTree.init($("#menuTree"), setting, zNodes);
+
+#正确绑好div，设置好setting和zNodes.
+
+#详细见roleAdd.jsp:78-99.
+
+#使用到了jquery.validate插件进行检验：
+
+#检验规则：
+
+#    验证思路：
+#   允许：return "true";
+#   不允许：retuen "false";
+ 
+#   添加时：不允许填写的名字存在数据库中
+#   填写的名字存在数据库中:getRoleCountByname > 0
+#    不允许:返回false
+ 
+#   修改时：1.允许与自身相同
+#           2.不允许与除了自身之外的名字在数据库中
+#    1.与自身相同：oldname == name
+#     允许:返回"true"
+ 
+#    2.除了自身之外的名字在数据库中:oldname !== name || getRoleCountByname > 0
+#    不允许：返回"false";
+
+
+#插入角色信息中的角色授权时，实际上是将role_id和menu_id一一对应地共同插入到role_menu表中。
+
+#进行修改操作时，
+
+#实际上是将role表的对应内容进行update,而将role_menu表的内容根据role_id进行全部删除后，再将获取到的menu_id一一对应再插入到role_menu表中
+
+#进行删除操作时，实际上是根据role的id获取到role的全部信息，并把role的del_flag变为1(即逻辑删除)。
 
 
 

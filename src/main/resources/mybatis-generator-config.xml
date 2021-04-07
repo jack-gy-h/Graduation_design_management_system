@@ -53,9 +53,11 @@
 <!--               enableUpdateByExample="true"/>-->
 <!--        <table tableName="topic_guidances" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
 <!--               enableUpdateByExample="true"/>-->
-        <table tableName="user" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
-               enableUpdateByExample="true"/>
-        <table tableName="menu" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+<!--        <table tableName="user" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
+<!--               enableUpdateByExample="true"/>-->
+<!--        <table tableName="menu" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
+<!--               enableUpdateByExample="true"/>-->
+        <table tableName="role" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                enableUpdateByExample="true"/>
 
 
