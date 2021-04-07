@@ -148,29 +148,29 @@
 
 #检验规则：
 
-#    验证思路：
+#验证思路：
 
-#   允许：return "true";
+#允许：return "true";
 
-#   不允许：retuen "false";
+#不允许：retuen "false";
  
-#   添加时：不允许填写的名字存在数据库中
+#添加时：不允许填写的名字存在数据库中
 
-#   填写的名字存在数据库中:getRoleCountByname > 0
+#填写的名字存在数据库中:getRoleCountByname > 0
 
-#    不允许:返回false
+#不允许:返回false
  
-#   修改时：1.允许与自身相同
+#修改时：1.允许与自身相同
 
-#           2.不允许与除了自身之外的名字在数据库中
+#        2.不允许与除了自身之外的名字在数据库中
 
-#    1.与自身相同：oldname == name
+#     1.与自身相同：oldname == name
 
 #     允许:返回"true"
  
-#    2.除了自身之外的名字在数据库中:oldname !== name || getRoleCountByname > 0
+#     2.除了自身之外的名字在数据库中:oldname !== name || getRoleCountByname > 0
 
-#    不允许：返回"false";
+#     不允许：返回"false";
 
 
 #插入角色信息中的角色授权时，实际上是将role_id和menu_id一一对应地共同插入到role_menu表中。
