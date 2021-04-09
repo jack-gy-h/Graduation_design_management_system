@@ -14,4 +14,8 @@ public interface UserService {
     List<User> getuserListByPageAndRowsAndSelectname(int page, int rows, String selectname);
 
     int getAllCountBySelectname(String selectname);
+
+    String getPasswordByid(Integer id);
+
+    int getUserCountBystudentNumber(String studentNumber);
 }

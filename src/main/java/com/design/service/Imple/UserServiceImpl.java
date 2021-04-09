@@ -60,5 +60,15 @@ public class UserServiceImpl implements UserService {
         return userMapper.getAllCountBySelectname(selectname);
     }
 
+    @Override
+    public String getPasswordByid(Integer id) {
+        return userMapper.getPasswordByid(id);
+    }
+
+    @Override
+    public int getUserCountBystudentNumber(String studentNumber) {
+        return userMapper.getUserCountBystudentNumber(studentNumber);
+    }
+
 
 }

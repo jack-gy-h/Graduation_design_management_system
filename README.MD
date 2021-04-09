@@ -191,9 +191,27 @@
 
 ![Image text](https://github.com/jack-gy-h/Graduation_design_management_system/blob/v9.0/src/main/webapp/static/noteimage/v9.0%20notpicture1.png)
 
-![Image text](https://github.com/jack-gy-h/Graduation_design_management_system/blob/v9.0/src/main/webapp/static/noteimage/v9.0%20notpicture1.png)
+![Image text](https://github.com/jack-gy-h/Graduation_design_management_system/blob/v9.0/src/main/webapp/static/noteimage/v9.0%20notpicture2.png)
 
 #做了一个根据名字的模糊查询，具体思路，将填写好的变量传给queryParams，并在controller中取出来用
+
+#v10.0
+
+###做了一个机构管理，完成了用户管理-用户添加中的checkbox.
+
+#在复制内容的时候：找到问题：
+
+#在getmenu时需要get正常的菜单才有意义，因此要加上a.del_flag = 0 
+
+#在验证角色名字是否合法时，需要和正常的（即没被删除的）角色相比，才有意义，因此语句是：
+
+#where name = #{name,jdbcType=VARCHAR} AND del_flag = 0
+
+#添加了一个office机构管理，在tree类的移植中，要注意去掉parentid的变量声明，把之前的getParentId放上去即可
+
+#在使用<form:form>做布局时，当path的名字没有出现在对应实体类中时，在对应的实体类中声明它，并生成对应的set/get方法即可。
+
+#再次做validate验证框得到的问题：rules中根据name绑定进行验证时的传参问题还未得到解决。
 
 
 

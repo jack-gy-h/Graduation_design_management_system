@@ -4,7 +4,6 @@ import com.design.entity.User;
 import com.design.entity.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.PathVariable;
 
 public interface UserMapper {
     /**
@@ -102,4 +101,8 @@ public interface UserMapper {
     List<User> getuserListByPageAndRowsAndSelectname(@Param("page")int page, @Param("rows")int rows, @Param("selectname")String selectname);
 
     int getAllCountBySelectname(String selectname);
+
+    String getPasswordByid(Integer id);
+
+    int getUserCountBystudentNumber(String studentNumber);
 }
