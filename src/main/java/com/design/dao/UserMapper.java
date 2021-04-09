@@ -4,6 +4,7 @@ import com.design.entity.User;
 import com.design.entity.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 public interface UserMapper {
     /**
@@ -93,4 +94,12 @@ public interface UserMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(User record);
+
+    List<User> getuserListByPageAndRows(@Param("page") int page,@Param("rows") int rows);
+
+    int getAllCount();
+
+    List<User> getuserListByPageAndRowsAndSelectname(@Param("page")int page, @Param("rows")int rows, @Param("selectname")String selectname);
+
+    int getAllCountBySelectname(String selectname);
 }

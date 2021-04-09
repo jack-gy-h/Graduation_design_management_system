@@ -410,11 +410,13 @@ public class Menu {
     public static void sortList(List<Menu> list, List<Menu> sourcelist, String parentId, boolean cascade) {
         for (int i = 0; i < sourcelist.size(); i++) {
             Menu e = sourcelist.get(i);
+//            找到父id为parentId的菜单
             if (e.getParent() != null && e.getParent().getId() != null
                     && e.getParent().getId().equals(parentId)) {
                 list.add(e);
                 if (cascade) {
                     // 判断是否还有子节点, 有则继续获取子节点
+//                    新做一个列表，让上一个parentId作为父id继续获取字节点
                     for (int j = 0; j < sourcelist.size(); j++) {
                         Menu child = sourcelist.get(j);
                         if (child.getParent() != null && child.getParent().getId() != null

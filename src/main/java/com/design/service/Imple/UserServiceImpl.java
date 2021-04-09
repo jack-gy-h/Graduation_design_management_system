@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -37,6 +38,27 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public List<User> getuserListByPageAndRows(int page, int rows) {
+        page = (page - 1) * rows;
+        return userMapper.getuserListByPageAndRows(page, rows);
+    }
+
+    @Override
+    public int getAllCount() {
+        return userMapper.getAllCount();
+    }
+
+    @Override
+    public List<User> getuserListByPageAndRowsAndSelectname(int page, int rows, String selectname) {
+        page = (page - 1) * rows;
+        return userMapper.getuserListByPageAndRowsAndSelectname(page, rows, selectname);
+    }
+
+    @Override
+    public int getAllCountBySelectname(String selectname) {
+        return userMapper.getAllCountBySelectname(selectname);
+    }
 
 
 }

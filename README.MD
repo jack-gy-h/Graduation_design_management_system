@@ -181,6 +181,19 @@
 
 ###进行删除操作时，实际上是根据role的id获取到role的全部信息，并把role的del_flag变为1(即逻辑删除)。
 
+#v9.0
+
+#由于选题时涉及到选题人、退选题人的时间等信息的查看，因此要先行做日志管理.
+
+#前端引用问题排错时，可以到f12中排错更快.
+
+#Menu parent自身取数相当于一对一，因此在数据库映射中不需要一对多取数时记得在mapper中写映射
+
+![Image text](https://github.com/jack-gy-h/Graduation_design_management_system/blob/v6.0/src/main/webapp/static/noteimage/v9.0%20notpicture1.png)
+
+![Image text](https://github.com/jack-gy-h/Graduation_design_management_system/blob/v6.0/src/main/webapp/static/noteimage/v9.0%20notpicture2.png)
+
+#做了一个根据名字的模糊查询，具体思路，将填写好的变量传给queryParams，并在controller中取出来用
 
 
 

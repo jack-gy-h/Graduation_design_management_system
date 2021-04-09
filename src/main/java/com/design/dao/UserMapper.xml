@@ -224,6 +224,34 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+    <select id="getuserListByPageAndRows" resultType="com.design.entity.User">
+      select *
+      FROM user
+<!--      <if test="#{selectname} !=null and #{selectname} !=''">-->
+<!--        WHERE username LIKE '%${selectname}%'-->
+<!--      </if>-->
+      WHERE username LIKE '%%'
+      LIMIT #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+    </select>
+  <select id="getuserListByPageAndRowsAndSelectname" resultType="com.design.entity.User">
+    select *
+    FROM user
+      WHERE username LIKE '%${selectname}%'
+    LIMIT #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+  </select>
+  <select id="getAllCount" resultType="java.lang.Integer">
+
+select count(*)
+from user
+order by user.id
+  </select>
+  <select id="getAllCountBySelectname" resultType="java.lang.Integer">
+
+    select count(*)
+    from user
+    WHERE username LIKE '%${_parameter}%'
+    order by user.id
+  </select>
   <update id="updateByExampleSelective" parameterType="map">
     <!--
       WARNING - @mbggenerated

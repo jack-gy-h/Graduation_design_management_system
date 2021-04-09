@@ -75,7 +75,7 @@ public class RoleController {
 
 //        System.out.println("roleService.getRoleByName(\"部门管理员\"):"+roleService.getRoleCountByEnName("b"));
 
-        return "roleAdd";
+        return "roleForm";
 
 
     }

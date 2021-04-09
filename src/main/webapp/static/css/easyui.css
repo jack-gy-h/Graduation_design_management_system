@@ -76,7 +76,7 @@
   position: relative;
 }
 .panel-title {
-  background: url('images/blank.gif') no-repeat;
+  background: url('/static/gif/blank.gif') no-repeat;
 }
 .panel-header-noborder {
   border-width: 0 0 1px 0;
@@ -146,7 +146,7 @@
   overflow: hidden;
 }
 .panel-loading {
-  background: url('images/loading.gif') no-repeat 10px 10px;
+  background: url('/static/gif/loading.gif') no-repeat 10px 10px;
 }
 .panel-tool-close {
   background: url('images/panel_tools.png') no-repeat -16px 0px;
@@ -1047,7 +1047,7 @@
   left: 0;
   top: 0;
   z-index: 10;
-  background: url('images/blank.gif') no-repeat;
+  background: url('/static/gif/blank.gif') no-repeat;
 }
 .l-btn-disabled .filebox-label {
   cursor: default;
@@ -1960,7 +1960,7 @@
   background: url('images/datagrid_icons.png') no-repeat -32px center;
 }
 .datagrid-mask-msg {
-  background: #ffffff url('images/loading.gif') no-repeat scroll 5px center;
+  background: #ffffff url('/static/gif/loading.gif') no-repeat scroll 5px center;
 }
 .datagrid-header,
 .datagrid-td-rownumber {
@@ -2219,22 +2219,22 @@
   min-width: 28px;
 }
 .pagination-first {
-  background: url('images/pagination_icons.png') no-repeat 0 center;
+  background: url('/static/png/pagination_icons.png') no-repeat 0 center;
 }
 .pagination-prev {
-  background: url('images/pagination_icons.png') no-repeat -16px center;
+  background: url('/static/png/pagination_icons.png') no-repeat -16px center;
 }
 .pagination-next {
-  background: url('images/pagination_icons.png') no-repeat -32px center;
+  background: url('/static/png/pagination_icons.png') no-repeat -32px center;
 }
 .pagination-last {
-  background: url('images/pagination_icons.png') no-repeat -48px center;
+  background: url('/static/png/pagination_icons.png') no-repeat -48px center;
 }
 .pagination-load {
-  background: url('images/pagination_icons.png') no-repeat -64px center;
+  background: url('/static/png/pagination_icons.png') no-repeat -64px center;
 }
 .pagination-loading {
-  background: url('images/loading.gif') no-repeat center center;
+  background: url('/static/gif/loading.gif') no-repeat center center;
 }
 .pagination-page-list,
 .pagination .pagination-num {
@@ -3148,7 +3148,7 @@
   background: url('images/tree_icons.png') no-repeat -240px 0;
 }
 .tree-loading {
-  background: url('images/loading.gif') no-repeat center center;
+  background: url('/static/gif/loading.gif') no-repeat center center;
 }
 .tree-checkbox0 {
   background: url('images/tree_icons.png') no-repeat -208px -18px;

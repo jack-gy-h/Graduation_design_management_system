@@ -17,5 +17,7 @@ public interface MenuService {
 
     Menu selectByPrimaryKey(String id);
 
+    List<Menu> getMenuParentListById(String id);
+
 //    Menu selectById(String i);
 }

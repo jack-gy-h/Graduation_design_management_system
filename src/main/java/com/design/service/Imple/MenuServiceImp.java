@@ -40,6 +40,11 @@ public class MenuServiceImp implements MenuService {
         return menuMapper.get(id);
     }
 
+    @Override
+    public List<Menu> getMenuParentListById(String id) {
+        return menuMapper.get1(id);
+    }
+
 //    @Override
 //    public Menu selectById(String i) {
 //        return menuMapper.selectByPrimaryKey(i);

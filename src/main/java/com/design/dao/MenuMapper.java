@@ -103,7 +103,7 @@ public interface MenuMapper<T> {
 
     Menu get(String id);
 
-    Menu get1(String id);
+    List<Menu> get1(String id);
 
 
 }
