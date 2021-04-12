@@ -157,6 +157,7 @@
 </ul>
 
 <form:form id="inputForm" modelAttribute="user" action="/user/form/saveUserRoleForm" method="post" class="form-horizontal">
+    <form:hidden path="id"/>
     <div class="control-group">
         <div class="control-group">
             <label class="control-label">个人姓名:</label>

@@ -106,14 +106,16 @@ public class UserController {
 //        用到了逆向工程提供的selectByPrimaryKey方法来取user。
         User user = userService.getUserByUserId(userid);
 
+        System.out.print("user.getId():"+user.getId());
+
 
         List<Office> officeList = officeService.getOfficeParentListById("1");
 
-        System.out.print("user.getIdentityNumber():"+user.getIdentityNumber());
+        System.out.print("user.getIdentityNumber():" + user.getIdentityNumber());
 
         System.out.print("user.getIdentity():" + user.getIdentity());
 
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
 
         model.addAttribute("UserParentOffice", officeList);
 
@@ -248,7 +250,7 @@ public class UserController {
 
 //    通过测试可以知道，由于带英文的字段插入需要带单引号
 //    否则会报错
-            user.setRoleId("'"+user.getRoleId()+"'");
+            user.setRoleId("'" + user.getRoleId() + "'");
 
             userService.insert(user);
 
@@ -307,26 +309,36 @@ public class UserController {
 
 //    通过测试可以知道，由于带英文的字段插入需要带单引号
 //    否则会报错
-            user.setRoleId("'" + user.getRoleId() + "'");
+//        user.setId("'" + user.getId() + "'");
+//
+//        user.setIdentitys("'" + user.getIdentitys() + "'");
+//
+//        user.setGrade("'" + user.getGrade() + "'");
+//
+//        user.setCollegeid("'" + user.getCollegeid() + "'");
+//
+//        user.setMajorid("'" + user.getMajorid() + "'");
+
+        user.setRoleId("'" + user.getRoleId() + "'");
 
 //            userService.insert(user);
 
-            System.out.print("user.getId():" + user.getId());
+//        System.out.print("user.getId():" + user.getId());
+//
+//        System.out.print("user.getcollegeid():" + user.getCollegeid());
+//
+//        System.out.print("user.getmajorid():" + user.getMajorid());
+//
+//        System.out.print("user.getidentitys():" + user.getIdentitys());
+//
+//        System.out.print("user.getgrade():" + user.getGrade());
+//
+//        System.out.print("user.getroleId():" + user.getRoleId());
 
-            System.out.print("user.getcollegeid():" + user.getCollegeid());
-
-            System.out.print("user.getmajorid():" + user.getMajorid());
-
-            System.out.print("user.getidentitys():" + user.getIdentitys());
-
-            System.out.print("user.getgrade():" + user.getGrade());
-
-            System.out.print("user.getroleId():" + user.getRoleId());
-
-            userService.insertUserInfoAll(user);
+        userService.insertUserInfoAll(user);
 
 
-/*        }*/
+        /*        }*/
 
         return "redirect:/user";
 
