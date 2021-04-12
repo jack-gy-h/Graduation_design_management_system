@@ -110,5 +110,7 @@ public interface UserMapper {
 
     int insertUserInfoAll(User user);
 
+    void deleteUserRoleForm(User user);
+
 //    User getUserByUserId(String userid);
 }

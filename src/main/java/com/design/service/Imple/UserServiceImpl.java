@@ -90,5 +90,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByPrimaryKey(userid);
     }
 
+    @Override
+    public void deleteUserRoleForm(User user) {
+        userMapper.deleteUserRoleForm(user);
+    }
+
 
 }

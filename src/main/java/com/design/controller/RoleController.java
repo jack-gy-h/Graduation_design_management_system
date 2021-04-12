@@ -35,6 +35,8 @@ public class RoleController {
 
         List<Role> Rolelist = roleService.findAllRole();
 
+        System.out.print("Rolelist.get(0).getMenuIdList():"+Rolelist.get(0).getMenuIdList());
+
         model.addAttribute("Rolelist",Rolelist);
         return "roleList";
 
@@ -56,8 +58,13 @@ public class RoleController {
             Role role = roleService.getRoleById(id);
             model.addAttribute("role",role);
 //            System.out.println("id:"+id);
-//            System.out.println("role.getMenuIds():"+role.getMenuList());
+            System.out.println("role.getMenuList():"+role.getMenuList());
+
+            System.out.print("role.getMenuIdList():"+role.getMenuIdList());
+
+            System.out.print("role.getMenuIds()"+role.getMenuIds());
         }
+
 
 
 

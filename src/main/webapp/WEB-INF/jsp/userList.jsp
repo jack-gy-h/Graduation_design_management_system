@@ -45,10 +45,15 @@
                 columns: [[
                     {field: 'ck', checkbox: true},
                     {field: 'id', title: '用户ID', width: 200, hidden: true, align: 'center'},
+                    {field: 'name', title: '用户名', width: 200, align: 'center'},
                     {field: 'username', title: '用户名', width: 200, align: 'center'},
                     {field: 'password', title: '密码', width: 200, align: 'center'},
                     {field: 'identity', title: '身份', width: 200, align: 'center'},
-                    {field: 'OperationItem', title: '操作列', width: 200, formatter: formatTitle}
+                    {field: 'identityNumber', title: '身份码', width: 200, align: 'center'},
+                    {field: 'collegeid', title: '学院', width: 200, align: 'center'},
+                    {field: 'majorid', title: '专业', width: 200, align: 'center'},
+                    {field: 'roleId', title: '角色名', width: 200, align: 'center'},
+                    {field: 'OperationItem', title: '操作列', width: 250, formatter: formatTitle},
                     // {field: 'userAdmin', title: '身份', width: 200, align: 'center'}
                     //    ， formatter: btnDetailed
                 ]],
@@ -59,14 +64,14 @@
 
         function search() {
             var selectname = $("#btnSearchName").val();
-            alert("selectname:" + selectname);
+            // alert("selectname:" + selectname);
             // params.name = name ;
             loadData(selectname);
 
         }
 
         function formatTitle(val, row) {
-            return "<a target='_self' style='text-decoration:none' href='/user/addUserRoleForm?userid="+ row.id+"'>添加用户角色</a>"
+            return "<a target='_self' style='text-decoration:none' href='/user/addUserRoleForm?userid="+ row.id+"'>添加用户角色</a> <a target='_self' style='text-decoration:none' href='/user/deleteUserRoleForm?userid=" + row.id + "'>删除</a>"
         }
 
 

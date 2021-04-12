@@ -47,7 +47,7 @@ public class UserController {
     @RequestMapping(value = "/userListData")
     @ResponseBody
     public Map<String, Object> userListData(int page, int rows, String selectname) {
-        List<User> userList = Lists.newArrayList();
+//        List<User> userList = Lists.newArrayList();
         int Count = 0;
         System.out.println("selectname:" + selectname);
         System.out.println("page:" + page);
@@ -57,12 +57,41 @@ public class UserController {
 //            userList = userService.getuserListByPageAndRows(page, rows);
 //            Count = userService.getAllCount();
 //        }
-        userList = userService.getuserListByPageAndRows(page, rows, selectname);
+
+        List<User> userList = userService.getuserListByPageAndRows(page, rows, selectname);
+
+//        System.out.print(userList.get(0).get);
+
+
+        System.out.println("userList.get(0).getIdentityNumber():" + userList.get(0).getIdentityNumber());
+
+        System.out.print("userList.get(0).getCollegeid():" + userList.get(0).getCollegeid());
+
+
+//        for (int i = 0; i < userList.size(); i++) {
+//            String collegeid = userList.get(i).getCollegeid();
+//
+//            if (collegeid != null) {
+//
+//                Office college = officeService.getOffice(collegeid);
+//
+//                String college_name = college.getName();
+//
+//                userList.get(i).setCollegeid(college_name);
+//            }
+//
+//        }
+
+//        Office office = officeService.getOffice(college_id);
+//
+//        String college_id_CN = office.getName();
 
         Count = userService.getAllCountBySelectname(selectname);
 
         map.put("total", Count);
-        System.out.println("userService.getAllCount():" + userService.getAllCount());
+
+
+//        System.out.println("college_id_CN:" + college_id_CN);
         map.put("rows", userList);
         return map;
 
@@ -106,7 +135,7 @@ public class UserController {
 //        用到了逆向工程提供的selectByPrimaryKey方法来取user。
         User user = userService.getUserByUserId(userid);
 
-        System.out.print("user.getId():"+user.getId());
+        System.out.print("user.getId():" + user.getId());
 
 
         List<Office> officeList = officeService.getOfficeParentListById("1");
@@ -125,6 +154,47 @@ public class UserController {
 
 
     }
+
+    @RequestMapping(value = "/deleteUserRoleForm")
+    public String deleteUserRoleForm(Model model, HttpServletRequest request) {
+
+        String userid = request.getParameter("userid");
+
+//        用到了逆向工程提供的selectByPrimaryKey方法来取user。
+        User user = userService.getUserByUserId(userid);
+
+        user.setDelFlag("0");
+
+        userService.deleteUserRoleForm(user);
+
+
+
+
+
+
+
+
+//        System.out.print("user.getId():" + user.getId());
+//
+//
+//        List<Office> officeList = officeService.getOfficeParentListById("1");
+//
+//        System.out.print("user.getIdentityNumber():" + user.getIdentityNumber());
+//
+//        System.out.print("user.getIdentity():" + user.getIdentity());
+//
+//        model.addAttribute("user", user);
+//
+//        model.addAttribute("UserParentOffice", officeList);
+//
+//        model.addAttribute("allRoles", roleService.findAllRole());
+
+        return "userRoleForm";
+
+
+    }
+
+
 
     //    这里的获取专业是通过学院来获取的，本质上是对office表的操作
     @RequestMapping(value = "/getMajor")
