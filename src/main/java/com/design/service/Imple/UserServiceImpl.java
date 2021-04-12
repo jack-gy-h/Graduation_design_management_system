@@ -66,8 +66,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int getUserCountBystudentNumber(String studentNumber) {
-        return userMapper.getUserCountBystudentNumber(studentNumber);
+    public int getUserCountByidentityNumber(String identityNumber) {
+        return userMapper.getUserCountByidentityNumber(identityNumber);
+    }
+
+    @Override
+    public int getUserCountByusername(String username) {
+        return userMapper.getUserCountByusername(username);
+    }
+
+    @Override
+    public int insertUserInfoAll(User user) {
+        return userMapper.insertUserInfoAll(user);
+    }
+
+    @Override
+    public int insert(User user) {
+        return userMapper.insert(user);
+    }
+
+    @Override
+    public User getUserByUserId(String userid) {
+        return userMapper.selectByPrimaryKey(userid);
     }
 
 

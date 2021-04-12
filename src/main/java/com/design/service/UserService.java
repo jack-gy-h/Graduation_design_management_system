@@ -17,5 +17,13 @@ public interface UserService {
 
     String getPasswordByid(Integer id);
 
-    int getUserCountBystudentNumber(String studentNumber);
+    int getUserCountByidentityNumber(String identityNumber);
+
+    int getUserCountByusername(String username);
+
+    int insertUserInfoAll(User user);
+
+    int insert(User user);
+
+    User getUserByUserId(String userid);
 }

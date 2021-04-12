@@ -18,5 +18,7 @@ public interface OfficeService {
 
     List<Office> getOfficeParentListById(String id);
 
+    List<Office> getMajorById(String code);
+
 //    Office selectById(String i);
 }

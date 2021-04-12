@@ -32,19 +32,19 @@
         $(document).ready(function () {
 
             $("#inputForm").validate({
-                rules:{
-                    username: {remote: "/user/checkUsername?oldUsername=" + encodeURIComponent("${user.username}")},
-                    password:{remote:"/user/checkPassword?oldPassword="+encodeURIComponent("${user.password}")},
-                    // confirmpassword:{remote:"/user/checkConfirmPassword?password="+ $("#password").val()},
-                    identityNumber: {remote: "/user/checkIdentityNumber?oldIdentityNumber="+encodeURIComponent("${user.identityNumber}")}
-                },
-                messages: {
-                    username:{remote:"用户名已被使用"},
-                    password: {remote: "与原密码相同"},
-                    // confirmpassword: {remote: "与原密码不同"},
-                    identityNumber:{remote:"该身份号已存在"}
+                <%--rules:{--%>
+                <%--    username: {remote: "/user/checkUsername?oldUsername=" + encodeURIComponent("${user.username}")},--%>
+                <%--    password:{remote:"/user/checkPassword?oldPassword="+encodeURIComponent("${user.password}")},--%>
+                <%--    // confirmpassword:{remote:"/user/checkConfirmPassword?password="+ $("#password").val()},--%>
+                <%--    identityNumber: {remote: "/user/checkIdentityNumber?oldIdentityNumber="+encodeURIComponent("${user.identityNumber}")}--%>
+                <%--},--%>
+                <%--messages: {--%>
+                <%--    username:{remote:"用户名已被使用"},--%>
+                <%--    password: {remote: "与原密码相同"},--%>
+                <%--    // confirmpassword: {remote: "与原密码不同"},--%>
+                <%--    identityNumber:{remote:"该身份号已存在"}--%>
 
-                },
+                <%--},--%>
                 submitHandler:function (form) {
 
                     var password = $("#password").val();
@@ -73,18 +73,18 @@
 
                     // var identityNumber =  $("#identityNumber").val();
 
-                    if(password != confirmpassword){
-                        alert("两次输入的密码不一致");
-                        return ;
-                    }
+                    // if(password != confirmpassword){
+                    //     alert("两次输入的密码不一致");
+                    //     return ;
+                    // }
                     if (identitys == 0) {
                         alert("请选择身份");
                         return;
                     }
-                    if (gender == 0) {
-                        alert("请选择性别");
-                        return;
-                    }
+                    // if (gender == 0) {
+                    //     alert("请选择性别");
+                    //     return;
+                    // }
                     if (collegeid == 0) {
                         alert("请选择学院");
                         return;
@@ -156,34 +156,34 @@
     <li class="active"><a href="">用户添加</a></li>
 </ul>
 
-<form:form id="inputForm" modelAttribute="user" action="/user/form/save" method="post" class="form-horizontal">
+<form:form id="inputForm" modelAttribute="user" action="/user/form/saveUserRoleForm" method="post" class="form-horizontal">
     <div class="control-group">
         <div class="control-group">
             <label class="control-label">个人姓名:</label>
             <div class="controls">
-                <form:input path="name" htmlEscape="false" maxlength="50" class="required input-xlarge"/>
+                <form:input path="name" htmlEscape="false" maxlength="50" class=" input-xlarge" readonly="true"/>
                 <span class="help-inline"><font color="red">*</font> </span>
             </div>
         </div>
         <label class="control-label">用户名:</label>
         <div class="controls">
-            <input id="oldUsername" name="oldUsername" type="hidden" value="${user.username}">
-            <form:input path="username" htmlEscape="false" maxlength="50" class="required input-xlarge"/>
+<%--            <input id="oldUsername" name="oldUsername" type="hidden" value="${user.username}">--%>
+            <form:input path="username" htmlEscape="false" maxlength="50" class=" input-xlarge" readonly="true"/>
             <span class="help-inline"><font color="red">*</font> </span>
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">密码:</label>
         <div class="controls">
-            <input id="oldPassword" name="oldPassword" type="hidden" value="${user.password}">
-            <form:input path="password" htmlEscape="false" maxlength="50" class="required input-xlarge"/>
+<%--            <input id="oldPassword" name="oldPassword" type="hidden" value="${user.password}">--%>
+            <form:input path="password" htmlEscape="false" maxlength="50" class=" input-xlarge" readonly="true"/>
             <span class="help-inline"><font color="red">*</font> </span>
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">确认密码:</label>
         <div class="controls">
-            <form:input path="confirmpassword" htmlEscape="false" maxlength="50" class="required input-xlarge"/>
+            <form:input path="confirmpassword" htmlEscape="false" maxlength="50" class=" input-xlarge" readonly="true"/>
             <span class="help-inline"><font color="red">*</font> </span>
         </div>
     </div>
@@ -201,19 +201,21 @@
     <div class="control-group">
         <label class="control-label">身份号:</label>
         <div class="controls">
-            <input id="oldIdentityNumber" name="oldIdentityNumber" type="hidden" value="${user.identityNumber}">
-            <form:input path="identityNumber" htmlEscape="false" maxlength="50" class="required input-xlarge"/>
+<%--            <input id="oldIdentityNumber" name="oldIdentityNumber" type="hidden" value="${user.identityNumber}">--%>
+            <form:input path="identityNumber" htmlEscape="false" maxlength="50" class=" input-xlarge" readonly="true"/>
             <span class="help-inline"><font color="red">*</font> </span>
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">性别:</label>
         <div class="controls">
-            <form:select path="gender" class="required input-xlarge" onchange="">
-                <form:option value="0">请选择</form:option>
-                <form:option value="1">男</form:option>
-                <form:option value="2">女</form:option>
-            </form:select>
+<%--            <form:select path="gender" class=" input-xlarge" onchange="">--%>
+<%--                <form:option value="0">请选择</form:option>--%>
+<%--                <form:option value="1">男</form:option>--%>
+<%--                <form:option value="2">女</form:option>--%>
+<%--            </form:select>--%>
+    <form:input path="gender" htmlEscape="false" maxlength="50" class=" input-xlarge" readonly="true"/>
+
         </div>
     </div>
     <div class="control-group">
@@ -226,7 +228,7 @@
     <div class="control-group">
         <label class="control-label">邮箱:</label>
         <div class="controls">
-            <form:input path="email" htmlEscape="false" maxlength="50" class="required input-xlarge"/>
+            <form:input path="email" htmlEscape="false" maxlength="50" class=" input-xlarge" readonly="true"/>
             <span class="help-inline"><font color="red">*</font> </span>
         </div>
     </div>

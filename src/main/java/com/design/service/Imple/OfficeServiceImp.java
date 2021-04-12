@@ -45,6 +45,11 @@ public class OfficeServiceImp implements OfficeService {
         return officeMapper.get1(id);
     }
 
+    @Override
+    public List<Office> getMajorById(String code) {
+        return officeMapper.get1(code);
+    }
+
 //    @Override
 //    public Office selectById(String i) {
 //        return officeMapper.selectByPrimaryKey(i);
