@@ -335,25 +335,31 @@
         where id = #{id,jdbcType=VARCHAR}
     </update>
     <insert id="insertUserInfoAll" parameterType="com.design.entity.User">
-        insert into user_info_all(user_id,college_id,major_id,identitys_id,grade,role_id,del_flag)
+        insert into user_info_all(user_id, college_id, major_id, identitys_id, grade, role_id, del_flag)
         values (#{id}, #{collegeid}, #{majorid},
-                ${identitys}, ${grade}, ${roleId},0)
+                ${identitys}, ${grade}, ${roleId}, 0)
 
     </insert>
+<!--    <select id="getuserListByPageAndRows" resultType="com.design.entity.User">-->
+<!--        select *-->
+<!--        FROM user-->
+<!--        &lt;!&ndash;      <if test="#{selectname} !=null and #{selectname} !=''">&ndash;&gt;-->
+<!--        &lt;!&ndash;        WHERE username LIKE '%${selectname}%'&ndash;&gt;-->
+<!--        &lt;!&ndash;      </if>&ndash;&gt;-->
+<!--        WHERE username LIKE '%%' AND del_flag = 0-->
+<!--        LIMIT #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}-->
+<!--    </select>-->
     <select id="getuserListByPageAndRows" resultType="com.design.entity.User">
         select *
         FROM user
-        <!--      <if test="#{selectname} !=null and #{selectname} !=''">-->
-        <!--        WHERE username LIKE '%${selectname}%'-->
-        <!--      </if>-->
-        WHERE username LIKE '%%' AND del_flag = 0
-        LIMIT #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
-    </select>
-    <select id="getuserListByPageAndRowsAndSelectname" resultType="com.design.entity.User">
-        select *
-        FROM user
-        WHERE username LIKE '%${selectname}%'
-          AND del_flag = 0
+        <if test="selectname == null">
+            WHERE username LIKE '%%' AND del_flag = 0
+        </if>
+        <if test="selectname !=null">
+            WHERE username LIKE '%${selectname}%'
+            AND del_flag = 0
+        </if>
+
         LIMIT #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
     </select>
     <select id="getAllCount" resultType="java.lang.Integer">
@@ -389,11 +395,11 @@
         where username = #{username,jdbcType = VARCHAR}
           AND del_flag = 0
     </select>
-<!--    <select id="getUserByUserId" resultType="com.design.entity.User">-->
-<!--        select-->
-<!--        <include refid="Base_Column_List"/>-->
-<!--        FROM user-->
-<!--        where id = #{userid,jdbcType = VARCHAR}-->
-<!--          AND del_flag = 0-->
-<!--    </select>-->
+    <!--    <select id="getUserByUserId" resultType="com.design.entity.User">-->
+    <!--        select-->
+    <!--        <include refid="Base_Column_List"/>-->
+    <!--        FROM user-->
+    <!--        where id = #{userid,jdbcType = VARCHAR}-->
+    <!--          AND del_flag = 0-->
+    <!--    </select>-->
 </mapper>

@@ -7,11 +7,11 @@ import java.util.List;
 public interface UserService {
     User getUserByUsername(String username);
 
-    List<User> getuserListByPageAndRows(int page, int rows);
+//    List<User> getuserListByPageAndRows(int page, int rows);
 
     int getAllCount();
 
-    List<User> getuserListByPageAndRowsAndSelectname(int page, int rows, String selectname);
+    List<User> getuserListByPageAndRows(int page, int rows, String selectname);
 
     int getAllCountBySelectname(String selectname);
 

@@ -38,11 +38,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public List<User> getuserListByPageAndRows(int page, int rows) {
-        page = (page - 1) * rows;
-        return userMapper.getuserListByPageAndRows(page, rows);
-    }
+//    @Override
+//    public List<User> getuserListByPageAndRows(int page, int rows) {
+//        page = (page - 1) * rows;
+//        return userMapper.getuserListByPageAndRows(page, rows);
+//    }
 
     @Override
     public int getAllCount() {
@@ -50,9 +50,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getuserListByPageAndRowsAndSelectname(int page, int rows, String selectname) {
+    public List<User> getuserListByPageAndRows(int page, int rows, String selectname) {
         page = (page - 1) * rows;
-        return userMapper.getuserListByPageAndRowsAndSelectname(page, rows, selectname);
+        return userMapper.getuserListByPageAndRows(page, rows, selectname);
     }
 
     @Override

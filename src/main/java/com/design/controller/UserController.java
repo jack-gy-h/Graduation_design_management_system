@@ -53,11 +53,11 @@ public class UserController {
         System.out.println("page:" + page);
         System.out.println("rows:" + rows);
         Map<String, Object> map = Maps.newHashMap();
-        if (selectname == null) {
-            userList = userService.getuserListByPageAndRows(page, rows);
-            Count = userService.getAllCount();
-        }
-        userList = userService.getuserListByPageAndRowsAndSelectname(page, rows, selectname);
+//        if (selectname == null) {
+//            userList = userService.getuserListByPageAndRows(page, rows);
+//            Count = userService.getAllCount();
+//        }
+        userList = userService.getuserListByPageAndRows(page, rows, selectname);
 
         Count = userService.getAllCountBySelectname(selectname);
 
