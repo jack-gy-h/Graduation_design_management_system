@@ -20,5 +20,11 @@ public interface OfficeService {
 
     List<Office> getMajorById(String code);
 
+    List<Office> getCollegeByUserIdAndGradeId(String userid, String gradeid);
+
+    List<Office> getMajorByUserIdAndGradeIdAndCollegeid(String userid, String gradeid, String collegeid);
+
+    List<Office> getMajorByUserIdAndGradeIdAndCollegeidAndMajorId(String userid, String gradeid, String collegeid, String majorid);
+
 //    Office selectById(String i);
 }

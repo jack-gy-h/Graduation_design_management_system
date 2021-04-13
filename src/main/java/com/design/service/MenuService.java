@@ -19,5 +19,9 @@ public interface MenuService {
 
     List<Menu> getMenuParentListById(String id);
 
+    List<Menu> getAllMenuById(String userid);
+
+    List<Menu> getAllMenuByRole(String roleid);
+
 //    Menu selectById(String i);
 }

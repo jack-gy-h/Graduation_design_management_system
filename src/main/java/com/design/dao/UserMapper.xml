@@ -155,9 +155,18 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <delete id="deleteUserRoleForm">
+    <update id="deleteUserRoleForm" parameterType="com.design.entity.User">
+        update user_info_all uia
+        set uia.del_flag = #{delFlag}
+        WHERE uia.user_id = #{id}
+          AND uia.identitys_id = #{identitysid}
+          AND uia.grade = #{grade}
+          AND uia.college_id = #{collegeid}
+          AND uia.major_id = #{majorid}
+          AND uia.role_id = #{roleId}
 
-    </delete>
+
+    </update>
     <insert id="insert" parameterType="com.design.entity.User">
         <!--
           WARNING - @mbggenerated
@@ -381,9 +390,15 @@
         u.email,
         u.identity,
         u.del_flag,
-        co.name AS "collegeid",
-        ma.name AS "majorid",
-        r.name AS "roleId"
+        co.name AS "collegeCnName",
+        ma.name AS "majorCnName",
+        r.name AS "roleCnName",
+        r.id AS "roleId",
+        uia.identitys_id AS "identitysid",
+        uia.grade AS "grade",
+        uia.college_id AS "collegeid",
+        uia.major_id AS "majorid"
+
 
         FROM user u
         LEFT JOIN user_info_all uia ON uia.user_id = u.id
@@ -434,6 +449,15 @@
         from user
         where username = #{username,jdbcType = VARCHAR}
           AND del_flag = 0
+    </select>
+    <select id="getGradeListById" resultType="com.design.entity.User">
+
+        SELECT DISTINCT uia.grade
+        FROM user u
+                 LEFT JOIN user_info_all uia ON u.id = uia.user_id
+        WHERE u.del_flag = 0
+          AND u.id = #{userid}
+        order by uia.grade
     </select>
     <!--    <select id="getUserByUserId" resultType="com.design.entity.User">-->
     <!--        select-->

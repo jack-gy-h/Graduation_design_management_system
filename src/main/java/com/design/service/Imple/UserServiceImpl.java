@@ -95,5 +95,10 @@ public class UserServiceImpl implements UserService {
         userMapper.deleteUserRoleForm(user);
     }
 
+    @Override
+    public List<User> getGradeListById(String userid) {
+        return userMapper.getGradeListById(userid);
+    }
+
 
 }

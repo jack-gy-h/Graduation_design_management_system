@@ -8,10 +8,14 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.Set;
 
 public class MyRealm extends AuthorizingRealm {
     @Resource
@@ -23,7 +27,12 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
-        return null;
+        Session session = SecurityUtils.getSubject().getSession();
+        User user = (User) session.getAttribute("user");
+        Set<String> identity = Collections.singleton(user.getIdentity());
+        AuthorizationInfo authcInfo = new SimpleAuthorizationInfo(identity);
+
+        return authcInfo;
     }
 
 //    登录认证

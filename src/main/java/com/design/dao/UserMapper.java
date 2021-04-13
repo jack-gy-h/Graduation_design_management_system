@@ -112,5 +112,7 @@ public interface UserMapper {
 
     void deleteUserRoleForm(User user);
 
+    List<User> getGradeListById(String userid);
+
 //    User getUserByUserId(String userid);
 }

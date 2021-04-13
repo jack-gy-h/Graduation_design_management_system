@@ -235,9 +235,33 @@
 
 #惊喜：学会了外连接快速取数。(详情请参照UserMapper.xml的373-403)
 
+#传入参数后可以通过一个hidden的框来取数
 
 
 
+#v13.0
+
+#重点还是取数
+
+#完成了用户的删除，登录的角色选择和跳转
+
+#缺陷：没有删除用户的功能，没有修改用户的功能，没有修改角色信息的功能
+
+#调整好了identity的属性：USER跳转到选择chooseRolePage.jsp界面，SUPERADMIN跳转到全部的菜单
+
+#但是除了一个超级管理员账号其他的人都时USER身份，即都要先选择身份再操作。
+
+#还对页面进行了拦截
+
+#                /superadminPage=roles[SUPERADMIN]
+
+#                 /chooseRolePage=roles[USER]
+
+#                 /studentloginPage=roles[USER]
+
+#调整好了没用的user。
+
+#由于允许添加用户时的自由度，后面的操作可能会有点难
 
 
 

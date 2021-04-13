@@ -106,4 +106,9 @@ public interface OfficeMapper<T> {
     List<Office> get1(String id);
 
 
+    List<Office> getCollegeByUserIdAndGradeId(String userid, String gradeid);
+
+    List<Office> getMajorByUserIdAndGradeIdAndCollegeid(String userid, String gradeid, String collegeid);
+
+    List<Office> getMajorByUserIdAndGradeIdAndCollegeidAndMajorId(String userid, String gradeid, String collegeid, String majorid);
 }

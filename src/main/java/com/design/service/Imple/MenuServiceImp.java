@@ -45,6 +45,16 @@ public class MenuServiceImp implements MenuService {
         return menuMapper.get1(id);
     }
 
+    @Override
+    public List<Menu> getAllMenuById(String userid) {
+        return menuMapper.getAllMenuById(userid);
+    }
+
+    @Override
+    public List<Menu> getAllMenuByRole(String roleid) {
+        return menuMapper.getAllMenuByRole(roleid);
+    }
+
 //    @Override
 //    public Menu selectById(String i) {
 //        return menuMapper.selectByPrimaryKey(i);

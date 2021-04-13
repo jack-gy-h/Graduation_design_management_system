@@ -28,4 +28,9 @@ public interface UserService {
     User getUserByUserId(String userid);
 
     void deleteUserRoleForm(User user);
+
+    List<User> getGradeListById(String userid);
+
+//    Object getGradeById(User user);
+//}}
 }

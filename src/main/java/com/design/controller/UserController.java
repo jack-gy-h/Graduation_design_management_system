@@ -11,6 +11,7 @@ import com.design.service.RoleService;
 import com.design.service.UserService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -155,17 +156,54 @@ public class UserController {
 
     }
 
+//    删除单个角色的功能
     @RequestMapping(value = "/deleteUserRoleForm")
-    public String deleteUserRoleForm(Model model, HttpServletRequest request) {
+    public String deleteUserRoleForm(Model model, HttpServletRequest request,User user) {
 
         String userid = request.getParameter("userid");
 
-//        用到了逆向工程提供的selectByPrimaryKey方法来取user。
-        User user = userService.getUserByUserId(userid);
+        String identitysid = request.getParameter("identitysid");
 
-        user.setDelFlag("0");
+        String grade = request.getParameter("grade");
+
+        String collegeid = request.getParameter("collegeid");
+
+        String majorid = request.getParameter("majorid");
+
+        String roleId = request.getParameter("roleid");
+
+//        用到了逆向工程提供的selectByPrimaryKey方法来取user。
+//        User user = userService.getUserByUserId(userid);
+        user.setId(userid);
+//        user.setRoleId("'" + user.getRoleId() + "'");
+
+        user.setIdentitysid(identitysid);
+
+        user.setGrade(grade);
+
+        user.setCollegeid(collegeid);
+
+        user.setMajorid(majorid);
+
+        user.setRoleId(roleId);
+
+        user.setDelFlag("1");
 
         userService.deleteUserRoleForm(user);
+
+        System.out.print("userid:"+user.getId());
+
+        System.out.print("identitysid:" + identitysid);
+
+        System.out.print("grade:" + grade);
+
+        System.out.print("collegeid:" + collegeid);
+
+        System.out.print("majorid:" + user.getMajorid());
+
+        System.out.print("roleId:" + user.getRoleId());
+
+//        userService.deleteUserRoleForm(user);
 
 
 
@@ -189,7 +227,7 @@ public class UserController {
 //
 //        model.addAttribute("allRoles", roleService.findAllRole());
 
-        return "userRoleForm";
+        return "userList";
 
 
     }
@@ -199,7 +237,7 @@ public class UserController {
     //    这里的获取专业是通过学院来获取的，本质上是对office表的操作
     @RequestMapping(value = "/getMajor")
     @ResponseBody
-    public List<Office> getChildOffice(String code) {
+    public List<Office> getMajor(String code) {
         System.out.println("code:" + code);
         List<Office> majorList = officeService.getMajorById(code);
 
@@ -208,6 +246,51 @@ public class UserController {
         }
 
         return majorList;
+
+
+    }
+
+    @RequestMapping(value = "/getCollegeByUserIdAndGradeId")
+    @ResponseBody
+    public List<Office> getCollegeByUserIdAndGradeId(String userid,String gradeid) {
+        System.out.println("gradeid:" + gradeid);
+        List<Office> collegeList = officeService.getCollegeByUserIdAndGradeId(userid,gradeid);
+
+        for (int i = 0; i < collegeList.size(); i++) {
+            System.out.println("collegeList.get(" + i + ").getName():" + collegeList.get(i).getName());
+        }
+
+        return collegeList;
+
+
+    }
+
+    @RequestMapping(value = "/getMajorByUserIdAndGradeIdAndCollegeid")
+    @ResponseBody
+    public List<Office> getMajorByUserIdAndGradeIdAndCollegeid(String userid,String gradeid,String collegeid) {
+        System.out.println("gradeid:" + gradeid);
+        List<Office> majorList = officeService.getMajorByUserIdAndGradeIdAndCollegeid(userid, gradeid,collegeid);
+
+        for (int i = 0; i < majorList.size(); i++) {
+            System.out.println("majorList.get(" + i + ").getName():" + majorList.get(i).getName());
+        }
+
+        return majorList;
+
+
+    }
+
+    @RequestMapping(value = "/getMajorByUserIdAndGradeIdAndCollegeidAndMajorId")
+    @ResponseBody
+    public List<Office> getMajorByUserIdAndGradeIdAndCollegeidAndMajorId(String userid, String gradeid, String collegeid,String majorid) {
+        System.out.println("gradeid:" + gradeid);
+        List<Office> roleList = officeService.getMajorByUserIdAndGradeIdAndCollegeidAndMajorId(userid, gradeid, collegeid,majorid);
+
+        for (int i = 0; i < roleList.size(); i++) {
+            System.out.println("roleList.get(" + i + ").getName():" + roleList.get(i).getName());
+        }
+
+        return roleList;
 
 
     }
@@ -322,6 +405,8 @@ public class UserController {
 //    否则会报错
             user.setRoleId("'" + user.getRoleId() + "'");
 
+            user.setIdentity("USER");
+
             userService.insert(user);
 
             System.out.print("user.getId():" + user.getId());
@@ -411,6 +496,54 @@ public class UserController {
         /*        }*/
 
         return "redirect:/user";
+
+
+    }
+
+    @RequestMapping(value = "/enter")
+    public String enter(User user){
+//        user传过来的参数
+
+        String grade = user.getGrade();
+
+        String collegeid = user.getCollegeid();
+
+        String majorid = user.getMajorid();
+
+        String roleId = user.getRoleId();
+
+
+
+//        user1 session中的参数
+
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        user1.setGrade(grade);
+
+        user1.setCollegeid(collegeid);
+
+        user1.setMajorid(majorid);
+
+        user1.setRoleId(roleId);
+
+        SecurityUtils.getSubject().getSession().setAttribute("user",user1);
+
+//        user2更新后的user
+
+//        User user2 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+//
+//        System.out.print("user2.getGrade():"+user2.getGrade());
+//
+//        System.out.print("user2.getCollegeid():" + user2.getCollegeid());
+//
+//        System.out.print("user2.getMajorid():" + user2.getMajorid());
+//
+//        System.out.print("user2.getRoleId():" + user2.getRoleId());
+//
+//        System.out.print("user2.getUsername():" + user2.getUsername());
+
+        return "/studentloginPage";
+
 
 
     }

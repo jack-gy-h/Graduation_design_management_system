@@ -191,10 +191,9 @@ public class MenuController {
     }
 
 
-
-//    保存菜单
+    //    保存菜单
     @RequestMapping(value = "/form/save")
-    public String form(Menu menu, HttpServletRequest request){
+    public String form(Menu menu, HttpServletRequest request) {
 //        主要有两种形式的提交：
 //         一种是只获取到了menu的parent,相当于新插入一个menu到数据库中(insert操作)
 //        另外一种是获取到了整个menu，相当于update menu
@@ -206,7 +205,7 @@ public class MenuController {
 
         String oldIds = menuService.getMenu(menu.getParent().getId()).getParentIds();
 
-        System.out.println("oldIds:"+oldIds);
+        System.out.println("oldIds:" + oldIds);
 
         String newIds = oldIds + menu.getParent().getId() + ",";
 
@@ -214,11 +213,11 @@ public class MenuController {
 
         menu.setParentIds(newIds);
 
-        System.out.println("menu.getId():"+menu.getId());
+        System.out.println("menu.getId():" + menu.getId());
 
 
 //        如果id是空的，说明是一个新插入操作(insert操作)
-        if(menu.getId().equals("")){
+        if (menu.getId().equals("")) {
             String Id = UUIDUtil.getUUID();
 
             menu.setId(Id);
@@ -234,7 +233,7 @@ public class MenuController {
             menuService.insertmenu(menu);
 
 
-        }else{
+        } else {
 //            如果不是空，则说明是修改操作
             menu.setUpdateBy(userId);
 
@@ -244,14 +243,14 @@ public class MenuController {
 
             System.out.println("2222222222222222222222222");
 
-            if(menu.getCreateBy() == null){
+            if (menu.getCreateBy() == null) {
 
                 System.out.println("33333333333333333333333");
 
                 menu.setCreateBy(userId);
 
             }
-            if(menu.getCreateDate() == null){
+            if (menu.getCreateDate() == null) {
 
                 System.out.println("44444444444444444444444");
 
@@ -266,24 +265,47 @@ public class MenuController {
         }
 
         String UUID = UUIDUtil.getUUID();
-        System.out.println("UUID:"+UUID);
+        System.out.println("UUID:" + UUID);
         return "redirect:/menu";
 
 
     }
 
-//获取菜单数据实现动态加载
+    //获取菜单数据实现动态加载
 //    需要返回json数据时，记得加上@ResponseBody
     @RequestMapping(value = "/listData")
     @ResponseBody
-    public List<Menu> listData(){
+    public List<Menu> listData() {
+
         List<Menu> list = Lists.newArrayList();
 
-        List<Menu> sourcelist = menuService.findAllMenu();
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
-        Menu.sortList(list, sourcelist, Menu.getRootId(), true);
+        String identity = user.getIdentity();
 
-        System.out.println("list.get(0).getId():"+list.get(0).getId());
+//        String userid = user.getId();
+
+        String roleid = user.getRoleId();
+
+//        System.out.print("username:" + username);
+
+        if (identity.equals("SUPERADMIN")) {
+            list = Lists.newArrayList();
+
+            List<Menu> sourcelist = menuService.findAllMenu();
+
+            Menu.sortList(list, sourcelist, Menu.getRootId(), true);
+
+            System.out.println("list.get(0).getId():" + list.get(0).getId());
+        } else {
+            List<Menu> sourcelist = menuService.getAllMenuByRole(roleid);
+
+            System.out.print("sourcelist.get(0).getName():"+sourcelist.get(0).getName());
+
+            System.out.print("sourcelist.get(0).getName():" + sourcelist.get(0).getParent().getName());
+
+            Menu.sortList(list, sourcelist, Menu.getRootId(), true);
+        }
 
         return list;
 
@@ -292,7 +314,7 @@ public class MenuController {
 
     @RequestMapping(value = "delete")
 
-    public String delete(HttpServletRequest request){
+    public String delete(HttpServletRequest request) {
 
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
@@ -304,13 +326,13 @@ public class MenuController {
 
         String id = request.getParameter("id");
 
-        System.out.println("menuService.selectByPrimaryKey(id).getParentId():"+menuService.selectByPrimaryKey(id).getParentId());
+        System.out.println("menuService.selectByPrimaryKey(id).getParentId():" + menuService.selectByPrimaryKey(id).getParentId());
 
         Menu menu = menuService.getMenu(id);
 
         menu.setDelFlag("1");
 
-        System.out.println("menu.getDelFlag():"+menu.getDelFlag());
+        System.out.println("menu.getDelFlag():" + menu.getDelFlag());
         System.out.println("menu.getIsShow():" + menu.getIsShow());
         System.out.println("menu.getCreateBy():" + menu.getCreateBy());
         System.out.println("menu.getDelFlag():" + menu.getDelFlag());
@@ -341,16 +363,16 @@ public class MenuController {
     }
 
     @RequestMapping(value = "updateSort")
-    public String updateSort(String[] ids,Integer[] sorts){
+    public String updateSort(String[] ids, Integer[] sorts) {
 
-        System.out.println("ids[0]:"+ids[0]);
+        System.out.println("ids[0]:" + ids[0]);
 
-        for (int i = 0;i < ids.length;i++){
+        for (int i = 0; i < ids.length; i++) {
             Menu menu = menuService.getMenu(ids[i]);
             menu.setSort(sorts[i]);
             menuService.updatemenu(menu);
         }
-        return "redirect:/menu" ;
+        return "redirect:/menu";
     }
 
 

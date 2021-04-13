@@ -100,9 +100,9 @@
         <!-- Shiro连接约束配置,即过滤链的定义 -->
         <property name="filterChainDefinitions">
             <value>
-<!--                /admin=roles[admin]-->
-<!--                /student=roles[student]-->
-<!--                /teacher=roles[teacher]-->
+                /superadminPage=roles[SUPERADMIN]
+                /chooseRolePage=roles[USER]
+                /studentloginPage=roles[USER]
             </value>
         </property>
     </bean>

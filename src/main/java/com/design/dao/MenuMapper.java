@@ -106,4 +106,7 @@ public interface MenuMapper<T> {
     List<Menu> get1(String id);
 
 
+    List<Menu> getAllMenuById(String userid);
+
+    List<Menu> getAllMenuByRole(String roleid);
 }

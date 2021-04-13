@@ -51,19 +51,11 @@ public class LoginController {
 
             String identity = successuser.getIdentity();
 
-            if (identity.equals("ADMIN")) {
+            if (identity.equals("USER")) {
                 System.out.println("执行了第一个if");
-                return "redirect:/adminloginPage";
-
-            } else if (identity.equals("TEACHER")) {
-                System.out.println("执行了第二个if");
-                return "redirect:/teacherloginPage";
-
-            } else if (identity.equals("STUDENT")) {
-                System.out.println("执行了第三个if");
-                return "redirect:/studentloginPage";
+                return "redirect:/chooseRolePage";
             }else if (identity.equals("SUPERADMIN")){
-                System.out.println("执行了第四个if");
+                System.out.println("执行了第二个if");
                 return "redirect:/superadminPage";
             }
 //            TestUtil.Test("1");

@@ -45,15 +45,21 @@
                 columns: [[
                     {field: 'ck', checkbox: true},
                     {field: 'id', title: '用户ID', width: 200, hidden: true, align: 'center'},
-                    {field: 'name', title: '用户名', width: 200, align: 'center'},
+                    {field: 'name', title: '姓名', width: 200, align: 'center'},
                     {field: 'username', title: '用户名', width: 200, align: 'center'},
                     {field: 'password', title: '密码', width: 200, align: 'center'},
                     {field: 'identity', title: '身份', width: 200, align: 'center'},
                     {field: 'identityNumber', title: '身份码', width: 200, align: 'center'},
-                    {field: 'collegeid', title: '学院', width: 200, align: 'center'},
-                    {field: 'majorid', title: '专业', width: 200, align: 'center'},
-                    {field: 'roleId', title: '角色名', width: 200, align: 'center'},
+                    {field: 'collegeCnName', title: '学院', width: 200, align: 'center'},
+                    {field: 'majorCnName', title: '专业', width: 200, align: 'center'},
+                    {field: 'roleCnName', title: '角色名', width: 200, align: 'center'},
                     {field: 'OperationItem', title: '操作列', width: 250, formatter: formatTitle},
+                    {field: 'identitysid', title: "身份ID", width: 200, hidden: true, align: 'center'},
+                    {field: 'grade', title: "年级ID", width: 200, hidden: true, align: 'center'},
+                    {field: 'collegeid', title: "学院ID", width: 200, hidden: true, align: 'center'},
+                    {field: 'majorid', title: "专业ID", width: 200, hidden: true, align: 'center'},
+                    {field: 'roleId', title: "角色Id", width: 200, hidden: true, align: 'center'}
+                    //identitysid
                     // {field: 'userAdmin', title: '身份', width: 200, align: 'center'}
                     //    ， formatter: btnDetailed
                 ]],
@@ -71,7 +77,7 @@
         }
 
         function formatTitle(val, row) {
-            return "<a target='_self' style='text-decoration:none' href='/user/addUserRoleForm?userid="+ row.id+"'>添加用户角色</a> <a target='_self' style='text-decoration:none' href='/user/deleteUserRoleForm?userid=" + row.id + "'>删除</a>"
+            return "<a target='_self' style='text-decoration:none' href='/user/addUserRoleForm?userid=" + row.id + "'>添加用户角色</a> <a target='_self' style='text-decoration:none' href='/user/deleteUserRoleForm?userid=" + row.id + "&identitysid=" + row.identitysid + "&grade=" + row.grade + "&collegeid=" + row.collegeid + "&majorid=" + row.majorid + "&roleid=" + row.roleId + "'>删除</a>"
         }
 
 
@@ -84,9 +90,9 @@
     </script>
 </head>
 <body>
-姓名：<input class="easyui-textbox" id="btnSearchName" style="width:150px;height:32px;">
+用户名：<input class="easyui-textbox" id="btnSearchName" style="width:150px;height:32px;">
 <input type="button" value="搜索" onclick="search()"/>
-<input type="button"  value="添加用户" onclick="opentable()"></input>
+<input type="button" value="添加用户" onclick="opentable()"></input>
 <table id="dg"></table>
 </body>
 </html>
