@@ -1,8 +1,10 @@
 package com.design.controller;
 
 import com.design.Util.UUIDUtil;
+import com.design.entity.Log;
 import com.design.entity.Office;
 import com.design.entity.User;
+import com.design.service.LogServiceI;
 import com.design.service.OfficeService;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/office")
@@ -24,8 +27,12 @@ public class OfficeController {
     @Autowired
     private OfficeService officeService;
 
+    @Autowired
+    private LogServiceI logServiceI;
+
+
     @RequestMapping(value = {""})
-    public String list(Model model) {
+    public String list(Model model, HttpServletRequest request, Log log) {
         List<Office> list = Lists.newArrayList();
         System.out.println("111111111111111111111");
         List<Office> sourcelist = officeService.findAllOffice();
@@ -90,6 +97,34 @@ public class OfficeController {
 //        System.out.println("list.get(61).getSort():" + list.get(61).getSort());
 //        System.out.println("list.get(61).getUpdateDate():" + list.get(61).getUpdateDate());
 //        System.out.println("UUIDUtil.getUUID():"+UUIDUtil.getUUID());
+
+        String id = UUID.randomUUID().toString().replace("-", "");
+
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = loginUser.getId();
+
+        log.setLid(id);
+
+        log.setLaction("查看");
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+
+//        log.setLip(remoteAddr);
+//        log.setLmodule(controllerMethodDescription.get("module"));
+        log.setLremark("机构");
+//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
+//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
+//        Date operateDate = beginTimeThreadLocal.get();
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
         model.addAttribute("list", list);
         return "officeList";
     }
@@ -197,7 +232,7 @@ public class OfficeController {
 
 //    保存菜单
     @RequestMapping(value = "/form/save")
-    public String form(Office office, HttpServletRequest request){
+    public String form(Office office, HttpServletRequest request,Log log){
 //        主要有两种形式的提交：
 //         一种是只获取到了office的parent,相当于新插入一个office到数据库中(insert操作)
 //        另外一种是获取到了整个office，相当于update office
@@ -237,6 +272,37 @@ public class OfficeController {
             officeService.insertoffice(office);
 
 
+            String id = UUID.randomUUID().toString().replace("-", "");
+
+
+            String requestUri = request.getRequestURI();//请求的Uri
+
+            User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+//            String userId = loginUser.getId();
+
+            log.setLid(id);
+
+            log.setLaction("添加");
+
+            log.setLcreator(userId);
+
+            log.setIurl(requestUri);
+
+
+//        log.setLip(remoteAddr);
+//        log.setLmodule(controllerMethodDescription.get("module"));
+            log.setLremark("机构");
+//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
+//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
+//        Date operateDate = beginTimeThreadLocal.get();
+            log.setLcreatetime(new Date());
+
+            logServiceI.insertSelective(log);
+
+
+
+
         }else{
 //            如果不是空，则说明是修改操作
             office.setUpdateBy(userId);
@@ -265,6 +331,35 @@ public class OfficeController {
             officeService.updateoffice(office);
 
             System.out.println("5555555555555555555555555555");
+
+
+            String id = UUID.randomUUID().toString().replace("-", "");
+
+
+            String requestUri = request.getRequestURI();//请求的Uri
+
+            User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+//            String userId = loginUser.getId();
+
+            log.setLid(id);
+
+            log.setLaction("修改");
+
+            log.setLcreator(userId);
+
+            log.setIurl(requestUri);
+
+
+//        log.setLip(remoteAddr);
+//        log.setLmodule(controllerMethodDescription.get("module"));
+            log.setLremark("机构");
+//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
+//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
+//        Date operateDate = beginTimeThreadLocal.get();
+            log.setLcreatetime(new Date());
+
+            logServiceI.insertSelective(log);
 
         }
 
@@ -295,7 +390,7 @@ public class OfficeController {
 
     @RequestMapping(value = "delete")
 
-    public String delete(HttpServletRequest request){
+    public String delete(HttpServletRequest request,Log log){
 
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
@@ -339,12 +434,41 @@ public class OfficeController {
 
         officeService.updateoffice(office);
 
+
+        String id1 = UUID.randomUUID().toString().replace("-", "");
+
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+//        String userId = loginUser.getId();
+
+        log.setLid(id1);
+
+        log.setLaction("删除");
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+
+//        log.setLip(remoteAddr);
+//        log.setLmodule(controllerMethodDescription.get("module"));
+        log.setLremark("机构");
+//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
+//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
+//        Date operateDate = beginTimeThreadLocal.get();
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
+
         return "redirect:/office";
 
     }
 
     @RequestMapping(value = "updateSort")
-    public String updateSort(String[] ids,Integer[] sorts){
+    public String updateSort(String[] ids,Integer[] sorts,HttpServletRequest request,Log log){
 
         System.out.println("ids[0]:"+ids[0]);
 
@@ -353,6 +477,35 @@ public class OfficeController {
             office.setSort(sorts[i]);
             officeService.updateoffice(office);
         }
+
+
+        String id = UUID.randomUUID().toString().replace("-", "");
+
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = loginUser.getId();
+
+        log.setLid(id);
+
+        log.setLaction("升级");
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+
+//        log.setLip(remoteAddr);
+//        log.setLmodule(controllerMethodDescription.get("module"));
+        log.setLremark("机构排序");
+//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
+//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
+//        Date operateDate = beginTimeThreadLocal.get();
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
         return "redirect:/office" ;
     }
 

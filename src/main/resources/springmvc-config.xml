@@ -61,5 +61,17 @@
         <property name="maxUploadSize" value="10485760000"></property>
         <property name="maxInMemorySize" value="40960"></property>
     </bean>
+    <bean id="taskExecutor"
+          class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="5"/>
+        <property name="maxPoolSize" value="10"/>
+        <property name="WaitForTasksToCompleteOnShutdown" value="true"/>
+    </bean>
+
+    <context:component-scan base-package="com.design">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+
 
 </beans>

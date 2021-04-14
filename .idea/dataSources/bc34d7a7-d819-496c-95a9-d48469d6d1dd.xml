@@ -790,262 +790,247 @@ SELECT|sys.sys_config:null
       <ObjectGrants>ALL PRIVILEGES!
 </ObjectGrants>
     </user>
-    <table id="246" parent="7" name="menu">
+    <table id="246" parent="7" name="log">
       <Comment>菜单表</Comment>
     </table>
-    <table id="247" parent="7" name="office">
+    <table id="247" parent="7" name="menu">
       <Comment>菜单表</Comment>
     </table>
-    <table id="248" parent="7" name="role">
+    <table id="248" parent="7" name="office">
+      <Comment>菜单表</Comment>
+    </table>
+    <table id="249" parent="7" name="role">
       <Comment>角色表</Comment>
     </table>
-    <table id="249" parent="7" name="role_menu">
+    <table id="250" parent="7" name="role_menu">
       <Comment>角色-菜单</Comment>
     </table>
-    <table id="250" parent="7" name="user"/>
-    <table id="251" parent="7" name="user_info_all"/>
-    <column id="252" parent="246" name="id">
+    <table id="251" parent="7" name="task"/>
+    <table id="252" parent="7" name="task_canbechosenmajor"/>
+    <table id="253" parent="7" name="task_chosen"/>
+    <table id="254" parent="7" name="user"/>
+    <table id="255" parent="7" name="user_info_all"/>
+    <column id="256" parent="246" name="lId">
+      <Position>1</Position>
+      <Comment>日志ID</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="257" parent="246" name="lAction">
+      <Position>2</Position>
+      <Comment>操作行为</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="258" parent="246" name="lCreator">
+      <Position>3</Position>
+      <Comment>操作人</Comment>
+      <DataType>varchar(100)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="259" parent="246" name="IUrl">
+      <Position>4</Position>
+      <Comment>操作的url</Comment>
+      <DataType>varchar(2000)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="260" parent="246" name="lRemark">
+      <Position>5</Position>
+      <Comment>类型</Comment>
+      <DataType>varchar(2000)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="261" parent="246" name="lCreatetime">
+      <Position>6</Position>
+      <Comment>操作时间</Comment>
+      <DataType>datetime(6)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="262" parent="246" name="sys_menu_parent_id">
+      <ColNames>lAction</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="263" parent="246" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>lId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="264" parent="247" name="id">
       <Position>1</Position>
       <Comment>编号</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="253" parent="246" name="parent_id">
+    <column id="265" parent="247" name="parent_id">
       <Position>2</Position>
       <Comment>父级编号</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="254" parent="246" name="parent_ids">
+    <column id="266" parent="247" name="parent_ids">
       <Position>3</Position>
       <Comment>所有父级编号</Comment>
       <DataType>varchar(2000)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="255" parent="246" name="name">
+    <column id="267" parent="247" name="name">
       <Position>4</Position>
       <Comment>名称</Comment>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="256" parent="246" name="sort">
+    <column id="268" parent="247" name="sort">
       <Position>5</Position>
       <Comment>排序</Comment>
       <DataType>decimal(10)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="257" parent="246" name="href">
+    <column id="269" parent="247" name="href">
       <Position>6</Position>
       <Comment>链接</Comment>
       <DataType>varchar(2000)|0s</DataType>
     </column>
-    <column id="258" parent="246" name="target">
+    <column id="270" parent="247" name="target">
       <Position>7</Position>
       <Comment>目标</Comment>
       <DataType>varchar(20)|0s</DataType>
     </column>
-    <column id="259" parent="246" name="icon">
+    <column id="271" parent="247" name="icon">
       <Position>8</Position>
       <Comment>图标</Comment>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <column id="260" parent="246" name="is_show">
+    <column id="272" parent="247" name="is_show">
       <Position>9</Position>
       <Comment>是否在菜单中显示</Comment>
       <DataType>char(1)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="261" parent="246" name="permission">
+    <column id="273" parent="247" name="permission">
       <Position>10</Position>
       <Comment>权限标识</Comment>
       <DataType>varchar(200)|0s</DataType>
     </column>
-    <column id="262" parent="246" name="create_by">
+    <column id="274" parent="247" name="create_by">
       <Position>11</Position>
       <Comment>创建者</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="263" parent="246" name="create_date">
+    <column id="275" parent="247" name="create_date">
       <Position>12</Position>
       <Comment>创建时间</Comment>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="264" parent="246" name="update_by">
+    <column id="276" parent="247" name="update_by">
       <Position>13</Position>
       <Comment>更新者</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="265" parent="246" name="update_date">
+    <column id="277" parent="247" name="update_date">
       <Position>14</Position>
       <Comment>更新时间</Comment>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="266" parent="246" name="remarks">
+    <column id="278" parent="247" name="remarks">
       <Position>15</Position>
       <Comment>备注信息</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="267" parent="246" name="del_flag">
+    <column id="279" parent="247" name="del_flag">
       <Position>16</Position>
       <Comment>删除标记</Comment>
       <DataType>char(1)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <index id="268" parent="246" name="sys_menu_parent_id">
+    <index id="280" parent="247" name="sys_menu_parent_id">
       <ColNames>parent_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="269" parent="246" name="sys_menu_del_flag">
+    <index id="281" parent="247" name="sys_menu_del_flag">
       <ColNames>del_flag</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="270" parent="246" name="PRIMARY">
+    <key id="282" parent="247" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="271" parent="247" name="id">
+    <column id="283" parent="248" name="id">
       <Position>1</Position>
       <Comment>编号</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="272" parent="247" name="parent_id">
+    <column id="284" parent="248" name="parent_id">
       <Position>2</Position>
       <Comment>父级编号</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="273" parent="247" name="parent_ids">
+    <column id="285" parent="248" name="parent_ids">
       <Position>3</Position>
       <Comment>所有父级编号</Comment>
       <DataType>varchar(2000)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="274" parent="247" name="name">
+    <column id="286" parent="248" name="name">
       <Position>4</Position>
       <Comment>名称</Comment>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="275" parent="247" name="sort">
+    <column id="287" parent="248" name="sort">
       <Position>5</Position>
       <Comment>排序</Comment>
       <DataType>decimal(10)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="276" parent="247" name="create_by">
+    <column id="288" parent="248" name="create_by">
       <Position>6</Position>
       <Comment>创建者</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="277" parent="247" name="create_date">
+    <column id="289" parent="248" name="create_date">
       <Position>7</Position>
       <Comment>创建时间</Comment>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="278" parent="247" name="update_by">
+    <column id="290" parent="248" name="update_by">
       <Position>8</Position>
       <Comment>更新者</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="279" parent="247" name="update_date">
+    <column id="291" parent="248" name="update_date">
       <Position>9</Position>
       <Comment>更新时间</Comment>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="280" parent="247" name="remarks">
+    <column id="292" parent="248" name="remarks">
       <Position>10</Position>
       <Comment>备注信息</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="281" parent="247" name="del_flag">
+    <column id="293" parent="248" name="del_flag">
       <Position>11</Position>
       <Comment>删除标记</Comment>
       <DataType>char(1)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <index id="282" parent="247" name="sys_menu_parent_id">
+    <index id="294" parent="248" name="sys_menu_parent_id">
       <ColNames>parent_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="283" parent="247" name="sys_menu_del_flag">
-      <ColNames>del_flag</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="284" parent="247" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="285" parent="248" name="id">
-      <Position>1</Position>
-      <Comment>编号</Comment>
-      <DataType>varchar(64)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="286" parent="248" name="name">
-      <Position>2</Position>
-      <Comment>角色名称</Comment>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="287" parent="248" name="enname">
-      <Position>3</Position>
-      <Comment>英文名称</Comment>
-      <DataType>varchar(255)|0s</DataType>
-    </column>
-    <column id="288" parent="248" name="create_by">
-      <Position>4</Position>
-      <Comment>创建者</Comment>
-      <DataType>varchar(64)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="289" parent="248" name="create_date">
-      <Position>5</Position>
-      <Comment>创建时间</Comment>
-      <DataType>datetime|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="290" parent="248" name="update_by">
-      <Position>6</Position>
-      <Comment>更新者</Comment>
-      <DataType>varchar(64)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="291" parent="248" name="update_date">
-      <Position>7</Position>
-      <Comment>更新时间</Comment>
-      <DataType>datetime|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="292" parent="248" name="remarks">
-      <Position>8</Position>
-      <Comment>备注信息</Comment>
-      <DataType>varchar(255)|0s</DataType>
-    </column>
-    <column id="293" parent="248" name="del_flag">
-      <Position>9</Position>
-      <Comment>删除标记</Comment>
-      <DataType>char(1)|0s</DataType>
-      <NotNull>1</NotNull>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
-    </column>
-    <index id="294" parent="248" name="sys_role_enname">
-      <ColNames>enname</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="295" parent="248" name="sys_role_del_flag">
+    <index id="295" parent="248" name="sys_menu_del_flag">
       <ColNames>del_flag</ColNames>
       <Type>btree</Type>
     </index>
@@ -1054,126 +1039,314 @@ SELECT|sys.sys_config:null
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="297" parent="249" name="role_id">
+    <column id="297" parent="249" name="id">
       <Position>1</Position>
-      <Comment>角色编号</Comment>
+      <Comment>编号</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="298" parent="249" name="menu_id">
+    <column id="298" parent="249" name="name">
       <Position>2</Position>
-      <Comment>菜单编号</Comment>
-      <DataType>varchar(64)|0s</DataType>
+      <Comment>角色名称</Comment>
+      <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="299" parent="249" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>role_id
-menu_id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="300" parent="250" name="id">
-      <Position>1</Position>
-      <Comment>用户ID</Comment>
-      <DataType>varchar(64)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="301" parent="250" name="name">
-      <Position>2</Position>
-      <Comment>用户姓名</Comment>
-      <DataType>varchar(255)|0s</DataType>
-      <DefaultExpression>&apos;&apos;</DefaultExpression>
-    </column>
-    <column id="302" parent="250" name="username">
+    <column id="299" parent="249" name="enname">
       <Position>3</Position>
-      <Comment>用户名</Comment>
+      <Comment>英文名称</Comment>
       <DataType>varchar(255)|0s</DataType>
-      <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="303" parent="250" name="password">
+    <column id="300" parent="249" name="create_by">
       <Position>4</Position>
-      <Comment>用户密码</Comment>
-      <DataType>varchar(255)|0s</DataType>
-      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <Comment>创建者</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <column id="304" parent="250" name="identity_number">
+    <column id="301" parent="249" name="create_date">
       <Position>5</Position>
-      <Comment>身份号</Comment>
-      <DataType>varchar(255)|0s</DataType>
+      <Comment>创建时间</Comment>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <column id="305" parent="250" name="gender">
+    <column id="302" parent="249" name="update_by">
       <Position>6</Position>
-      <Comment>性别</Comment>
-      <DataType>varchar(255)|0s</DataType>
-      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <Comment>更新者</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <column id="306" parent="250" name="email">
+    <column id="303" parent="249" name="update_date">
       <Position>7</Position>
-      <Comment>邮箱</Comment>
-      <DataType>varchar(255)|0s</DataType>
-      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <Comment>更新时间</Comment>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <column id="307" parent="250" name="identity">
+    <column id="304" parent="249" name="remarks">
       <Position>8</Position>
-      <Comment>身份</Comment>
+      <Comment>备注信息</Comment>
       <DataType>varchar(255)|0s</DataType>
-      <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="308" parent="250" name="del_flag">
+    <column id="305" parent="249" name="del_flag">
       <Position>9</Position>
       <Comment>删除标记</Comment>
       <DataType>char(1)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <key id="309" parent="250" name="PRIMARY">
+    <index id="306" parent="249" name="sys_role_enname">
+      <ColNames>enname</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="307" parent="249" name="sys_role_del_flag">
+      <ColNames>del_flag</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="308" parent="249" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="310" parent="251" name="user_id">
+    <column id="309" parent="250" name="role_id">
+      <Position>1</Position>
+      <Comment>角色编号</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="310" parent="250" name="menu_id">
+      <Position>2</Position>
+      <Comment>菜单编号</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="311" parent="250" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>role_id
+menu_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="312" parent="251" name="id">
+      <Position>1</Position>
+      <Comment>编号</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="313" parent="251" name="topic">
+      <Position>2</Position>
+      <Comment>课题题目</Comment>
+      <DataType>varchar(64)|0s</DataType>
+    </column>
+    <column id="314" parent="251" name="college_id">
+      <Position>3</Position>
+      <Comment>课题所属学院</Comment>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="315" parent="251" name="major_id">
+      <Position>4</Position>
+      <Comment>课题所属专业</Comment>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="316" parent="251" name="type">
+      <Position>5</Position>
+      <Comment>题目类型</Comment>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="317" parent="251" name="pattern">
+      <Position>6</Position>
+      <Comment>选题模式&#xd;
+1.双选&#xd;
+2.指定&#xd;
+3.学生申报</Comment>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="318" parent="251" name="source">
+      <Position>7</Position>
+      <Comment>题目来源</Comment>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="319" parent="251" name="research_direction">
+      <Position>8</Position>
+      <Comment>研究方向</Comment>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="320" parent="251" name="brief_introduction">
+      <Position>9</Position>
+      <Comment>简介</Comment>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="321" parent="251" name="basic_requirements">
+      <Position>10</Position>
+      <Comment>基本要求</Comment>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="322" parent="251" name="reference_data">
+      <Position>11</Position>
+      <Comment>参考资料</Comment>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="323" parent="251" name="teacher_id">
+      <Position>12</Position>
+      <Comment>老师id</Comment>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="324" parent="251" name="audit_status">
+      <Position>13</Position>
+      <Comment>审核状态&#xd;
+1.通过&#xd;
+2.不通过&#xd;
+3.未审核</Comment>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <key id="325" parent="251" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="326" parent="252" name="task_id">
+      <Position>1</Position>
+      <Comment>课题id</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="327" parent="252" name="CanBeChosenMajor">
+      <Position>2</Position>
+      <Comment>学生可选专业</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="328" parent="252" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>task_id
+CanBeChosenMajor</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="329" parent="253" name="task_id">
+      <Position>1</Position>
+      <Comment>课题id</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="330" parent="253" name="chosen_student">
+      <Position>2</Position>
+      <Comment>选择的学生</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="331" parent="253" name="teacher_choose_status">
+      <Position>3</Position>
+      <Comment>老师选题情况：&#xd;
+1.选&#xd;
+2.退选</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="332" parent="253" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>task_id
+chosen_student
+teacher_choose_status</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="333" parent="254" name="id">
+      <Position>1</Position>
+      <Comment>用户ID</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="334" parent="254" name="name">
+      <Position>2</Position>
+      <Comment>用户姓名</Comment>
+      <DataType>varchar(255)|0s</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+    </column>
+    <column id="335" parent="254" name="username">
+      <Position>3</Position>
+      <Comment>用户名</Comment>
+      <DataType>varchar(255)|0s</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+    </column>
+    <column id="336" parent="254" name="password">
+      <Position>4</Position>
+      <Comment>用户密码</Comment>
+      <DataType>varchar(255)|0s</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+    </column>
+    <column id="337" parent="254" name="identity_number">
+      <Position>5</Position>
+      <Comment>身份号</Comment>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="338" parent="254" name="gender">
+      <Position>6</Position>
+      <Comment>性别</Comment>
+      <DataType>varchar(255)|0s</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+    </column>
+    <column id="339" parent="254" name="email">
+      <Position>7</Position>
+      <Comment>邮箱</Comment>
+      <DataType>varchar(255)|0s</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+    </column>
+    <column id="340" parent="254" name="identity">
+      <Position>8</Position>
+      <Comment>身份</Comment>
+      <DataType>varchar(255)|0s</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+    </column>
+    <column id="341" parent="254" name="del_flag">
+      <Position>9</Position>
+      <Comment>删除标记</Comment>
+      <DataType>char(1)|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <key id="342" parent="254" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="343" parent="255" name="user_id">
       <Position>1</Position>
       <Comment>用户id</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="311" parent="251" name="identitys_id">
+    <column id="344" parent="255" name="identitys_id">
       <Position>2</Position>
       <Comment>身份id,用于看是否需要显示专业</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="312" parent="251" name="grade">
+    <column id="345" parent="255" name="grade">
       <Position>3</Position>
       <Comment>年级id</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="313" parent="251" name="college_id">
+    <column id="346" parent="255" name="college_id">
       <Position>4</Position>
       <Comment>学院id,实际上是机构id</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="314" parent="251" name="major_id">
+    <column id="347" parent="255" name="major_id">
       <Position>5</Position>
       <Comment>专业id,实际上是机构id</Comment>
       <DataType>varchar(64)|0s</DataType>
     </column>
-    <column id="315" parent="251" name="role_id">
+    <column id="348" parent="255" name="role_id">
       <Position>6</Position>
       <Comment>角色id</Comment>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="316" parent="251" name="del_flag">
+    <column id="349" parent="255" name="del_flag">
       <Position>7</Position>
       <Comment>删除标记</Comment>
       <DataType>char(1)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <key id="317" parent="251" name="PRIMARY">
+    <key id="350" parent="255" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id
 college_id

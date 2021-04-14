@@ -200,7 +200,7 @@
                 }
             }
 // 默认展开全部节点
-            tree.expandAll(true);
+//             tree.expandAll(true);
 
         });
     </script>

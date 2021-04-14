@@ -42,6 +42,7 @@
                 border: false,
                 idField: "id",
                 fitColumns: true, //去除滚动条
+                // showHeader:false,
                 columns: [[
                     {field: 'ck', checkbox: true},
                     {field: 'id', title: '用户ID', width: 200, hidden: true, align: 'center'},

@@ -1,8 +1,11 @@
 package com.design.controller;
 
 import com.design.Util.UUIDUtil;
+import com.design.annotation.ControllerLog;
+import com.design.entity.Log;
 import com.design.entity.Menu;
 import com.design.entity.User;
+import com.design.service.LogServiceI;
 import com.design.service.MenuService;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.*;
 import java.util.List;
 
 @Controller
@@ -26,8 +30,12 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
+    @Autowired
+    private LogServiceI logServiceI;
+
     @RequestMapping(value = {""})
-    public String list(Model model) {
+//    @ControllerLog(Module = "日志管理", Remark = "查看菜单列表")
+    public String list(Model model, Log log,HttpServletRequest request) {
         List<Menu> list = Lists.newArrayList();
         List<Menu> sourcelist = menuService.findAllMenu();
 //        Menu menu = menuService.selectById("61");
@@ -90,7 +98,38 @@ public class MenuController {
 //        System.out.println("list.get(61).getSort():" + list.get(61).getSort());
 //        System.out.println("list.get(61).getUpdateDate():" + list.get(61).getUpdateDate());
 //        System.out.println("UUIDUtil.getUUID():"+UUIDUtil.getUUID());
+
+        String id = UUID.randomUUID().toString().replace("-", "");
+
+
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = loginUser.getId();
+
+        log.setLid(id);
+
+        log.setLaction("查看");
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+
+//        log.setLip(remoteAddr);
+//        log.setLmodule(controllerMethodDescription.get("module"));
+        log.setLremark("菜单");
+//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
+//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
+//        Date operateDate = beginTimeThreadLocal.get();
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
+
         model.addAttribute("list", list);
+
         return "menuList";
     }
 
@@ -193,7 +232,7 @@ public class MenuController {
 
     //    保存菜单
     @RequestMapping(value = "/form/save")
-    public String form(Menu menu, HttpServletRequest request) {
+    public String form(Menu menu, HttpServletRequest request,Log log) {
 //        主要有两种形式的提交：
 //         一种是只获取到了menu的parent,相当于新插入一个menu到数据库中(insert操作)
 //        另外一种是获取到了整个menu，相当于update menu
@@ -232,6 +271,34 @@ public class MenuController {
 
             menuService.insertmenu(menu);
 
+            String id = UUID.randomUUID().toString().replace("-", "");
+
+
+            String requestUri = request.getRequestURI();//请求的Uri
+
+            User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+//            String userId = loginUser.getId();
+
+            log.setLid(id);
+
+            log.setLaction("添加");
+
+            log.setLcreator(userId);
+
+            log.setIurl(requestUri);
+
+
+//        log.setLip(remoteAddr);
+//        log.setLmodule(controllerMethodDescription.get("module"));
+            log.setLremark("菜单");
+//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
+//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
+//        Date operateDate = beginTimeThreadLocal.get();
+            log.setLcreatetime(new Date());
+
+            logServiceI.insertSelective(log);
+
 
         } else {
 //            如果不是空，则说明是修改操作
@@ -260,6 +327,34 @@ public class MenuController {
 
             menuService.updatemenu(menu);
 
+            String id = UUID.randomUUID().toString().replace("-", "");
+
+
+            String requestUri = request.getRequestURI();//请求的Uri
+
+            User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+//            String userId = loginUser.getId();
+
+            log.setLid(id);
+
+            log.setLaction("修改");
+
+            log.setLcreator(userId);
+
+            log.setIurl(requestUri);
+
+
+//        log.setLip(remoteAddr);
+//        log.setLmodule(controllerMethodDescription.get("module"));
+            log.setLremark("菜单");
+//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
+//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
+//        Date operateDate = beginTimeThreadLocal.get();
+            log.setLcreatetime(new Date());
+
+            logServiceI.insertSelective(log);
+
             System.out.println("5555555555555555555555555555");
 
         }
@@ -287,7 +382,7 @@ public class MenuController {
 
         String roleid = user.getRoleId();
 
-//        System.out.print("username:" + username);
+//        System.out.print("userId:" + userId);
 
         if (identity.equals("SUPERADMIN")) {
             list = Lists.newArrayList();
@@ -314,7 +409,7 @@ public class MenuController {
 
     @RequestMapping(value = "delete")
 
-    public String delete(HttpServletRequest request) {
+    public String delete(HttpServletRequest request,Log log) {
 
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
@@ -332,24 +427,24 @@ public class MenuController {
 
         menu.setDelFlag("1");
 
-        System.out.println("menu.getDelFlag():" + menu.getDelFlag());
-        System.out.println("menu.getIsShow():" + menu.getIsShow());
-        System.out.println("menu.getCreateBy():" + menu.getCreateBy());
-        System.out.println("menu.getDelFlag():" + menu.getDelFlag());
-        System.out.println("menu.getHref():" + menu.getHref());
-        System.out.println("menu.getIcon():" + menu.getIcon());
-        System.out.println("menu.getId():" + menu.getId());
-        System.out.println("menu.getName():" + menu.getName());
-        System.out.println("menu.getParentId():" + menu.getParentId());
-        System.out.println("menu.getParent():" + menu.getParent());
-        System.out.println("menu.getParentIds():" + menu.getParentIds());
-        System.out.println("menu.getPermission():" + menu.getPermission());
-        System.out.println("menu.getRemarks():" + menu.getRemarks());
-        System.out.println("menu.getTarget():" + menu.getTarget());
-        System.out.println("menu.getUpdateBy():" + menu.getUpdateBy());
-        System.out.println("menu.getCreateDate():" + menu.getCreateDate());
-        System.out.println("menu.getSort():" + menu.getSort());
-        System.out.println("menu.getUpdateDate():" + menu.getUpdateDate());
+//        System.out.println("menu.getDelFlag():" + menu.getDelFlag());
+//        System.out.println("menu.getIsShow():" + menu.getIsShow());
+//        System.out.println("menu.getCreateBy():" + menu.getCreateBy());
+//        System.out.println("menu.getDelFlag():" + menu.getDelFlag());
+//        System.out.println("menu.getHref():" + menu.getHref());
+//        System.out.println("menu.getIcon():" + menu.getIcon());
+//        System.out.println("menu.getId():" + menu.getId());
+//        System.out.println("menu.getName():" + menu.getName());
+//        System.out.println("menu.getParentId():" + menu.getParentId());
+//        System.out.println("menu.getParent():" + menu.getParent());
+//        System.out.println("menu.getParentIds():" + menu.getParentIds());
+//        System.out.println("menu.getPermission():" + menu.getPermission());
+//        System.out.println("menu.getRemarks():" + menu.getRemarks());
+//        System.out.println("menu.getTarget():" + menu.getTarget());
+//        System.out.println("menu.getUpdateBy():" + menu.getUpdateBy());
+//        System.out.println("menu.getCreateDate():" + menu.getCreateDate());
+//        System.out.println("menu.getSort():" + menu.getSort());
+//        System.out.println("menu.getUpdateDate():" + menu.getUpdateDate());
 //        if(menu.getCreateDate() == null){
 //
 //            menu.setCreateDate();
@@ -358,12 +453,40 @@ public class MenuController {
 
         menuService.updatemenu(menu);
 
+        String id1 = UUID.randomUUID().toString().replace("-", "");
+
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+//        String userId = loginUser.getId();
+
+        log.setLid(id1);
+
+        log.setLaction("删除");
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+
+//        log.setLip(remoteAddr);
+//        log.setLmodule(controllerMethodDescription.get("module"));
+        log.setLremark("菜单");
+//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
+//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
+//        Date operateDate = beginTimeThreadLocal.get();
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
+
         return "redirect:/menu";
 
     }
 
     @RequestMapping(value = "updateSort")
-    public String updateSort(String[] ids, Integer[] sorts) {
+    public String updateSort(String[] ids, Integer[] sorts,HttpServletRequest request,Log log) {
 
         System.out.println("ids[0]:" + ids[0]);
 
@@ -372,6 +495,29 @@ public class MenuController {
             menu.setSort(sorts[i]);
             menuService.updatemenu(menu);
         }
+
+        String id = UUID.randomUUID().toString().replace("-", "");
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = loginUser.getId();
+
+        log.setLid(id);
+
+        log.setLaction("修改");
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+        log.setLremark("菜单排序");
+
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
+
         return "redirect:/menu";
     }
 
