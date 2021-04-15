@@ -265,6 +265,30 @@
 
 #添加了日志功能
 
+#缺陷：这里的日志功能是手动功能，没有用aspect实现
+
+#Bug:无法删除老师的角色，主要原因，mapper 传参问题
+
+#插入同学院的不同专业的同学时会出bug
+
+#v14.0
+
+#做出了联动框
+
+#在页面的最开始要先初始化一个全部的office-Ztree(officeTree1-ztree1)（并主动隐藏）
+
+#和一个部分的office-ztree(officeTree-ztree)
+
+#判断canbechosencollegeid是否为2，只有在2即部分专业时才显示office-ztree，其余都不显示
+
+#最后在提交的时候判断canbechosencollegeid的值，
+
+#1(全校)则提交Ztree1,2（部分专业）则提交Ztree,3(课题所属专业)则提交majorId
+
+#对于ztree的提交取决于officeIds的赋值
+
+
+
 
 
 

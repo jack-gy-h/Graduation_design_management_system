@@ -1,6 +1,7 @@
 package com.design.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TaskExample {
@@ -684,6 +685,76 @@ public class TaskExample {
             return (Criteria) this;
         }
 
+        public Criteria andCanbechosencollegeidIsNull() {
+            addCriterion("canBeChosencollegeid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanbechosencollegeidIsNotNull() {
+            addCriterion("canBeChosencollegeid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanbechosencollegeidEqualTo(String value) {
+            addCriterion("canBeChosencollegeid =", value, "canbechosencollegeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanbechosencollegeidNotEqualTo(String value) {
+            addCriterion("canBeChosencollegeid <>", value, "canbechosencollegeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanbechosencollegeidGreaterThan(String value) {
+            addCriterion("canBeChosencollegeid >", value, "canbechosencollegeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanbechosencollegeidGreaterThanOrEqualTo(String value) {
+            addCriterion("canBeChosencollegeid >=", value, "canbechosencollegeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanbechosencollegeidLessThan(String value) {
+            addCriterion("canBeChosencollegeid <", value, "canbechosencollegeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanbechosencollegeidLessThanOrEqualTo(String value) {
+            addCriterion("canBeChosencollegeid <=", value, "canbechosencollegeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanbechosencollegeidLike(String value) {
+            addCriterion("canBeChosencollegeid like", value, "canbechosencollegeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanbechosencollegeidNotLike(String value) {
+            addCriterion("canBeChosencollegeid not like", value, "canbechosencollegeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanbechosencollegeidIn(List<String> values) {
+            addCriterion("canBeChosencollegeid in", values, "canbechosencollegeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanbechosencollegeidNotIn(List<String> values) {
+            addCriterion("canBeChosencollegeid not in", values, "canbechosencollegeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanbechosencollegeidBetween(String value1, String value2) {
+            addCriterion("canBeChosencollegeid between", value1, value2, "canbechosencollegeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanbechosencollegeidNotBetween(String value1, String value2) {
+            addCriterion("canBeChosencollegeid not between", value1, value2, "canbechosencollegeid");
+            return (Criteria) this;
+        }
+
         public Criteria andResearchDirectionIsNull() {
             addCriterion("research_direction is null");
             return (Criteria) this;
@@ -1101,6 +1172,196 @@ public class TaskExample {
 
         public Criteria andAuditStatusNotBetween(String value1, String value2) {
             addCriterion("audit_status not between", value1, value2, "auditStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDateIsNull() {
+            addCriterion("create_date is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDateIsNotNull() {
+            addCriterion("create_date is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDateEqualTo(Date value) {
+            addCriterion("create_date =", value, "createDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDateNotEqualTo(Date value) {
+            addCriterion("create_date <>", value, "createDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDateGreaterThan(Date value) {
+            addCriterion("create_date >", value, "createDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_date >=", value, "createDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDateLessThan(Date value) {
+            addCriterion("create_date <", value, "createDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDateLessThanOrEqualTo(Date value) {
+            addCriterion("create_date <=", value, "createDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDateIn(List<Date> values) {
+            addCriterion("create_date in", values, "createDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDateNotIn(List<Date> values) {
+            addCriterion("create_date not in", values, "createDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDateBetween(Date value1, Date value2) {
+            addCriterion("create_date between", value1, value2, "createDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDateNotBetween(Date value1, Date value2) {
+            addCriterion("create_date not between", value1, value2, "createDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDateIsNull() {
+            addCriterion("update_date is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDateIsNotNull() {
+            addCriterion("update_date is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDateEqualTo(Date value) {
+            addCriterion("update_date =", value, "updateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDateNotEqualTo(Date value) {
+            addCriterion("update_date <>", value, "updateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDateGreaterThan(Date value) {
+            addCriterion("update_date >", value, "updateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("update_date >=", value, "updateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDateLessThan(Date value) {
+            addCriterion("update_date <", value, "updateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDateLessThanOrEqualTo(Date value) {
+            addCriterion("update_date <=", value, "updateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDateIn(List<Date> values) {
+            addCriterion("update_date in", values, "updateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDateNotIn(List<Date> values) {
+            addCriterion("update_date not in", values, "updateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDateBetween(Date value1, Date value2) {
+            addCriterion("update_date between", value1, value2, "updateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDateNotBetween(Date value1, Date value2) {
+            addCriterion("update_date not between", value1, value2, "updateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagIsNull() {
+            addCriterion("del_flag is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagIsNotNull() {
+            addCriterion("del_flag is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagEqualTo(String value) {
+            addCriterion("del_flag =", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagNotEqualTo(String value) {
+            addCriterion("del_flag <>", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagGreaterThan(String value) {
+            addCriterion("del_flag >", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagGreaterThanOrEqualTo(String value) {
+            addCriterion("del_flag >=", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagLessThan(String value) {
+            addCriterion("del_flag <", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagLessThanOrEqualTo(String value) {
+            addCriterion("del_flag <=", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagLike(String value) {
+            addCriterion("del_flag like", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagNotLike(String value) {
+            addCriterion("del_flag not like", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagIn(List<String> values) {
+            addCriterion("del_flag in", values, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagNotIn(List<String> values) {
+            addCriterion("del_flag not in", values, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagBetween(String value1, String value2) {
+            addCriterion("del_flag between", value1, value2, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagNotBetween(String value1, String value2) {
+            addCriterion("del_flag not between", value1, value2, "delFlag");
             return (Criteria) this;
         }
     }

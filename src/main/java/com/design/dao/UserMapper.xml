@@ -155,15 +155,18 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <update id="deleteUserRoleForm" parameterType="com.design.entity.User">
+    <update id="deleteUserRoleForm" >
         update user_info_all uia
-        set uia.del_flag = #{delFlag}
-        WHERE uia.user_id = #{id}
-          AND uia.identitys_id = #{identitysid}
-          AND uia.grade = #{grade}
-          AND uia.college_id = #{collegeid}
-          AND uia.major_id = #{majorid}
-          AND uia.role_id = #{roleId}
+        set uia.del_flag = #{param1}
+        WHERE uia.user_id = #{param2}
+          AND uia.identitys_id = #{param3}
+          AND uia.grade = #{param4}
+          AND uia.college_id = #{param5}
+          <if test="param6 == null">
+              AND uia.major_id = #{param6}
+          </if>
+
+          AND uia.role_id = #{param7}
 
 
     </update>

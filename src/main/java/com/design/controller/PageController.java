@@ -30,9 +30,9 @@ public class PageController {
         return "teacherloginPage";
     }
 
-    @RequestMapping("/studentloginPage")
-    public String studentloginPage() {
-        return "studentloginPage";
+    @RequestMapping("/UserloginPage")
+    public String UserloginPage() {
+        return "UserloginPage";
     }
 
     @RequestMapping("/superadminPage")

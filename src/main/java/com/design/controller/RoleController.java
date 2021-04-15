@@ -1,9 +1,11 @@
 package com.design.controller;
 
 import com.design.Util.UUIDUtil;
+import com.design.entity.Log;
 import com.design.entity.Menu;
 import com.design.entity.Role;
 import com.design.entity.User;
+import com.design.service.LogServiceI;
 import com.design.service.MenuService;
 import com.design.service.RoleService;
 import com.google.common.collect.Lists;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/role")
@@ -29,13 +32,38 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private LogServiceI logServiceI;
+
 
     @RequestMapping(value = "")
-    public String role(Role role,Model model){
+    public String role(Role role, Model model, HttpServletRequest request, Log log){
 
         List<Role> Rolelist = roleService.findAllRole();
 
         System.out.print("Rolelist.get(0).getMenuIdList():"+Rolelist.get(0).getMenuIdList());
+
+        String id = UUID.randomUUID().toString().replace("-", "");
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = loginUser.getId();
+
+        log.setLid(id);
+
+        log.setLaction("查看");
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+        log.setLremark("角色列表");
+
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
 
         model.addAttribute("Rolelist",Rolelist);
         return "roleList";
@@ -151,7 +179,7 @@ public class RoleController {
     }
 
     @RequestMapping(value = "/form/save")
-    public String saveRole(Role role){
+    public String saveRole(Role role, HttpServletRequest request, Log log){
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
         String userId = user.getId().toString();
@@ -172,6 +200,30 @@ public class RoleController {
             role.setUpdateDate(date);
 
             role.setCreateDate(date);
+
+            String id = UUID.randomUUID().toString().replace("-", "");
+
+            String requestUri = request.getRequestURI();//请求的Uri
+
+            User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+//            String userId = loginUser.getId();
+
+            log.setLid(id);
+
+            log.setLaction("添加");
+
+            log.setLcreator(userId);
+
+            log.setIurl(requestUri);
+
+            log.setLremark("角色");
+
+            log.setLcreatetime(new Date());
+
+            logServiceI.insertSelective(log);
+
+
 
             roleService.insertrole(role);
 
@@ -196,7 +248,37 @@ public class RoleController {
 
             roleService.updateRole(role);
 
+            String id = UUID.randomUUID().toString().replace("-", "");
+
+            String requestUri = request.getRequestURI();//请求的Uri
+
+            User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+//            String userId = loginUser.getId();
+
+            log.setLid(id);
+
+            log.setLaction("修改");
+
+            log.setLcreator(userId);
+
+            log.setIurl(requestUri);
+
+            log.setLremark("角色");
+
+            log.setLcreatetime(new Date());
+
+            logServiceI.insertSelective(log);
+
+
+
         }
+
+        System.out.print("role.getMenuList()1:" + role.getMenuList());
+
+        System.out.print("role.getMenuIdList()1:" + role.getMenuIdList());
+
+        System.out.print("role.getMenuIds()1:"+role.getMenuIds());
 
         roleService.deleteRoleMenu(role);
 
@@ -214,7 +296,7 @@ public class RoleController {
 
 
     @RequestMapping(value = "/delete")
-    public String deleteRole(HttpServletRequest request){
+    public String deleteRole(HttpServletRequest request, Log log){
 
         String id = request.getParameter("id");
 
@@ -223,6 +305,28 @@ public class RoleController {
         role.setDelFlag("1");
 
         roleService.deleteRole(role);
+
+        String id1 = UUID.randomUUID().toString().replace("-", "");
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = loginUser.getId();
+
+        log.setLid(id1);
+
+        log.setLaction("删除");
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+        log.setLremark("角色");
+
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
 
         return "redirect:/role";
 

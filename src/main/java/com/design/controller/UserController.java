@@ -3,12 +3,10 @@ package com.design.controller;
 
 import com.design.Util.CryptographyUtil;
 import com.design.Util.UUIDUtil;
+import com.design.entity.Log;
 import com.design.entity.Office;
 import com.design.entity.User;
-import com.design.service.MenuService;
-import com.design.service.OfficeService;
-import com.design.service.RoleService;
-import com.design.service.UserService;
+import com.design.service.*;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
@@ -19,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -37,6 +37,9 @@ public class UserController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private LogServiceI logServiceI;
 
     private final String SALT = "LOGIN";
 
@@ -158,7 +161,7 @@ public class UserController {
 
 //    删除单个角色的功能
     @RequestMapping(value = "/deleteUserRoleForm")
-    public String deleteUserRoleForm(Model model, HttpServletRequest request,User user) {
+    public String deleteUserRoleForm(Model model, HttpServletRequest request, User user, Log log) {
 
         String userid = request.getParameter("userid");
 
@@ -169,6 +172,8 @@ public class UserController {
         String collegeid = request.getParameter("collegeid");
 
         String majorid = request.getParameter("majorid");
+
+        System.out.print("majorid"+majorid);
 
         String roleId = request.getParameter("roleid");
 
@@ -183,13 +188,35 @@ public class UserController {
 
         user.setCollegeid(collegeid);
 
-        user.setMajorid(majorid);
+//        user.setMajorid(majorid);
 
         user.setRoleId(roleId);
 
         user.setDelFlag("1");
 
-        userService.deleteUserRoleForm(user);
+        userService.deleteUserRoleForm("1",userid,identitysid,grade,collegeid,majorid,roleId);
+
+        String id = UUID.randomUUID().toString().replace("-", "");
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = loginUser.getId();
+
+        log.setLid(id);
+
+        log.setLaction("删除");
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+        log.setLremark("单个角色");
+
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
 
         System.out.print("userid:"+user.getId());
 
@@ -202,6 +229,8 @@ public class UserController {
         System.out.print("majorid:" + user.getMajorid());
 
         System.out.print("roleId:" + user.getRoleId());
+
+
 
 //        userService.deleteUserRoleForm(user);
 
@@ -372,7 +401,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/form/save")
-    public String saveUser(User user) {
+    public String saveUser(User user, HttpServletRequest request, Log log) {
 
 //        String collegeid = user.getCollegeid();
 //
@@ -423,8 +452,32 @@ public class UserController {
 
             userService.insertUserInfoAll(user);
 
+            String id = UUID.randomUUID().toString().replace("-", "");
+
+            String requestUri = request.getRequestURI();//请求的Uri
+
+            User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+            String userId = loginUser.getId();
+
+            log.setLid(id);
+
+            log.setLaction("添加");
+
+            log.setLcreator(userId);
+
+            log.setIurl(requestUri);
+
+            log.setLremark("用户");
+
+            log.setLcreatetime(new Date());
+
+            logServiceI.insertSelective(log);
+
 
         }
+
+
 
         return "redirect:/user";
 
@@ -433,7 +486,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/form/saveUserRoleForm")
-    public String saveUserRoleForm(User user) {
+    public String saveUserRoleForm(User user, HttpServletRequest request, Log log) {
 
 //        String collegeid = user.getCollegeid();
 //
@@ -493,6 +546,30 @@ public class UserController {
         userService.insertUserInfoAll(user);
 
 
+        String id = UUID.randomUUID().toString().replace("-", "");
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = loginUser.getId();
+
+        log.setLid(id);
+
+        log.setLaction("添加");
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+        log.setLremark("用户角色");
+
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
+
+
+
         /*        }*/
 
         return "redirect:/user";
@@ -542,7 +619,7 @@ public class UserController {
 //
 //        System.out.print("user2.getUsername():" + user2.getUsername());
 
-        return "/studentloginPage";
+        return "/UserloginPage";
 
 
 

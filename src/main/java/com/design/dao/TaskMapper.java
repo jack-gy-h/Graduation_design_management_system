@@ -93,4 +93,10 @@ public interface TaskMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(Task record);
+
+    Task getTaskById(String id);
+
+    void deleteTaskOffice(Task task);
+
+    void insertTaskOffice(Task task);
 }

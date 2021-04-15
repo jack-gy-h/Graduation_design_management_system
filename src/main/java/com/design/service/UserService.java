@@ -27,7 +27,7 @@ public interface UserService {
 
     User getUserByUserId(String userid);
 
-    void deleteUserRoleForm(User user);
+    void deleteUserRoleForm(String delflag,String userid,String identitysid,String grade,String collegeid,String majorid,String roleId);
 
     List<User> getGradeListById(String userid);
 

@@ -91,8 +91,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserRoleForm(User user) {
-        userMapper.deleteUserRoleForm(user);
+    public void deleteUserRoleForm(String delflag, String userid, String identitysid, String grade, String collegeid, String majorid, String roleId) {
+        userMapper.deleteUserRoleForm(delflag, userid, identitysid, grade, collegeid, majorid, roleId);
     }
 
     @Override
