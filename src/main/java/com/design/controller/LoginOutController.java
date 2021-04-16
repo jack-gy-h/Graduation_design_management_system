@@ -17,7 +17,7 @@ public class LoginOutController {
 //        Test test = new Test();
         SecurityUtils.getSubject().logout();
 //        test.SessionTest(request,session);
-//        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+//        User task = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 //        System.out.println("退出后session为："+user1.getIdentity());
         return "redirect:/index";
     }

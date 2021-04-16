@@ -99,4 +99,8 @@ public interface TaskMapper {
     void deleteTaskOffice(Task task);
 
     void insertTaskOffice(Task task);
+
+    List<Task> gettaskListByPageAndRows(@Param("page")int page, @Param("rows")int rows, @Param("grade") String grade, @Param("userId")String userId, @Param("office")String office, @Param("topic") String topic, @Param("teacher") String teacher, @Param("teacheridentitynumber")String teacheridentitynumber, @Param("type")String type, @Param("source")String source);
+
+    Task getTaskTotalInformationById(String id);
 }

@@ -26,6 +26,7 @@ public class TaskController {
     @Autowired
     private LogServiceI logServiceI;
 
+    //    师生双选保存功能
     @RequestMapping(value = "/form/save")
     public String saveTask(Task task, HttpServletRequest request, Log log) {
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
@@ -34,22 +35,35 @@ public class TaskController {
 
         Date date = new Date();
 
-        System.out.print("task.getId():"+task.getId());
+        System.out.print("task.getId():" + task.getId());
 
 //        如果id是空的，则说明是添加操作
-//        if (task.getId().equals("")||task.getId() ==null) {
+        if (task.getId() == null ||task.getId().equals("")) {
 
             String Id = UUIDUtil.getUUID();
 
+
+//            由于是添加操作，因此要添加taskid。
             task.setId(Id);
+//          师生双选
+            task.setPattern("1");
+
+            task.setTeacherId(userId);
+
+            task.setAuditStatus("3");
+
+            task.setGrade(((User) SecurityUtils.getSubject().getSession().getAttribute("user")).getGrade());
 
 //            task.setUpdateBy(userId);
 //
 //            task.setCreateBy(userId);
 
+            task.setCreateDate(date);
+
             task.setUpdateDate(date);
 
-            task.setCreateDate(date);
+
+
 
 //            task.setDelFlag("0");
 
@@ -79,14 +93,17 @@ public class TaskController {
             taskService.inserttask(task);
 
 
-//        }
-//        如果id不是空的，说明是修改操作
-//        else {
-//
+        } else {
+
 //            task.setUpdateBy(userId);
-//
-//            task.setUpdateDate(date);
-//
+
+
+
+//修改之后肯定是未审核状态
+
+            task.setAuditStatus("3");
+
+            task.setUpdateDate(date);
 //            if (task.getCreateBy() == null) {
 //                task.setCreateBy(userId);
 //            }
@@ -95,33 +112,33 @@ public class TaskController {
 //                task.setCreateDate(date);
 //
 //            }
-//
-//            taskService.updateTask(task);
-//
-//            String id = UUID.randomUUID().toString().replace("-", "");
-//
-//            String requestUri = request.getRequestURI();//请求的Uri
-//
-//            User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
-//
-////            String userId = loginUser.getId();
-//
-//            log.setLid(id);
-//
-//            log.setLaction("修改");
-//
-//            log.setLcreator(userId);
-//
-//            log.setIurl(requestUri);
-//
-//            log.setLremark("课题");
-//
-//            log.setLcreatetime(new Date());
-//
-//            logServiceI.insertSelective(log);
-//
-//
-//        }
+
+            taskService.updateTask(task);
+
+            String id = UUID.randomUUID().toString().replace("-", "");
+
+            String requestUri = request.getRequestURI();//请求的Uri
+
+            User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+//            String userId = loginUser.getId();
+
+            log.setLid(id);
+
+            log.setLaction("修改");
+
+            log.setLcreator(userId);
+
+            log.setIurl(requestUri);
+
+            log.setLremark("课题");
+
+            log.setLcreatetime(new Date());
+
+            logServiceI.insertSelective(log);
+
+
+        }
 
         System.out.print("task.getOfficeList()1:" + task.getOfficeList());
 
@@ -136,8 +153,10 @@ public class TaskController {
         System.out.println("task.getOfficeIdList():" + task.getOfficeIdList());
 
 
-        return "redirect:/release_topic";
+        return "teacherTaskList";
 
 
     }
+
+
 }

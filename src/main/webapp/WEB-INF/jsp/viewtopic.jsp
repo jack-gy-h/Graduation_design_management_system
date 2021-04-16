@@ -288,7 +288,7 @@
 </head>
 <body>
 
-<form:form id="inputForm" modelAttribute="task" action="/task/form/save" method="post" class="form-horizontal">
+<form:form id="inputForm" modelAttribute="task" action="/teacher/task/form" method="post" class="form-horizontal">
     <form:hidden path="id"/>
     <form:hidden path="pattern"/>
     <form:hidden path="teacherId"/>
@@ -299,7 +299,8 @@
     <div class="control-group">
         <label class="control-label">课题题目：</label>
         <div class="controls">
-            <form:textarea path="topic" htmlEscape="false" rows="2" maxlength="2000" class="input-xxlarge required"/>
+            <form:textarea path="topic" htmlEscape="false" rows="2" maxlength="2000" class="input-xxlarge required"
+                           readonly="true"/>
             <span class="help-inline"><font color="red">*</font> </span>
         </div>
     </div>
@@ -307,50 +308,55 @@
     <div class="control-group">
         <label class="control-label">所属学院:</label>
         <div class="controls">
-            <form:select path="collegeId" class="required input-xlarge" onchange="getSecond()">
-                <form:option value="0" label="请选择"/>
-                <form:options items="${UserParentOffice}" itemLabel="name" itemValue="id" htmlEscape="false"
-                              class="required"/>
-                <%--            <form:option value="1" label="系统用户"/>--%>
-            </form:select>
+                <%--            <form:select path="collegeId" class="required input-xlarge" onchange="getSecond()" >--%>
+                <%--                <form:option value="0" label="请选择"/>--%>
+                <%--                <form:options items="${UserParentOffice}" itemLabel="name" itemValue="id" htmlEscape="false"--%>
+                <%--                              class="required"/>--%>
+                <%--                &lt;%&ndash;            <form:option value="1" label="系统用户"/>&ndash;%&gt;--%>
+                <%--            </form:select>--%>
+                <%--    <form:input path="name" htmlEscape="false" maxlength="50" class="required input-xlarge"/>--%>
+            <form:input path="collegename" class="required input-xlarge" readonly="true"/>
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">所属专业:</label>
         <div class="controls">
-            <form:select path="majorId" class="required input-xlarge" onchange="">
-                <%--            <form:options items="${UserParentMenu}" itemLabel="name" itemValue="Office" htmlEscape="false"--%>
-                <%--                          class="required"/>--%>
-                <%--            <form:option value="1" label="系统用户"/>--%>
-            </form:select>
+                <%--            <form:select path="majorId" class="required input-xlarge" onchange="">--%>
+                <%--                &lt;%&ndash;            <form:options items="${UserParentMenu}" itemLabel="name" itemValue="Office" htmlEscape="false"&ndash;%&gt;--%>
+                <%--                &lt;%&ndash;                          class="required"/>&ndash;%&gt;--%>
+                <%--                &lt;%&ndash;            <form:option value="1" label="系统用户"/>&ndash;%&gt;--%>
+                <%--            </form:select>--%>
+            <form:input path="majorname" class="required input-xlarge" readonly="true"/>
         </div>
     </div>
 
     <div class="control-group">
         <label class="control-label">题目类型:</label>
         <div class="controls">
-            <form:select path="type" class="required input-xlarge" onchange="">
-                <%--                <form:option value="0" label="请选择"/>--%>
-                <%--                <form:option value="1" label="全校"/>--%>
-                <%--                <form:option value="2" label="部分专业"/>--%>
-                <%--                <form:option value="3" label="所属专业"/>--%>
-                <option value="0">请选择</option>
-                <option value="1" <c:if test="${task.type == 1}"> selected = "selected"</c:if>>应用研究
-                </option>
-                <option value="2" <c:if test="${task.type == 2}"> selected = "selected"</c:if>>其他
-                </option>
-                <option value="3" <c:if test="${task.type == 3}"> selected = "selected"</c:if>>软件设计
-                </option>
-                <option value="4" <c:if test="${task.type == 4}"> selected = "selected"</c:if>>艺术设计
-                </option>
-                <option value="5" <c:if test="${task.type == 5}"> selected = "selected"</c:if>>工程设计
-                </option>
-                <option value="6" <c:if test="${task.type == 6}"> selected = "selected"</c:if>>实验研究
-                </option>
-                <option value="7" <c:if test="${task.type == 7}"> selected = "selected"</c:if>>理论研究
-                </option>
-                <%--            <form:option value="1" label="系统用户"/>--%>
-            </form:select>
+                <%--            <form:select path="type" class="required input-xlarge" onchange="">--%>
+                <%--                &lt;%&ndash;                <form:option value="0" label="请选择"/>&ndash;%&gt;--%>
+                <%--                &lt;%&ndash;                <form:option value="1" label="全校"/>&ndash;%&gt;--%>
+                <%--                &lt;%&ndash;                <form:option value="2" label="部分专业"/>&ndash;%&gt;--%>
+                <%--                &lt;%&ndash;                <form:option value="3" label="所属专业"/>&ndash;%&gt;--%>
+                <%--                <option value="0">请选择</option>--%>
+                <%--                <option value="1" <c:if test="${task.type == 1}"> selected = "selected"</c:if>>应用研究--%>
+                <%--                </option>--%>
+                <%--                <option value="2" <c:if test="${task.type == 2}"> selected = "selected"</c:if>>其他--%>
+                <%--                </option>--%>
+                <%--                <option value="3" <c:if test="${task.type == 3}"> selected = "selected"</c:if>>软件设计--%>
+                <%--                </option>--%>
+                <%--                <option value="4" <c:if test="${task.type == 4}"> selected = "selected"</c:if>>艺术设计--%>
+                <%--                </option>--%>
+                <%--                <option value="5" <c:if test="${task.type == 5}"> selected = "selected"</c:if>>工程设计--%>
+                <%--                </option>--%>
+                <%--                <option value="6" <c:if test="${task.type == 6}"> selected = "selected"</c:if>>实验研究--%>
+                <%--                </option>--%>
+                <%--                <option value="7" <c:if test="${task.type == 7}"> selected = "selected"</c:if>>理论研究--%>
+                <%--                </option>--%>
+                <%--                &lt;%&ndash;            <form:option value="1" label="系统用户"/>&ndash;%&gt;--%>
+                <%--            </form:select>--%>
+            <form:input path="typename" class="required input-xlarge" readonly="true"/>
+
         </div>
     </div>
 
@@ -358,67 +364,71 @@
     <div class="control-group">
         <label class="control-label">题目来源:</label>
         <div class="controls">
-            <form:select path="source" class="required input-xlarge" onchange="">
-                <%--                <form:option value="0" label="请选择"/>--%>
-                <%--                <form:option value="1" label="全校"/>--%>
-                <%--                <form:option value="2" label="部分专业"/>--%>
-                <%--                <form:option value="3" label="所属专业"/>--%>
-                <option value="0">请选择</option>
-                <option value="1" <c:if test="${task.source == 1}"> selected = "selected"</c:if>>学生社会调查
-                </option>
-                <option value="2" <c:if test="${task.source == 2}"> selected = "selected"</c:if>>学生实验、实习、工程实践
-                </option>
-                <option value="3" <c:if test="${task.source == 3}"> selected = "selected"</c:if>>教师社会调查
-                </option>
-                <option value="4" <c:if test="${task.source == 4}"> selected = "selected"</c:if>>其他
-                </option>
-                <option value="5" <c:if test="${task.source == 5}"> selected = "selected"</c:if>>教师实验、实习、工程实践
-                </option>
-                <option value="6" <c:if test="${task.source == 6}"> selected = "selected"</c:if>>教师科研题
-                </option>
-                <%--                <option value="7" <c:if test="${task.canbechosencollegeid == 3}"> selected = "selected"</c:if>>--%>
+                <%--            <form:select path="source" class="required input-xlarge" onchange="">--%>
+                <%--                &lt;%&ndash;                <form:option value="0" label="请选择"/>&ndash;%&gt;--%>
+                <%--                &lt;%&ndash;                <form:option value="1" label="全校"/>&ndash;%&gt;--%>
+                <%--                &lt;%&ndash;                <form:option value="2" label="部分专业"/>&ndash;%&gt;--%>
+                <%--                &lt;%&ndash;                <form:option value="3" label="所属专业"/>&ndash;%&gt;--%>
+                <%--                <option value="0">请选择</option>--%>
+                <%--                <option value="1" <c:if test="${task.source == 1}"> selected = "selected"</c:if>>学生社会调查--%>
                 <%--                </option>--%>
-                <%--            <form:option value="1" label="系统用户"/>--%>
-            </form:select>
+                <%--                <option value="2" <c:if test="${task.source == 2}"> selected = "selected"</c:if>>学生实验、实习、工程实践--%>
+                <%--                </option>--%>
+                <%--                <option value="3" <c:if test="${task.source == 3}"> selected = "selected"</c:if>>教师社会调查--%>
+                <%--                </option>--%>
+                <%--                <option value="4" <c:if test="${task.source == 4}"> selected = "selected"</c:if>>其他--%>
+                <%--                </option>--%>
+                <%--                <option value="5" <c:if test="${task.source == 5}"> selected = "selected"</c:if>>教师实验、实习、工程实践--%>
+                <%--                </option>--%>
+                <%--                <option value="6" <c:if test="${task.source == 6}"> selected = "selected"</c:if>>教师科研题--%>
+                <%--                </option>--%>
+                <%--                &lt;%&ndash;                <option value="7" <c:if test="${task.canbechosencollegeid == 3}"> selected = "selected"</c:if>>&ndash;%&gt;--%>
+                <%--                &lt;%&ndash;                </option>&ndash;%&gt;--%>
+                <%--                &lt;%&ndash;            <form:option value="1" label="系统用户"/>&ndash;%&gt;--%>
+                <%--            </form:select>--%>
+            <form:input path="sourcename" class="required input-xlarge" readonly="true"/>
         </div>
     </div>
 
     <div class="control-group">
         <label class="control-label">可选专业:</label>
         <div class="controls">
-            <form:select path="canbechosencollegeid" class="required input-xlarge" onchange="getThree()">
-                <%--                <form:option value="0" label="请选择"/>--%>
-                <%--                <form:option value="1" label="全校"/>--%>
-                <%--                <form:option value="2" label="部分专业"/>--%>
-                <%--                <form:option value="3" label="所属专业"/>--%>
-                <option value="0">请选择</option>
-                <option value="1" <c:if test="${task.canbechosencollegeid == 1}"> selected = "selected"</c:if>>全校
-                </option>
-                <option value="2" <c:if test="${task.canbechosencollegeid == 2}"> selected = "selected"</c:if>>部分专业
-                </option>
-                <option value="3" <c:if test="${task.canbechosencollegeid == 3}"> selected = "selected"</c:if>>所属专业
-                </option>
-                <%--            <form:option value="1" label="系统用户"/>--%>
-            </form:select>
+                <%--        <div class="controls">--%>
+                <%--            <form:select path="canbechosencollegeid" class="required input-xlarge" onchange="getThree()">--%>
+                <%--                &lt;%&ndash;                <form:option value="0" label="请选择"/>&ndash;%&gt;--%>
+                <%--                &lt;%&ndash;                <form:option value="1" label="全校"/>&ndash;%&gt;--%>
+                <%--                &lt;%&ndash;                <form:option value="2" label="部分专业"/>&ndash;%&gt;--%>
+                <%--                &lt;%&ndash;                <form:option value="3" label="所属专业"/>&ndash;%&gt;--%>
+                <%--                <option value="0">请选择</option>--%>
+                <%--                <option value="1" <c:if test="${task.canbechosencollegeid == 1}"> selected = "selected"</c:if>>全校--%>
+                <%--                </option>--%>
+                <%--                <option value="2" <c:if test="${task.canbechosencollegeid == 2}"> selected = "selected"</c:if>>部分专业--%>
+                <%--                </option>--%>
+                <%--                <option value="3" <c:if test="${task.canbechosencollegeid == 3}"> selected = "selected"</c:if>>所属专业--%>
+                <%--                </option>--%>
+                <%--                &lt;%&ndash;            <form:option value="1" label="系统用户"/>&ndash;%&gt;--%>
+                <%--            </form:select>--%>
+                <%--        </div>--%>
+            <form:input path="canbechosentypename" class="required input-xlarge" readonly="true"/>
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label"></label>
-        <div class="controls">
-                <%--            <div id="officeTree" class="ztree" style="margin-top:3px;float:left;"></div>--%>
-            <form:hidden path="officeIds"/>
-            <div id="officeTree" class="ztree" style="margin-left:100px;margin-top:3px;float:left;"></div>
-            <div id="officeTree1" class="ztree" style="margin-left:100px;margin-top:3px;float:left;"></div>
-                <%--        <form:hidden path="officeIds"/>--%>
-        </div>
-    </div>
+    <%--    <div class="control-group">--%>
+    <%--        <label class="control-label"></label>--%>
+    <%--        <div class="controls">--%>
+    <%--                &lt;%&ndash;            <div id="officeTree" class="ztree" style="margin-top:3px;float:left;"></div>&ndash;%&gt;--%>
+    <%--            <form:hidden path="officeIds"/>--%>
+    <%--            <div id="officeTree" class="ztree" style="margin-left:100px;margin-top:3px;float:left;"></div>--%>
+    <%--            <div id="officeTree1" class="ztree" style="margin-left:100px;margin-top:3px;float:left;"></div>--%>
+    <%--                &lt;%&ndash;        <form:hidden path="officeIds"/>&ndash;%&gt;--%>
+    <%--        </div>--%>
+    <%--    </div>--%>
 
     <div class="control-group">
         <label class="control-label">研究方向：</label>
         <div class="controls">
             <form:textarea path="researchDirection" htmlEscape="false" rows="6" maxlength="2000"
-                           class="input-xxlarge required"/>
+                           class="input-xxlarge required" readonly="true"/>
             <span class="help-inline"><font color="red">*</font> </span>
         </div>
     </div>
@@ -427,7 +437,7 @@
         <label class="control-label">题目简介：</label>
         <div class="controls">
             <form:textarea path="briefIntroduction" htmlEscape="false" rows="6" maxlength="2000"
-                           class="input-xxlarge required"/>
+                           class="input-xxlarge required" readonly="true"/>
             <span class="help-inline"><font color="red">*</font> </span>
         </div>
     </div>
@@ -436,7 +446,7 @@
         <label class="control-label">基本要求：</label>
         <div class="controls">
             <form:textarea path="basicRequirements" htmlEscape="false" rows="6" maxlength="2000"
-                           class="input-xxlarge required"/>
+                           class="input-xxlarge required" readonly="true"/>
             <span class="help-inline"><font color="red">*</font> </span>
         </div>
     </div>
@@ -446,14 +456,14 @@
         <div class="controls">
                 <%--            <form:input path="referenceData" htmlEscape="false" maxlength="50" class="required input-xlarge"/>--%>
             <form:textarea path="referenceData" htmlEscape="false" rows="6" maxlength="2000"
-                           class="input-xxlarge required"/>
+                           class="input-xxlarge required" readonly="true"/>
             <span class="help-inline"><font color="red">*</font> </span>
         </div>
     </div>
 
     <div class="form-actions">
-        <input id="btnSubmit" class="btn btn-primary" type="submit"
-               value="保 存"/>&nbsp;
+                    <input id="btnSubmit" class="btn btn-primary" type="submit"
+                           value="修 改"/>&nbsp;
         <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
     </div>
 

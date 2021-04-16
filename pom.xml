@@ -365,6 +365,14 @@
       <version>${guava.version}</version>
     </dependency>
 
+<!--    日期转换包相关  -->
+    <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.76</version>
+    </dependency>
+
 
   </dependencies>
 

@@ -134,12 +134,9 @@
                     //
                     //身份框值为1的是需要展示专业框的
                     //身份框值为2的是不需要展示（或者说不需要选择专业的）
-                    if(identitys == 1 || identitys == 3){
+
                         $("#majorid").html(option);//将循环拼接的字符串插入第二个下拉列表
                         $("#majorid").show();//把第二个下拉列表展示
-                    }else if (identitys == 0||identitys == 2){
-                        $("#majorid").hide();
-                    }
 
                 });
 
