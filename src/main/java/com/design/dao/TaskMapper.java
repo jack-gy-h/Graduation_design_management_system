@@ -100,7 +100,16 @@ public interface TaskMapper {
 
     void insertTaskOffice(Task task);
 
-    List<Task> gettaskListByPageAndRows(@Param("page")int page, @Param("rows")int rows, @Param("grade") String grade, @Param("userId")String userId, @Param("office")String office, @Param("topic") String topic, @Param("teacher") String teacher, @Param("teacheridentitynumber")String teacheridentitynumber, @Param("type")String type, @Param("source")String source);
+    List<Task> getdoubletaskListByPageAndRows(@Param("page")int page, @Param("rows")int rows, @Param("grade") String grade, @Param("userId")String userId, @Param("office")String office, @Param("topic") String topic, @Param("teacher") String teacher, @Param("teacheridentitynumber")String teacheridentitynumber, @Param("type")String type, @Param("source")String source);
+
+    int getdoubletaskListCountByPageAndRows(@Param("page") int page, @Param("rows") int rows, @Param("grade") String grade, @Param("userId") String userId, @Param("office") String office, @Param("topic") String topic, @Param("teacher") String teacher, @Param("teacheridentitynumber") String teacheridentitynumber, @Param("type") String type, @Param("source") String source);
 
     Task getTaskTotalInformationById(String id);
+
+    List<Task> getdoubletaskListByPageAndRowsForAuditDouble(@Param("page")int page, @Param("rows")int rows, @Param("grade")String grade, @Param("majorid")String majorid);
+
+    int getdoubletaskListCountByPageAndRowsForAuditDouble(@Param("page")int page, @Param("rows")int rows, @Param("grade") String grade, @Param("majorid") String majorid);
+
+
+//    List<Task> getdoubletaskListByPageAndRows(@Param("page")int page, @Param("rows")int rows, @Param("grade")String grade, @Param("majorid")String majorid);
 }

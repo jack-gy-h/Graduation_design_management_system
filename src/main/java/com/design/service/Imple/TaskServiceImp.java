@@ -35,9 +35,14 @@ public class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public List<Task> gettaskListByPageAndRows(int page, int rows, String grade,String userId,String office, String topic, String teacher, String teacheridentitynumber, String type, String source) {
+    public List<Task> getdoubletaskListByPageAndRows(int page, int rows, String grade,String userId,String office, String topic, String teacher, String teacheridentitynumber, String type, String source) {
         page = (page - 1) * rows;
-        return taskMapper.gettaskListByPageAndRows(page, rows, grade, userId,office, topic, teacher, teacheridentitynumber, type, source);
+        return taskMapper.getdoubletaskListByPageAndRows(page, rows, grade, userId,office, topic, teacher, teacheridentitynumber, type, source);
+    }
+
+    @Override
+    public int getdoubletaskListCountByPageAndRows(int page, int rows, String grade, String userId, String office, String topic, String teacher, String teacheridentitynumber, String type, String source) {
+        return taskMapper.getdoubletaskListCountByPageAndRows(page, rows, grade, userId, office, topic, teacher, teacheridentitynumber, type, source);
     }
 
     @Override
@@ -55,4 +60,25 @@ public class TaskServiceImp implements TaskService {
     public int deleteTask(Task task) {
         return taskMapper.updateByPrimaryKey(task);
     }
+
+    @Override
+    public List<Task> getdoubletaskListByPageAndRowsForAuditDouble(int page, int rows, String grade, String majorid) {
+        return taskMapper.getdoubletaskListByPageAndRowsForAuditDouble(page,rows,grade,majorid);
+    }
+
+    @Override
+    public int getdoubletaskListCountByPageAndRowsForAuditDouble(int page, int rows, String grade, String majorid) {
+        return taskMapper.getdoubletaskListCountByPageAndRowsForAuditDouble(page, rows, grade, majorid);
+    }
+
+
+//    @Override
+//    public int getdoubletaskListCountByPageAndRows(int page, int rows, String grade, String userId, String office, String topic, String teacher, String teacheridentitynumber, String type, String source) {
+//        return taskMapper.getdoubletaskListCountByPageAndRows();
+//    }
+
+//    @Override
+//    public List<Task> gettaskListByPageAndRowsForAuditDouble(int page, int rows, String grade, String majorid) {
+//        return taskMapper.getdoubletaskListByPageAndRows(page,rows,grade,majorid);
+//    }
 }

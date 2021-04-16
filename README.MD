@@ -301,7 +301,30 @@
 
 #完成了教师申报题目的增删改查功能
 
+#教师申报题目列表获取的整体思路：
 
+#只获取该学年下（t.grade = #{grade}）该老师（t.teacher_id = #{userId}）正常的（t.del_Flag = 0）双选题目（t.pattern = 1）
+
+#v16.0
+
+#修复了教师申报题目时下面数值不变的情况。
+
+#CountBy数数只需要把原list的where全部拿过来并在最前面加上
+
+#select count(*)和将where中别名的表连起来（如果只有一个表的别名的话，只需要把别名加上）
+
+#详细参照TaskMapper.xml中getdoubletaskListByPageAndRows和getdoubletaskListCountByPageAndRows的区别
+
+#系主任审核列表的获取思路：
+
+#   整体思路：
+#   取出该学年的
+#   本专业下的
+#   双选题目（t.pattern=1）
+#   而且该题目还没有被审核（t.audit_status = 3）
+#   而且是正常状态下的题目（t.del_Flag = 0）
+
+#完成了系主任的审核双选题目的功能。注意.equals()来判断string之间是否相同
 
 
 

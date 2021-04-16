@@ -37,7 +37,7 @@
         function loadData(office, topic, teacher, teacheridentitynumber, type, source) {
             $("#dg").datagrid({
                 title: "用户信息列表",
-                url: "/teacher/taskListData",
+                url: "/teacher/doubletaskListData",
                 method: "POST",
                 pagination: true,
                 pageSize: 20,
@@ -107,9 +107,9 @@
 
         function formatTitle(val, row) {
             if (row.auditStatusId == 1) {
-                return "<a target = '_self'   style = 'text-decoration:none'href = '/teacher/viewtopic?id=" + row.id + "' > 查看详情 < /a>&nbsp;<a target = '_self' style = 'text-decoration:none'href = '' > 进行双选 < /a>"
+                return "<a target = '_self'   style = 'text-decoration:none'href = '/teacher/viewtopic?id=" + row.id + "' > 查看详情 </a>&nbsp;<a target = '_self' style = 'text-decoration:none'href = '' > 进行双选 </a>"
             }else if(row.auditStatusId == 2){
-                return "<a target = '_self' style = 'text-decoration:none'href = '/teacher/viewtopic?id="+ row.id +"' > 查看详情 < /a>&nbsp;<a target = '_self' style = 'text-decoration:none'href = '/teacher/task/form?id="+row.id+"' > 修改后再提交 < /a>"
+                return "<a target = '_self' style = 'text-decoration:none'href = '/teacher/viewtopic?id="+ row.id +"' > 查看详情 </a>&nbsp;<a target = '_self' style = 'text-decoration:none'href = '/teacher/task/form?id="+row.id+"' > 修改后再提交 </a>"
             }
             else if (row.auditStatusId == 3) {
                 return "<a target='_self'  style='text-decoration:none' href='/teacher/viewtopic?id="+  row.id +"'>查看详情</a>&nbsp;<a target='_self' style='text-decoration:none' href='/teacher/task/form?id="+row.id+"'>修改</a>&nbsp;<a target='_self' style='text-decoration:none' href='/teacher/task/delete?id="+ row.id+"'>删除</a>"

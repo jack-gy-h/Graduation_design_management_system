@@ -140,7 +140,7 @@ public class TeacherController {
     }
 
 //    老师查看题目所加载的数据
-    @RequestMapping(value = "/taskListData")
+    @RequestMapping(value = "/doubletaskListData")
     @ResponseBody
     public Map<String, Object> taskListData(int page, int rows, String office, String topic, String teacher, String teacheridentitynumber, String type, String source) {
 //        List<Task> taskList = Lists.newArrayList();
@@ -172,7 +172,7 @@ public class TeacherController {
         System.out.println("type:" + type);
         System.out.println("source:" + source);
 
-        List<Task> taskList = taskService.gettaskListByPageAndRows(page, rows, grade,userId,office, topic, teacher, teacheridentitynumber, type, source);
+        List<Task> taskList = taskService.getdoubletaskListByPageAndRows(page, rows, grade,userId,office, topic, teacher, teacheridentitynumber, type, source);
 
 
 
@@ -206,7 +206,7 @@ public class TeacherController {
 //
 //        String college_id_CN = office.getName();
 
-//        Count = taskService.getAllCountBySelectname(selectname);
+        Count = taskService.getdoubletaskListCountByPageAndRows(page, rows, grade, userId, office, topic, teacher, teacheridentitynumber, type, source);
 
         map.put("total", Count);
 
@@ -217,7 +217,8 @@ public class TeacherController {
 
     }
 
-    //    老师查看题目功能
+    //    老师查看单个题目功能
+//    有修改和返回按钮
     @RequestMapping(value = "/viewtopic")
 
     public String viewtopic(Model model, HttpServletRequest request) {

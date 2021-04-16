@@ -514,7 +514,7 @@
 
 
     </select>
-    <select id="gettaskListByPageAndRows" resultType="com.design.entity.Task">
+    <select id="getdoubletaskListByPageAndRows" resultType="com.design.entity.Task">
         SELECT
         t.id AS "id",
         t.topic AS "topic",
@@ -563,22 +563,62 @@
 
         </if>
         AND t.del_Flag = 0
+        And t.pattern = 1
         LIMIT #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
 
 
     </select>
+
+    <select id="getdoubletaskListCountByPageAndRows" resultType="java.lang.Integer">
+        select count(*)
+        FROM task t
+        LEFT JOIN USER u ON t.teacher_id = u.id
+
+        WHERE t.grade = #{grade}
+        AND t.teacher_id = #{userId}
+        <if test="office != 0">
+            <if test="office!=null">
+                AND t.college_id = #{office}
+            </if>
+
+        </if>
+        <if test="topic != null">
+            AND t.topic LIKE '%${topic}%'
+        </if>
+        <if test="teacher != null">
+            AND u.name LIKE '%${teacher}%'
+        </if>
+        <if test="teacheridentitynumber != null">
+            AND u.identity_number LIKE '%${teacheridentitynumber}%'
+        </if>
+        <if test="type != 0">
+            <if test="type!=null">
+                AND t.type = #{type}
+            </if>
+        </if>
+        <if test="source != 0">
+            <if test="source!=null">
+                AND t.source = #{source}
+            </if>
+
+        </if>
+        AND t.del_Flag = 0
+        And t.pattern = 1
+
+
+    </select>
     <select id="getTaskTotalInformationById" resultType="com.design.entity.Task">
-        SELECT t.id AS "id",
-               t.topic AS "topic",
-               co.name AS "collegename",
-               ma.name AS "majorname",
-               tt.type AS "typename",
-               ts.source AS "sourcename",
-               tc.canbechosentype AS "canbechosentypename",
+        SELECT t.id                 AS "id",
+               t.topic              AS "topic",
+               co.name              AS "collegename",
+               ma.name              AS "majorname",
+               tt.type              AS "typename",
+               ts.source            AS "sourcename",
+               tc.canbechosentype   AS "canbechosentypename",
                t.research_direction AS "researchDirection",
                t.brief_introduction AS "briefIntroduction",
                t.basic_requirements AS "basicRequirements",
-               t.reference_data AS "referenceData"
+               t.reference_data     AS "referenceData"
         FROM task t
                  LEFT JOIN office co ON co.id = t.college_id
                  LEFT JOIN office ma ON ma.id = t.major_id
@@ -591,4 +631,39 @@
 
 
     </select>
+    <select id="getdoubletaskListByPageAndRowsForAuditDouble" resultType="com.design.entity.Task">
+        SELECT t.id              AS "id",
+               t.topic           AS "topic",
+               tt.type           AS "type",
+               ts.source         AS "source",
+               u.name            AS "teachername",
+               u.identity_number AS "teacherId",
+               tas.Audit_Status  AS "auditStatus",
+               t.create_date     AS "createDate",
+               tas.id            AS "auditStatusId"
+        FROM task t
+                 LEFT JOIN USER u ON t.teacher_id = u.id
+                 LEFT JOIN task_type tt ON t.type = tt.id
+                 LEFT JOIN task_source ts ON t.source = ts.id
+                 LEFT JOIN task_audit_status tas ON tas.id = t.audit_status
+        WHERE t.grade = #{grade}
+          AND t.major_id = #{majorid}
+
+          AND t.del_Flag = 0
+          AND t.pattern = 1
+          AND t.audit_status = 3
+    </select>
+    <select id="getdoubletaskListCountByPageAndRowsForAuditDouble" resultType="java.lang.Integer">
+        select count(*)
+        FROM task t
+        WHERE t.grade = #{grade}
+          AND t.major_id = #{majorid}
+
+          AND t.del_Flag = 0
+          AND t.pattern = 1
+          AND t.audit_status = 3
+
+
+    </select>
+
 </mapper>

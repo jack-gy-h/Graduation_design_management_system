@@ -7,13 +7,18 @@ import com.design.entity.Task;
 import com.design.entity.User;
 import com.design.service.LogServiceI;
 import com.design.service.TaskService;
+import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -154,6 +159,171 @@ public class TaskController {
 
 
         return "teacherTaskList";
+
+
+    }
+
+//    系主任审核双选题目
+    @RequestMapping(value = "/audit/doublelist")
+    public String auditdoublelist(Task task, HttpServletRequest request, Log log) {
+
+
+
+        return "auditdoubleTaskList";
+
+
+    }
+
+
+//    整体思路：
+//    取出该学年的
+//    本专业下的
+//    双选题目（t.pattern=1）
+//    而且该题目还没有被审核（t.audit_status = 3）
+//    而且是正常状态下的题目（t.del_Flag = 0）
+    @RequestMapping(value = "/audit/double/ListData")
+    @ResponseBody
+    public Map<String, Object> auditdoubleListData(int page, int rows) {
+
+        //        List<Task> taskList = Lists.newArrayList();
+        int Count = 0;
+//        System.out.println("selectname:" + selectname);
+
+
+        Map<String, Object> map = Maps.newHashMap();
+//        if (selectname == null) {
+//            taskList = taskService.gettaskListByPageAndRows(page, rows);
+//            Count = taskService.getAllCount();
+//        }
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+//        String officet = office;
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+//        System.out.println("page:" + page);
+//        System.out.println("rows:" + rows);
+//        System.out.println("grade:" + grade);
+//        System.out.println("userId:" + userId);
+//        System.out.println("office:" + office);
+//        System.out.println("topic:" + topic);
+//        System.out.println("teacher:" + teacher);
+//        System.out.println("teacheridentitynumber:" + teacheridentitynumber);
+//        System.out.println("type:" + type);
+//        System.out.println("source:" + source);
+
+        List<Task> taskList = taskService.getdoubletaskListByPageAndRowsForAuditDouble(page, rows, grade,majorid);
+
+
+//        System.out.print("taskList.get(0).getTopic():"+taskList.get(0));
+//
+//        System.out.print("taskList.get(0).getCreateDate():" + taskList.get(0).getCreateDate());
+
+//        System.out.print(taskList.get(0).get);
+
+
+//        System.out.println("taskList.get(0).getIdentityNumber():" + taskList.get(0).getIdentityNumber());
+//
+//        System.out.print("taskList.get(0).getCollegeid():" + taskList.get(0).getCollegeid());
+
+
+//        for (int i = 0; i < taskList.size(); i++) {
+//            String collegeid = taskList.get(i).getCollegeid();
+//
+//            if (collegeid != null) {
+//
+//                Office college = officeService.getOffice(collegeid);
+//
+//                String college_name = college.getName();
+//
+//                taskList.get(i).setCollegeid(college_name);
+//            }
+//
+//        }
+
+//        Office office = officeService.getOffice(college_id);
+//
+//        String college_id_CN = office.getName();
+
+        Count = taskService.getdoubletaskListCountByPageAndRowsForAuditDouble(page, rows, grade, majorid);
+
+        map.put("total", Count);
+
+
+//        System.out.println("college_id_CN:" + college_id_CN);
+        map.put("rows", taskList);
+        return map;
+
+
+    }
+
+
+    @RequestMapping(value = "/viewtopic")
+
+    public String viewtopic(Model model, HttpServletRequest request) {
+
+        String id = request.getParameter("id");
+
+        Task task = taskService.getTaskTotalInformationById(id);
+
+//        task.get
+
+
+        model.addAttribute("task", task);
+//
+//        List<Office> officeList = officeService.getOfficeParentListById("1");
+//        for (int i = 0; i < officeList.size(); i++) {
+//            System.out.println("officeList.get(" + i + ").getName():" + officeList.get(i).getName());
+//        }
+//
+//        model.addAttribute("UserParentOffice", officeList);
+
+//        model.addAttribute("task",task);
+
+        return "viewtopicfordoubleaudit";
+
+
+    }
+
+    @RequestMapping(value = "/audit/double")
+    public String auditdouble(HttpServletRequest request){
+
+        String id = request.getParameter("id");
+
+        String audit_status = request.getParameter("audit_status");
+
+        System.out.print("id:"+id);
+
+        System.out.print("audit_status:" + audit_status);
+
+        if(audit_status.equals("1") || audit_status.equals("2")){
+            System.out.print("111111111111111111111111");
+
+            Task task = taskService.getTaskById(id);
+
+            System.out.print("2222222222222222222222222222");
+
+            task.setAuditStatus(audit_status);
+
+            System.out.print("333333333333333333333333333");
+
+            taskService.updateTask(task);
+
+            System.out.print("444444444444444444444444");
+
+
+
+        }
+        return "redirect:/task/audit/doublelist";
+
+
+
+
+
 
 
     }
