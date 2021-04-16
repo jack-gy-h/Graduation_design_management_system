@@ -303,7 +303,13 @@
 
 #教师申报题目列表获取的整体思路：
 
-#只获取该学年下（t.grade = #{grade}）该老师（t.teacher_id = #{userId}）正常的（t.del_Flag = 0）双选题目（t.pattern = 1）
+#只获取该学年下（t.grade = #{grade}）
+
+#该老师（t.teacher_id = #{userId}）
+
+#正常的（t.del_Flag = 0）
+
+#双选题目（t.pattern = 1）
 
 #v16.0
 
