@@ -32,6 +32,8 @@ public class PageController {
 
     @RequestMapping("/UserloginPage")
     public String UserloginPage() {
+        System.out.print("((User) SecurityUtils.getSubject().getSession().getAttribute(\"user\")).getName():" + ((User) SecurityUtils.getSubject().getSession().getAttribute("user")).getName());
+
         return "UserloginPage";
     }
 

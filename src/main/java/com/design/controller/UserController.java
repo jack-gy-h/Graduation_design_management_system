@@ -578,7 +578,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/enter")
-    public String enter(User user){
+    public String enter(User user,Model model){
 //        user传过来的参数
 
         String grade = user.getGrade();
@@ -604,6 +604,12 @@ public class UserController {
         user1.setRoleId(roleId);
 
         SecurityUtils.getSubject().getSession().setAttribute("user",user1);
+
+        System.out.print("((User) SecurityUtils.getSubject().getSession().getAttribute(\"user\")).getName():"+((User) SecurityUtils.getSubject().getSession().getAttribute("user")).getName());
+
+//        model.addAttribute("user",user1);
+
+
 
 //        user2更新后的user
 

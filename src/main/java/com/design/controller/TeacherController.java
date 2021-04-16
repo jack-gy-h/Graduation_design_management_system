@@ -1,10 +1,7 @@
 package com.design.controller;
 
 import com.design.entity.*;
-import com.design.service.MenuService;
-import com.design.service.OfficeService;
-import com.design.service.RoleService;
-import com.design.service.TaskService;
+import com.design.service.*;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
@@ -15,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/teacher")
@@ -33,6 +32,9 @@ public class TeacherController {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private LogServiceI logServiceI;
 
 
 //师生双选添加/删除功能
@@ -119,7 +121,7 @@ public class TeacherController {
 //    老师查看题目列表功能
     @RequestMapping(value = "/tasklist")
 
-    public String tasklist(Model model,Task task){
+    public String tasklist(Model model, Task task, Log log, HttpServletRequest request){
 
         List<Office> officeList = officeService.getOfficeParentListById("1");
         for (int i = 0; i < officeList.size(); i++) {
@@ -127,6 +129,28 @@ public class TeacherController {
         }
 
         model.addAttribute("UserParentOffice", officeList);
+
+        String id = UUID.randomUUID().toString().replace("-", "");
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = loginUser.getId();
+
+        log.setLid(id);
+
+        log.setLaction("查看");
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+        log.setLremark("双选题目");
+
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
 
 //        model.addAttribute("task",task);
 
@@ -245,6 +269,8 @@ public class TeacherController {
 
 
     }
+
+//    教师删除题目
 
     @RequestMapping(value = "/task/delete")
 

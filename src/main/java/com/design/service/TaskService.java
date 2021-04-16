@@ -27,6 +27,10 @@ public interface TaskService {
 
     int getdoubletaskListCountByPageAndRowsForAuditDouble(int page, int rows, String grade, String majorid);
 
+    List<Task> getstudentdoubletaskListByPageAndRows(int page, int rows, String grade, String majorid, String office, String topic, String teacher, String teacheridentitynumber, String type, String source);
+
+    int getstudentdoubletaskListCountByPageAndRows(int page, int rows, String grade, String majorid, String office, String topic, String teacher, String teacheridentitynumber, String type, String source);
+
 
 //    List<Task> gettaskListByPageAndRowsForAuditDouble(int page, int rows, String grade, String majorid);
 }

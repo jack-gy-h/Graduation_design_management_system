@@ -545,6 +545,76 @@ public class LogExample {
             return (Criteria) this;
         }
 
+        public Criteria andLtaskIsNull() {
+            addCriterion("lTask is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLtaskIsNotNull() {
+            addCriterion("lTask is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLtaskEqualTo(String value) {
+            addCriterion("lTask =", value, "ltask");
+            return (Criteria) this;
+        }
+
+        public Criteria andLtaskNotEqualTo(String value) {
+            addCriterion("lTask <>", value, "ltask");
+            return (Criteria) this;
+        }
+
+        public Criteria andLtaskGreaterThan(String value) {
+            addCriterion("lTask >", value, "ltask");
+            return (Criteria) this;
+        }
+
+        public Criteria andLtaskGreaterThanOrEqualTo(String value) {
+            addCriterion("lTask >=", value, "ltask");
+            return (Criteria) this;
+        }
+
+        public Criteria andLtaskLessThan(String value) {
+            addCriterion("lTask <", value, "ltask");
+            return (Criteria) this;
+        }
+
+        public Criteria andLtaskLessThanOrEqualTo(String value) {
+            addCriterion("lTask <=", value, "ltask");
+            return (Criteria) this;
+        }
+
+        public Criteria andLtaskLike(String value) {
+            addCriterion("lTask like", value, "ltask");
+            return (Criteria) this;
+        }
+
+        public Criteria andLtaskNotLike(String value) {
+            addCriterion("lTask not like", value, "ltask");
+            return (Criteria) this;
+        }
+
+        public Criteria andLtaskIn(List<String> values) {
+            addCriterion("lTask in", values, "ltask");
+            return (Criteria) this;
+        }
+
+        public Criteria andLtaskNotIn(List<String> values) {
+            addCriterion("lTask not in", values, "ltask");
+            return (Criteria) this;
+        }
+
+        public Criteria andLtaskBetween(String value1, String value2) {
+            addCriterion("lTask between", value1, value2, "ltask");
+            return (Criteria) this;
+        }
+
+        public Criteria andLtaskNotBetween(String value1, String value2) {
+            addCriterion("lTask not between", value1, value2, "ltask");
+            return (Criteria) this;
+        }
+
         public Criteria andLcreatetimeIsNull() {
             addCriterion("lCreatetime is null");
             return (Criteria) this;
