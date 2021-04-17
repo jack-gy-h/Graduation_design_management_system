@@ -82,6 +82,53 @@ public class TaskServiceImp implements TaskService {
         return taskMapper.getstudentdoubletaskListCountByPageAndRows(page, rows, grade, majorid, office, topic, teacher, teacheridentitynumber, type, source);
     }
 
+    @Override
+    public List<Task> getviewlogDatafordoubletaskByPageAndRows(int page, int rows, String taskid) {
+        page = (page - 1) * rows;
+        return taskMapper.getviewlogDatafordoubletaskByPageAndRows(page,rows,taskid);
+    }
+
+    @Override
+    public int getviewlogDatafordoubletaskCountByPageAndRows(int page, int rows, String taskid) {
+        return taskMapper.getviewlogDatafordoubletaskCountByPageAndRows(page, rows, taskid);
+    }
+
+    @Override
+    public int gettaskstudentjudgehaschosen(String userId) {
+        return taskMapper.gettaskstudentjudgehaschosen(userId);
+    }
+
+    @Override
+    public int gettaskstudentjudgehaschosenThreeTitle(String userId) {
+        return taskMapper.gettaskstudentjudgehaschosenThreeTitle(userId);
+    }
+
+    @Override
+    public int gettaskstudentjudgehaschosenThreePeople(String taskid) {
+        return taskMapper.gettaskstudentjudgehaschosenThreePeople(taskid);
+    }
+
+    @Override
+    public void studentdoublechoose(String taskid, String userId) {
+        taskMapper.studentdoublechoose(taskid, userId);
+    }
+
+    @Override
+    public int gettaskstudentjudgewhetherchoosethistask(String taskid, String userId) {
+        return taskMapper.gettaskstudentjudgewhetherchoosethistask(taskid,userId);
+    }
+
+    @Override
+    public List<Task> gettaskstudenthaschosendoubletaskListDataByPageAndRows(int page, int rows,String userId) {
+        page = (page - 1) * rows;
+        return taskMapper.gettaskstudenthaschosendoubletaskListDataByPageAndRows(page,rows, userId);
+    }
+
+    @Override
+    public int gettaskstudenthaschosendoubletaskListDataCountByPageAndRows(int page, int rows, String userId) {
+        return taskMapper.gettaskstudenthaschosendoubletaskListDataCountByPageAndRows(page, rows, userId);
+    }
+
 
 //    @Override
 //    public int getdoubletaskListCountByPageAndRows(int page, int rows, String grade, String userId, String office, String topic, String teacher, String teacheridentitynumber, String type, String source) {

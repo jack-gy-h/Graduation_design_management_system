@@ -173,16 +173,34 @@ public class Task {
     private String collegename;
 
 
-
     private String typename;
-
 
 
     private String sourcename;
 
 
-
     private String canbechosentypename;
+
+    private String operator;
+
+
+    private String operatorRole;
+
+    private String action;
+
+    private String remark;
+
+
+
+    private String tcs;
+
+    private String teacherchoosestatus;
+
+    private String teacherchoosestatusId;
+
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createtime;
 
 
     public List<Office> getOfficeList() {
@@ -677,5 +695,69 @@ public class Task {
 
     public void setCanbechosentypename(String canbechosentypename) {
         this.canbechosentypename = canbechosentypename;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getOperatorRole() {
+        return operatorRole;
+    }
+
+    public void setOperatorRole(String operatorRole) {
+        this.operatorRole = operatorRole;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+    public String getTcs() {
+        return tcs;
+    }
+
+    public void setTcs(String tcs) {
+        this.tcs = tcs;
+    }
+
+    public String getTeacherchoosestatus() {
+        return teacherchoosestatus;
+    }
+
+    public void setTeacherchoosestatus(String teacherchoosestatus) {
+        this.teacherchoosestatus = teacherchoosestatus;
+    }
+
+    public String getTeacherchoosestatusId() {
+        return teacherchoosestatusId;
+    }
+
+    public void setTeacherchoosestatusId(String teacherchoosestatusId) {
+        this.teacherchoosestatusId = teacherchoosestatusId;
     }
 }

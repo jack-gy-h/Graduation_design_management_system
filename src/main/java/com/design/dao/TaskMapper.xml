@@ -505,6 +505,13 @@
         </foreach>
 
     </insert>
+    <insert id="studentdoublechoose">
+        INSERT INTO graduation_design_management_system.task_chosen(graduation_design_management_system.task_chosen.task_id,
+                                                                    graduation_design_management_system.task_chosen.chosen_student,
+                                                                    graduation_design_management_system.task_chosen.teacher_choose_status)
+        values (#{taskid}, #{userId}, 1)
+
+    </insert>
     <select id="getTaskById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List1"/>
@@ -721,11 +728,13 @@
         FROM task t
         LEFT JOIN task_canbechosenmajor tc on t.id = tc.task_id
         LEFT JOIN user u ON t.teacher_id = u.id
+        LEFT JOIN graduation_design_management_system.task_chosen tch ON tch.task_id = t.id
         WHERE tc.CanBeChosenMajor = #{majorid}
         AND t.grade = #{grade}
         AND t.audit_status = 1
         AND t.pattern = 1
         AND t.del_flag = 0
+        AND (tch.teacher_choose_status != 2 or tch.teacher_choose_status is null)
         <if test="office != 0">
             <if test="office!=null">
                 AND t.college_id = #{office}
@@ -752,6 +761,90 @@
             </if>
 
         </if>
+
+
+    </select>
+    <select id="getviewlogDatafordoubletaskByPageAndRows" resultType="com.design.entity.Task">
+        select u.name        AS "operator",
+               r.name        AS "operatorRole",
+               l.lAction     AS "action",
+               l.lRemark     AS "remark",
+               l.lCreatetime AS "createtime"
+
+        from graduation_design_management_system.log l
+                 LEFT JOIN user u ON l.lCreator = u.id
+                 LEFT JOIN role r ON r.id = l.lCreatorRole
+        WHERE l.lTask = #{taskid}
+        LIMIT #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+
+
+    </select>
+    <select id="getviewlogDatafordoubletaskCountByPageAndRows" resultType="java.lang.Integer">
+        select count(*)
+        from graduation_design_management_system.log l
+        WHERE l.lTask = #{taskid}
+
+
+    </select>
+    <select id="gettaskstudentjudgehaschosen" resultType="java.lang.Integer">
+        select count(*)
+        FROM graduation_design_management_system.task_chosen tc
+        WHERE tc.chosen_student = #{userId}
+          AND tc.teacher_choose_status = 2
+
+
+    </select>
+    <select id="gettaskstudentjudgehaschosenThreeTitle" resultType="java.lang.Integer">
+        select count(chosen_student)
+        FROM graduation_design_management_system.task_chosen tc
+        WHERE tc.chosen_student = #{userId}
+          AND tc.teacher_choose_status = 1
+
+
+    </select>
+    <select id="gettaskstudentjudgehaschosenThreePeople" resultType="java.lang.Integer">
+
+        select count(*)
+        FROM graduation_design_management_system.task_chosen tc
+        WHERE tc.task_id = #{taskid}
+          AND tc.teacher_choose_status = 1
+    </select>
+    <select id="gettaskstudentjudgewhetherchoosethistask" resultType="java.lang.Integer">
+
+        select count(*)
+        FROM graduation_design_management_system.task_chosen tc
+        WHERE tc.task_id = #{taskid}
+          AND tc.chosen_student = #{userId}
+          AND tc.teacher_choose_status = 1
+    </select>
+    <select id="gettaskstudenthaschosendoubletaskListDataByPageAndRows" resultType="com.design.entity.Task">
+        select t.id                       AS "id",
+               t.topic                    AS "topic",
+               tt.type                    AS "type",
+               ts.source                  AS "source",
+               u.name                     AS "teachername",
+               u.identity_number          AS "teacherId",
+               ttcs.teacher_choose_status AS "teacherchoosestatus",
+               ttcs.id                    AS "teacherchoosestatusId"
+        FROM task t
+                 LEFT JOIN task_chosen tc ON tc.task_id = t.id
+                 LEFT JOIN USER u ON t.teacher_id = u.id
+                 LEFT JOIN task_type tt ON t.type = tt.id
+                 LEFT JOIN task_source ts ON t.source = ts.id
+                 LEFT JOIN task_teacher_choose_status ttcs ON ttcs.id = tc.teacher_choose_status
+        WHERE tc.chosen_student = #{userId}
+        LIMIT #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+
+
+    </select>
+    <select id="gettaskstudenthaschosendoubletaskListDataCountByPageAndRows" resultType="java.lang.Integer">
+        select count(*)
+        FROM task t
+        LEFT JOIN task_chosen tc ON tc.task_id = t.id
+
+        WHERE tc.chosen_student = #{userId}
+
+
 
 
     </select>

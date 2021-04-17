@@ -114,6 +114,24 @@ public interface TaskMapper {
 
     int getstudentdoubletaskListCountByPageAndRows(@Param("page") int page, @Param("rows") int rows, @Param("grade") String grade, @Param("majorid") String majorid, @Param("office") String office, @Param("topic") String topic, @Param("teacher") String teacher, @Param("teacheridentitynumber") String teacheridentitynumber, @Param("type") String type, @Param("source") String source);
 
+    List<Task> getviewlogDatafordoubletaskByPageAndRows(@Param("page")int page, @Param("rows") int rows, @Param("taskid")String taskid);
+
+    int getviewlogDatafordoubletaskCountByPageAndRows(@Param("page") int page, @Param("rows") int rows, @Param("taskid") String taskid);
+
+    int gettaskstudentjudgehaschosen(@Param("userId")String userId);
+
+    int gettaskstudentjudgehaschosenThreeTitle(@Param("userId")String userId);
+
+    int gettaskstudentjudgehaschosenThreePeople(@Param("taskid")String taskid);
+
+    void studentdoublechoose(@Param("taskid")String taskid, @Param("userId") String userId);
+
+    int gettaskstudentjudgewhetherchoosethistask(@Param("taskid")String taskid, @Param("userId") String userId);
+
+    List<Task> gettaskstudenthaschosendoubletaskListDataByPageAndRows(@Param("page")int page, @Param("rows")int rows, @Param("userId")String userId);
+
+    int gettaskstudenthaschosendoubletaskListDataCountByPageAndRows(@Param("page") int page, @Param("rows") int rows, @Param("userId") String userId);
+
 
 //    List<Task> getdoubletaskListByPageAndRows(@Param("page")int page, @Param("rows")int rows, @Param("grade")String grade, @Param("majorid")String majorid);
 }

@@ -138,6 +138,10 @@ public class TeacherController {
 
         String userId = loginUser.getId();
 
+        String roleid = loginUser.getRoleId();
+
+
+
         log.setLid(id);
 
         log.setLaction("查看");
@@ -147,6 +151,8 @@ public class TeacherController {
         log.setIurl(requestUri);
 
         log.setLremark("双选题目");
+
+        log.setLcreatorrole(roleid);
 
         log.setLcreatetime(new Date());
 

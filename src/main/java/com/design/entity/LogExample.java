@@ -674,6 +674,76 @@ public class LogExample {
             addCriterion("lCreatetime not between", value1, value2, "lcreatetime");
             return (Criteria) this;
         }
+
+        public Criteria andLcreatorroleIsNull() {
+            addCriterion("lCreatorRole is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLcreatorroleIsNotNull() {
+            addCriterion("lCreatorRole is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLcreatorroleEqualTo(String value) {
+            addCriterion("lCreatorRole =", value, "lcreatorrole");
+            return (Criteria) this;
+        }
+
+        public Criteria andLcreatorroleNotEqualTo(String value) {
+            addCriterion("lCreatorRole <>", value, "lcreatorrole");
+            return (Criteria) this;
+        }
+
+        public Criteria andLcreatorroleGreaterThan(String value) {
+            addCriterion("lCreatorRole >", value, "lcreatorrole");
+            return (Criteria) this;
+        }
+
+        public Criteria andLcreatorroleGreaterThanOrEqualTo(String value) {
+            addCriterion("lCreatorRole >=", value, "lcreatorrole");
+            return (Criteria) this;
+        }
+
+        public Criteria andLcreatorroleLessThan(String value) {
+            addCriterion("lCreatorRole <", value, "lcreatorrole");
+            return (Criteria) this;
+        }
+
+        public Criteria andLcreatorroleLessThanOrEqualTo(String value) {
+            addCriterion("lCreatorRole <=", value, "lcreatorrole");
+            return (Criteria) this;
+        }
+
+        public Criteria andLcreatorroleLike(String value) {
+            addCriterion("lCreatorRole like", value, "lcreatorrole");
+            return (Criteria) this;
+        }
+
+        public Criteria andLcreatorroleNotLike(String value) {
+            addCriterion("lCreatorRole not like", value, "lcreatorrole");
+            return (Criteria) this;
+        }
+
+        public Criteria andLcreatorroleIn(List<String> values) {
+            addCriterion("lCreatorRole in", values, "lcreatorrole");
+            return (Criteria) this;
+        }
+
+        public Criteria andLcreatorroleNotIn(List<String> values) {
+            addCriterion("lCreatorRole not in", values, "lcreatorrole");
+            return (Criteria) this;
+        }
+
+        public Criteria andLcreatorroleBetween(String value1, String value2) {
+            addCriterion("lCreatorRole between", value1, value2, "lcreatorrole");
+            return (Criteria) this;
+        }
+
+        public Criteria andLcreatorroleNotBetween(String value1, String value2) {
+            addCriterion("lCreatorRole not between", value1, value2, "lcreatorrole");
+            return (Criteria) this;
+        }
     }
 
     /**

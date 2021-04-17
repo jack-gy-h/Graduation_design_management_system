@@ -51,6 +51,10 @@ public class RoleController {
 
         String userId = loginUser.getId();
 
+        String roleid = loginUser.getRoleId();
+
+
+
         log.setLid(id);
 
         log.setLaction("查看");
@@ -60,6 +64,8 @@ public class RoleController {
         log.setIurl(requestUri);
 
         log.setLremark("角色列表");
+
+        log.setLcreatorrole(roleid);
 
         log.setLcreatetime(new Date());
 
@@ -209,6 +215,9 @@ public class RoleController {
 
 //            String userId = loginUser.getId();
 
+            String roleid = loginUser.getRoleId();
+
+
             log.setLid(id);
 
             log.setLaction("添加");
@@ -218,6 +227,9 @@ public class RoleController {
             log.setIurl(requestUri);
 
             log.setLremark("角色");
+
+            log.setLcreatorrole(roleid);
+
 
             log.setLcreatetime(new Date());
 
@@ -256,6 +268,10 @@ public class RoleController {
 
 //            String userId = loginUser.getId();
 
+            String roleid = loginUser.getRoleId();
+
+
+
             log.setLid(id);
 
             log.setLaction("修改");
@@ -265,6 +281,8 @@ public class RoleController {
             log.setIurl(requestUri);
 
             log.setLremark("角色");
+
+            log.setLcreatorrole(roleid);
 
             log.setLcreatetime(new Date());
 
@@ -314,6 +332,10 @@ public class RoleController {
 
         String userId = loginUser.getId();
 
+        String roleid = loginUser.getRoleId();
+
+
+
         log.setLid(id1);
 
         log.setLaction("删除");
@@ -323,6 +345,8 @@ public class RoleController {
         log.setIurl(requestUri);
 
         log.setLremark("角色");
+
+        log.setLcreatorrole(roleid);
 
         log.setLcreatetime(new Date());
 

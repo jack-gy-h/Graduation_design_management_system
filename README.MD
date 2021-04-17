@@ -359,6 +359,68 @@
 
 #且正常的题目(del_flag = 0)->这个条件其实是非必须的，因为能提交审核的必然是正常的。但为了防范非法数据的写入还是加了这一条。
 
+#还需要在controller处遴选出不是被选的题目
+
+#v18.0
+
+#缺陷：老师查看自己的题目不需要分学院，只需要分年级和id。
+
+#缺陷2：学生只能获取到所有的属于自己的，本学年下的已选题目
+
+#对于有其他角色和其他学年的暂时无法遴选出。
+
+#选题逻辑：
+
+##alert("您已经有选题，无法重新选题");
+
+#先判断有没有选题
+
+#有选题是指自己本身id在task_chosen表中（即tc.chosen_student = #{userId}）
+
+#而且teacher_choose_status为2（确认通过）（tc.teacher_choose_status = 2）
+
+#这里无论是什么类型的选题，只要被选上都符合上面的条件
+    
+##alert("您已选择了三个题目，无法继续选题");
+
+#再判断自己选了几个题目
+
+#查看等待确认的课题数，即已选题数
+ 
+#你自己
+ 
+#WHERE tc.chosen_student = #{userId}
+ 
+#等待确认的课题
+
+#AND tc.teacher_choose_status = 1
+             
+##alert("选择的人数超过三个，请选择其他题目");
+
+#判断选了几个人
+
+#WHERE tc.task_id = #{taskid}
+
+#AND tc.teacher_choose_status = 1
+
+#该选题下等待确认的人数
+
+#即使是退选或者选上了也需要老师手动退选，因此无需担心
+
+                                 
+##alert("您已选择过该题目，请勿重复选择");
+
+#最后再判断是否选过这个题目。
+
+#WHERE tc.task_id = #{taskid}
+
+#AND tc.chosen_student = #{userId}
+
+#AND tc.teacher_choose_status = 1
+
+#还完成了对学生已选课题的遴选
+      
+
 
 
 

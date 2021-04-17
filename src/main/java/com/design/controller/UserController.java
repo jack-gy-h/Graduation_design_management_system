@@ -204,6 +204,10 @@ public class UserController {
 
         String userId = loginUser.getId();
 
+        String roleid = loginUser.getRoleId();
+
+
+
         log.setLid(id);
 
         log.setLaction("删除");
@@ -213,6 +217,8 @@ public class UserController {
         log.setIurl(requestUri);
 
         log.setLremark("单个角色");
+
+        log.setLcreatorrole(roleid);
 
         log.setLcreatetime(new Date());
 
@@ -460,6 +466,10 @@ public class UserController {
 
             String userId = loginUser.getId();
 
+            String roleid = loginUser.getRoleId();
+
+
+
             log.setLid(id);
 
             log.setLaction("添加");
@@ -469,6 +479,8 @@ public class UserController {
             log.setIurl(requestUri);
 
             log.setLremark("用户");
+
+            log.setLcreatorrole(roleid);
 
             log.setLcreatetime(new Date());
 
@@ -554,6 +566,10 @@ public class UserController {
 
         String userId = loginUser.getId();
 
+        String roleid = loginUser.getRoleId();
+
+
+
         log.setLid(id);
 
         log.setLaction("添加");
@@ -563,6 +579,8 @@ public class UserController {
         log.setIurl(requestUri);
 
         log.setLremark("用户角色");
+
+        log.setLcreatorrole(roleid);
 
         log.setLcreatetime(new Date());
 

@@ -30,6 +30,7 @@
         var source = '';
         $(function () {
             loadData();
+            loadData1();
 
 
         });
@@ -92,6 +93,53 @@
             })
         }
 
+        function loadData1() {
+            $("#dg1").datagrid({
+                title: "已选信息列表",
+                url: "/task/student/haschosendoubletaskListData",
+                method: "POST",
+                pagination: true,
+                pageSize: 20,
+                pageList: [10, 20, 30],
+                rownumbers: true,
+                singleSelect: true,
+                fit: false,
+                border: false,
+                idField: "id",
+                fitColumns: true, //去除滚动条
+                // showHeader:false,
+                columns: [[
+                    {field: 'ck', checkbox: true},
+                    {field: 'id', title: '选题ID', width: 200, hidden: true, align: 'center'},
+                    {field: 'topic', title: '题目', width: 200, align: 'center'},
+                    {field: 'type', title: '题目类型', width: 200, align: 'center'},
+                    {field: 'source', title: '题目来源', width: 200, align: 'center'},
+                    {field: 'teachername', title: '指导教师', width: 200, align: 'center'},
+                    {field: 'teacherId', title: '指导教师编号', width: 200, align: 'center'},
+                    {field: 'teacherchoosestatus', title: '确认状态', width: 200, align: 'center'},
+                    // {field: 'auditStatus', title: '审核状态', width: 200, align: 'center'},
+                    // {field: 'createDate', title: '申报时间', width: 200, align: 'center'},
+                    // {
+                    //     field: 'auditStatusId',
+                    //     title: "审核状态id",
+                    //     width: 200,
+                    //     hidden: true,
+                    //     align: 'center'
+                    // },
+                    {field: 'OperationItem', title: '操作列', width: 250, formatter: formatTitle1},
+
+                    {field: 'teacherchoosestatusId', title: "确认状态Id", width: 200, hidden: true, align: 'center'}
+                    // {field: 'collegeid', title: "学院ID", width: 200, hidden: true, align: 'center'},
+                    // {field: 'majorid', title: "专业ID", width: 200, hidden: true, align: 'center'},
+                    // {field: 'roleId', title: "角色Id", width: 200, hidden: true, align: 'center'}
+                    //identitysid
+                    // {field: 'userAdmin', title: '身份', width: 200, align: 'center'}
+                    //    ， formatter: btnDetailed
+                ]]
+
+            })
+        }
+
         function search() {
             var office = $("#office").val();
             var topic = $("#topic").val();
@@ -105,15 +153,82 @@
 
         }
 
+        function jsmethod(taskid) {
+            // alert(1);
+            $.post("/task/student/judge/haschosenAndPass", {}, function (data) {
+
+                if(data > 0){
+                    alert("您已经有选题，无法重新选题");
+                    return ;
+                }else{
+                    $.post("/task/student/judge/haschosenThree", {}, function (data) {
+
+                        if (data >= 3) {
+                            alert("您已选择了三个题目，无法继续选题");
+                            return;
+                        }else{
+                            $.post("/task/student/judge/haschosenPeople", {taskid: taskid}, function (data) {
+
+                                if (data > 3) {
+                                    alert("选择的人数超过三个，请选择其他题目");
+                                    return;
+                                }else{
+                                    $.post("/task/student/judge/whetherchoosethistask",{taskid:taskid},function (data) {
+                                        if(data>0){
+                                            alert("您已选择过该题目，请勿重复选择");
+                                            return ;
+                                        }else {
+                                            window.location.href = '/task/student/double/choose?taskid=' + taskid;
+                                        }
+
+                                    })
+
+                                }
+
+
+                            });
+                        }
+
+
+
+
+
+                    });
+                }
+
+
+
+
+
+            });
+
+
+
+
+
+
+
+
+        }
+
         function formatTitle(val, row) {
-            if (row.auditStatusId == 1) {
-                return "<a target = '_self'   style = 'text-decoration:none'href = '/teacher/viewtopic?id=" + row.id + "' > 查看详情 </a>&nbsp;<a target = '_self' style = 'text-decoration:none'href = '' > 进行双选 </a>"
-            }else if(row.auditStatusId == 2){
-                return "<a target = '_self' style = 'text-decoration:none'href = '/teacher/viewtopic?id="+ row.id +"' > 查看详情 </a>&nbsp;<a target = '_self' style = 'text-decoration:none'href = '/teacher/task/form?id="+row.id+"' > 修改后再提交 </a>"
+                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/student/viewtopic?id=" + row.id + "' > 查看详情 </a>&nbsp;<a target = '_self' style = 'text-decoration:none'href='javascript:jsmethod(\""+row.id+"\")' > 选择题目 </a>"
+
+
+            // return "<a target='_self' style='text-decoration:none' href='/user/addUserRoleForm?userid=" + row.id + "'>添加用户角色</a> <a target='_self' style='text-decoration:none' href='/user/deleteUserRoleForm?userid=" + row.id + "&identitysid=" + row.identitysid + "&grade=" + row.grade + "&collegeid=" + row.collegeid + "&majorid=" + row.majorid + "&roleid=" + row.roleId + "'>删除</a>"
+        }
+
+        function formatTitle1(val, row) {
+            if(row.teacherchoosestatusId == 2|| row.teacherchoosestatusId == 3){
+                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/student/viewtopic?id=" + row.id + "' > 查看详情 </a>"
+            }else if(row.teacherchoosestatusId == 1){
+                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/student/viewtopic?id=" + row.id + "' > 查看详情 </a>&nbsp;<a target = '_self' style = 'text-decoration:none'href='/task/student/deletehaschosentopic?id="+row.id+"' > 取消选择选题 </a>"
+
             }
-            else if (row.auditStatusId == 3) {
-                return "<a target='_self'  style='text-decoration:none' href='/teacher/viewtopic?id="+  row.id +"'>查看详情</a>&nbsp;<a target='_self' style='text-decoration:none' href='/teacher/task/form?id="+row.id+"'>修改</a>&nbsp;<a target='_self' style='text-decoration:none' href='/teacher/task/delete?id="+ row.id+"'>删除</a>"
-            }
+
+
+
+
             // return "<a target='_self' style='text-decoration:none' href='/user/addUserRoleForm?userid=" + row.id + "'>添加用户角色</a> <a target='_self' style='text-decoration:none' href='/user/deleteUserRoleForm?userid=" + row.id + "&identitysid=" + row.identitysid + "&grade=" + row.grade + "&collegeid=" + row.collegeid + "&majorid=" + row.majorid + "&roleid=" + row.roleId + "'>删除</a>"
         }
 
@@ -127,6 +242,7 @@
     </script>
 </head>
 <body>
+<table id="dg1"></table>
 题目所属院系：
 <select id="office" name="office">
     <option value="0">请选择

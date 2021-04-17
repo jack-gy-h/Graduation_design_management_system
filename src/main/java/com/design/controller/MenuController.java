@@ -109,6 +109,10 @@ public class MenuController {
 
         String userId = loginUser.getId();
 
+        String roleid = loginUser.getRoleId();
+
+
+
         log.setLid(id);
 
         log.setLaction("查看");
@@ -121,6 +125,8 @@ public class MenuController {
 //        log.setLip(remoteAddr);
 //        log.setLmodule(controllerMethodDescription.get("module"));
         log.setLremark("菜单");
+
+        log.setLcreatorrole(roleid);
 //        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
 //        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
 //        Date operateDate = beginTimeThreadLocal.get();
@@ -278,6 +284,10 @@ public class MenuController {
 
             User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
+            String roleid = loginUser.getRoleId();
+
+
+
 //            String userId = loginUser.getId();
 
             log.setLid(id);
@@ -292,6 +302,8 @@ public class MenuController {
 //        log.setLip(remoteAddr);
 //        log.setLmodule(controllerMethodDescription.get("module"));
             log.setLremark("菜单");
+
+            log.setLcreatorrole(roleid);
 //        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
 //        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
 //        Date operateDate = beginTimeThreadLocal.get();
@@ -336,6 +348,10 @@ public class MenuController {
 
 //            String userId = loginUser.getId();
 
+            String roleid = loginUser.getRoleId();
+
+
+
             log.setLid(id);
 
             log.setLaction("修改");
@@ -348,6 +364,9 @@ public class MenuController {
 //        log.setLip(remoteAddr);
 //        log.setLmodule(controllerMethodDescription.get("module"));
             log.setLremark("菜单");
+
+            log.setLcreatorrole(roleid);
+
 //        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
 //        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
 //        Date operateDate = beginTimeThreadLocal.get();
@@ -462,6 +481,10 @@ public class MenuController {
 
 //        String userId = loginUser.getId();
 
+        String roleid = loginUser.getRoleId();
+
+
+
         log.setLid(id1);
 
         log.setLaction("删除");
@@ -473,7 +496,11 @@ public class MenuController {
 
 //        log.setLip(remoteAddr);
 //        log.setLmodule(controllerMethodDescription.get("module"));
+
         log.setLremark("菜单");
+
+        log.setLcreatorrole(roleid);
+
 //        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
 //        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
 //        Date operateDate = beginTimeThreadLocal.get();
@@ -504,6 +531,9 @@ public class MenuController {
 
         String userId = loginUser.getId();
 
+        String roleid = loginUser.getRoleId();
+
+
         log.setLid(id);
 
         log.setLaction("修改");
@@ -513,6 +543,9 @@ public class MenuController {
         log.setIurl(requestUri);
 
         log.setLremark("菜单排序");
+
+        log.setLcreatorrole(roleid);
+
 
         log.setLcreatetime(new Date());
 

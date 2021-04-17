@@ -107,6 +107,10 @@ public class OfficeController {
 
         String userId = loginUser.getId();
 
+        String roleid = loginUser.getRoleId();
+
+
+
         log.setLid(id);
 
         log.setLaction("查看");
@@ -119,6 +123,8 @@ public class OfficeController {
 //        log.setLip(remoteAddr);
 //        log.setLmodule(controllerMethodDescription.get("module"));
         log.setLremark("机构");
+
+        log.setLcreatorrole(roleid);
 //        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
 //        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
 //        Date operateDate = beginTimeThreadLocal.get();
@@ -281,6 +287,9 @@ public class OfficeController {
 
 //            String userId = loginUser.getId();
 
+            String roleid = loginUser.getRoleId();
+
+
             log.setLid(id);
 
             log.setLaction("添加");
@@ -293,6 +302,10 @@ public class OfficeController {
 //        log.setLip(remoteAddr);
 //        log.setLmodule(controllerMethodDescription.get("module"));
             log.setLremark("机构");
+
+
+            log.setLcreatorrole(roleid);
+
 //        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
 //        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
 //        Date operateDate = beginTimeThreadLocal.get();
@@ -341,6 +354,9 @@ public class OfficeController {
             User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
 //            String userId = loginUser.getId();
+            String roleid = loginUser.getRoleId();
+
+
 
             log.setLid(id);
 
@@ -354,6 +370,8 @@ public class OfficeController {
 //        log.setLip(remoteAddr);
 //        log.setLmodule(controllerMethodDescription.get("module"));
             log.setLremark("机构");
+
+            log.setLcreatorrole(roleid);
 //        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
 //        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
 //        Date operateDate = beginTimeThreadLocal.get();
@@ -444,6 +462,10 @@ public class OfficeController {
 
 //        String userId = loginUser.getId();
 
+        String roleid = loginUser.getRoleId();
+
+
+
         log.setLid(id1);
 
         log.setLaction("删除");
@@ -456,6 +478,8 @@ public class OfficeController {
 //        log.setLip(remoteAddr);
 //        log.setLmodule(controllerMethodDescription.get("module"));
         log.setLremark("机构");
+
+        log.setLcreatorrole(roleid);
 //        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
 //        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
 //        Date operateDate = beginTimeThreadLocal.get();
@@ -488,6 +512,10 @@ public class OfficeController {
 
         String userId = loginUser.getId();
 
+        String roleid = loginUser.getRoleId();
+
+
+
         log.setLid(id);
 
         log.setLaction("升级");
@@ -500,6 +528,8 @@ public class OfficeController {
 //        log.setLip(remoteAddr);
 //        log.setLmodule(controllerMethodDescription.get("module"));
         log.setLremark("机构排序");
+
+        log.setLcreatorrole(roleid);
 //        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
 //        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
 //        Date operateDate = beginTimeThreadLocal.get();
