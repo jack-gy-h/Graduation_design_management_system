@@ -772,6 +772,112 @@ public class TaskController {
 
     }
 
+    @RequestMapping(value = "/student/deletehaschosentopic")
+    public String taskstudentdeletehaschosentopic(HttpServletRequest request, Log log) {
+
+        String taskid = request.getParameter("taskid");
+
+        System.out.print("taskid:"+taskid);
+
+        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = loginUser.getId();
+
+        taskService.deletehaschosentopic(taskid,userId);
+
+//        Role role = roleService.getRoleById(id);
+//
+//        role.setDelFlag("1");
+//
+//        roleService.deleteRole(role);
+
+        String id1 = UUID.randomUUID().toString().replace("-", "");
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+
+
+
+
+        String roleid = loginUser.getRoleId();
+
+
+        log.setLid(id1);
+
+        log.setLaction("退选");
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+        log.setLremark("题目");
+
+        log.setLtask(taskid);
+
+        log.setLcreatorrole(roleid);
+
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
+
+        return "redirect:/task/student/doublechoselist";
+
+
+    }
+
+//    选出选了自己的题目的双选的学生
+//    选出自己的t.teacher_id = #{userId}
+//    审核状态不为空的AND tc.teacher_choose_status is not null
+//    而且属于自己学年的题目AND t.grade = #{grade}
+//    并且是双选的t.pattern = 1
+@RequestMapping(value = "/viewchosenstudentallListData")
+@ResponseBody
+public Map<String, Object> viewchosenstudentallListData(int page, int rows) {
+
+    int Count = 0;
+
+
+    Map<String, Object> map = Maps.newHashMap();
+
+//        }
+    User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+    String userId = user1.getId();
+
+
+    String grade = user1.getGrade();
+
+    String majorid = user1.getMajorid();
+
+//        System.out.println("page:" + page);
+//        System.out.println("rows:" + rows);
+//        System.out.println("grade:" + grade);
+//        System.out.println("userId:" + userId);
+//        System.out.println("office:" + office);
+//        System.out.println("topic:" + topic);
+//        System.out.println("teacher:" + teacher);
+//        System.out.println("teacheridentitynumber:" + teacheridentitynumber);
+//        System.out.println("type:" + type);
+
+    System.out.print("userId:"+userId);
+
+
+    List<Task> taskList = taskService.getviewchosenstudentallListData(page, rows, userId,grade);
+
+
+    Count = taskService.getviewchosenstudentallListDataCountByPageAndRows(page, rows, userId,grade);
+
+    map.put("total", Count);
+
+
+//        System.out.println("college_id_CN:" + college_id_CN);
+    map.put("rows", taskList);
+    return map;
+
+}
+
+//    /student/deletehaschosentopic
+
 
 
 }

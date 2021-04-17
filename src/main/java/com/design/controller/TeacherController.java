@@ -300,6 +300,38 @@ public class TeacherController {
 
     }
 
+    @RequestMapping(value = "/task/doublechoosestudent")
+    public String teachertaskdoublechoosestudent(){
+
+
+        return "teacherchoosedouble";
+    }
+
+    @RequestMapping(value = "/task/chosenstudent")
+    public String teachertaskchosenstudent(HttpServletRequest request){
+        String taskid = request.getParameter("taskid");
+
+        String choosestatusId = request.getParameter("choosestatusId");
+
+        String studentId = request.getParameter("studentId");
+
+        String status = request.getParameter("status");
+
+        System.out.print("taskid:"+taskid);
+
+        System.out.print("choosestatusId:" + choosestatusId);
+
+        System.out.print("studentId:" + studentId);
+
+        System.out.print("status:" + status);
+
+        taskService.updateTaskChosenStatus(taskid,choosestatusId,studentId,status);
+
+        return "redirect:/teacher/task/doublechoosestudent";
+    }
+
+
+
 
 
 

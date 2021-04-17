@@ -198,6 +198,12 @@ public class Task {
 
     private String teacherchoosestatusId;
 
+    private String studentname;
+
+
+
+    private String studentId;
+
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createtime;
@@ -759,5 +765,21 @@ public class Task {
 
     public void setTeacherchoosestatusId(String teacherchoosestatusId) {
         this.teacherchoosestatusId = teacherchoosestatusId;
+    }
+
+    public String getStudentname() {
+        return studentname;
+    }
+
+    public void setStudentname(String studentname) {
+        this.studentname = studentname;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 }

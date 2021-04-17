@@ -129,6 +129,28 @@ public class TaskServiceImp implements TaskService {
         return taskMapper.gettaskstudenthaschosendoubletaskListDataCountByPageAndRows(page, rows, userId);
     }
 
+    @Override
+    public void deletehaschosentopic(String taskid, String userId) {
+        taskMapper.deletehaschosentopic(taskid,userId);
+
+    }
+
+    @Override
+    public List<Task> getviewchosenstudentallListData(int page, int rows, String userId,String grade) {
+        page = (page - 1) * rows;
+        return taskMapper.getviewchosenstudentallListData(page,rows,userId, grade);
+    }
+
+    @Override
+    public int getviewchosenstudentallListDataCountByPageAndRows(int page, int rows, String userId, String grade) {
+        return taskMapper.getviewchosenstudentallListDataCountByPageAndRows(page, rows, userId, grade);
+    }
+
+    @Override
+    public void updateTaskChosenStatus(String taskid, String choosestatusId, String studentId,String status) {
+        taskMapper.updateTaskChosenStatus(taskid, choosestatusId, studentId, status);
+    }
+
 
 //    @Override
 //    public int getdoubletaskListCountByPageAndRows(int page, int rows, String grade, String userId, String office, String topic, String teacher, String teacheridentitynumber, String type, String source) {

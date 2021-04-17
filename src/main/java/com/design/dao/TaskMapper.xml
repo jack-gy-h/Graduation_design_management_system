@@ -489,11 +489,31 @@
         del_flag = #{delFlag,jdbcType=CHAR}
         where id = #{id,jdbcType=VARCHAR}
     </update>
+    <update id="updateTaskChosenStatus">
+        update task_chosen tc
+        set tc.task_id               = #{taskid},
+            tc.chosen_student        = #{studentId},
+            tc.teacher_choose_status = #{status}
+        where
+              tc.task_id = #{taskid}
+          AND tc.chosen_student = #{studentId}
+          AND tc.teacher_choose_status = #{choosestatusId}
+
+    </update>
     <delete id="deleteTaskOffice">
 
         DELETE
         FROM task_canbechosenmajor
         where task_id = #{id}
+    </delete>
+    <delete id="deletehaschosentopic">
+        delete
+        from task_chosen
+        where chosen_student = #{userId}
+          AND task_id = #{taskid}
+          AND teacher_choose_status = 1
+
+
     </delete>
     <insert id="insertTaskOffice">
         INSERT INTO task_canbechosenmajor(task_id, CanBeChosenMajor)
@@ -840,12 +860,39 @@
     <select id="gettaskstudenthaschosendoubletaskListDataCountByPageAndRows" resultType="java.lang.Integer">
         select count(*)
         FROM task t
-        LEFT JOIN task_chosen tc ON tc.task_id = t.id
+                 LEFT JOIN task_chosen tc ON tc.task_id = t.id
 
         WHERE tc.chosen_student = #{userId}
 
 
+    </select>
+    <select id="getviewchosenstudentallListData" resultType="com.design.entity.Task">
+        SELECT t.id                       AS 'id',
+               t.topic                    AS 'topic',
+               u.`name`                   AS 'studentname',
+               ttcs.teacher_choose_status AS 'teacherchoosestatus',
+               ttcs.id                    AS 'teacherchoosestatusId',
+               u.id                       AS 'studentId'
+        FROM task t
+                 LEFT JOIN task_chosen tc ON tc.task_id = t.id
+                 LEFT JOIN user u ON tc.chosen_student = u.id
+                 LEFT JOIN task_teacher_choose_status ttcs ON tc.teacher_choose_status = ttcs.id
+        WHERE t.teacher_id = #{userId}
+          AND tc.teacher_choose_status is not null
+          AND t.grade = #{grade}
+          AND t.pattern = 1
+        LIMIT #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
 
+
+    </select>
+    <select id="getviewchosenstudentallListDataCountByPageAndRows" resultType="java.lang.Integer">
+        select count(*)
+        FROM task t
+                 LEFT JOIN task_chosen tc ON tc.task_id = t.id
+        WHERE t.teacher_id = #{userId}
+          AND tc.teacher_choose_status is not null
+          AND t.grade = #{grade}
+          AND t.pattern = 1
 
     </select>
 

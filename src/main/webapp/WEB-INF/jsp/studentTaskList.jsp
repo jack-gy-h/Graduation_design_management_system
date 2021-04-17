@@ -44,7 +44,7 @@
                 pageSize: 20,
                 pageList: [10, 20, 30],
                 rownumbers: true,
-                singleSelect: true,
+                singleSelect: false,
                 fit: false,
                 border: false,
                 idField: "id",
@@ -102,7 +102,7 @@
                 pageSize: 20,
                 pageList: [10, 20, 30],
                 rownumbers: true,
-                singleSelect: true,
+                singleSelect: false,
                 fit: false,
                 border: false,
                 idField: "id",
@@ -222,7 +222,7 @@
             if(row.teacherchoosestatusId == 2|| row.teacherchoosestatusId == 3){
                 return "<a target = '_self'   style = 'text-decoration:none'href = '/task/student/viewtopic?id=" + row.id + "' > 查看详情 </a>"
             }else if(row.teacherchoosestatusId == 1){
-                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/student/viewtopic?id=" + row.id + "' > 查看详情 </a>&nbsp;<a target = '_self' style = 'text-decoration:none'href='/task/student/deletehaschosentopic?id="+row.id+"' > 取消选择选题 </a>"
+                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/student/viewtopic?id=" + row.id + "' > 查看详情 </a>&nbsp;<a target = '_self' style = 'text-decoration:none'href='/task/student/deletehaschosentopic?taskid="+row.id+"' > 取消选择选题 </a>"
 
             }
 

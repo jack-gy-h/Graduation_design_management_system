@@ -132,6 +132,14 @@ public interface TaskMapper {
 
     int gettaskstudenthaschosendoubletaskListDataCountByPageAndRows(@Param("page") int page, @Param("rows") int rows, @Param("userId") String userId);
 
+    void deletehaschosentopic(@Param("taskid")String taskid, @Param("userId")String userId);
+
+    List<Task> getviewchosenstudentallListData(@Param("page")int page, @Param("rows")int rows, @Param("userId") String userId, @Param("grade")String grade);
+
+    int getviewchosenstudentallListDataCountByPageAndRows(@Param("page") int page, @Param("rows") int rows, @Param("userId") String userId, @Param("grade") String grade);
+
+    void updateTaskChosenStatus(@Param("taskid")String taskid, @Param("choosestatusId")String choosestatusId, @Param("studentId")String studentId, @Param("status") String status);
+
 
 //    List<Task> getdoubletaskListByPageAndRows(@Param("page")int page, @Param("rows")int rows, @Param("grade")String grade, @Param("majorid")String majorid);
 }

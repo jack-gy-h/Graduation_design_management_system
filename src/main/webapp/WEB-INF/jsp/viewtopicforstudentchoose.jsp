@@ -56,7 +56,7 @@
                 pageSize: 20,
                 pageList: [10, 20, 30],
                 rownumbers: true,
-                singleSelect: true,
+                singleSelect: false,
                 fit: false,
                 border: false,
                 idField: "id",

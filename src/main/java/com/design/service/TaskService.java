@@ -49,6 +49,14 @@ public interface TaskService {
 
     int gettaskstudenthaschosendoubletaskListDataCountByPageAndRows(int page, int rows, String userId);
 
+    void deletehaschosentopic(String taskid, String userId);
+
+    List<Task> getviewchosenstudentallListData(int page, int rows, String userId,String grade);
+
+    int getviewchosenstudentallListDataCountByPageAndRows(int page, int rows, String userId, String grade);
+
+    void updateTaskChosenStatus(String taskid, String choosestatusId, String studentId,String status);
+
 
 //    List<Task> gettaskListByPageAndRowsForAuditDouble(int page, int rows, String grade, String majorid);
 }
