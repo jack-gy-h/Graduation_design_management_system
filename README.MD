@@ -434,7 +434,39 @@
 
 #v19.0
 
-#完成了教师的双选功能，主要逻辑就是自己的任务的状态更改为2/3（通过/不通过）
+#获取属于自己的双选题目：
+
+#属于自己的：t.teacher_id = #{userId}
+
+#状态不为null的tc.teacher_choose_status is not null
+
+#属于自己学年的t.grade = #{grade}
+
+#双选：t.pattern = 1
+
+###完成了教师的双选功能，主要逻辑就是将自己的任务的状态更改为2/3（通过/不通过）
+
+#主要用到update的手段：
+
+#    <update id="updateTaskChosenStatus">
+
+#update task_chosen tc
+
+#set tc.task_id               = #{taskid},
+
+#tc.chosen_student        = #{studentId},
+
+#tc.teacher_choose_status = #{status}
+
+#where
+
+#tc.task_id = #{taskid}
+
+#AND tc.chosen_student = #{studentId}
+
+#AND tc.teacher_choose_status = #{choosestatusId}
+
+#</update>
       
 
 
