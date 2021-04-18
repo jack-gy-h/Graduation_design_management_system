@@ -28,5 +28,7 @@ public interface OfficeService {
 
     List<Office> getUserBymajorIdAndIdentitys(String majorId, String identitys,String usergrade);
 
+    String getOfficeCnNameById(String Id);
+
 //    Office selectById(String i);
 }

@@ -917,7 +917,8 @@ public Map<String, Object> viewchosenstudentallListData(int page, int rows) {
 
     }
 
-//    /student/deletehaschosentopic
+
+//    进入学生申报题目的发布界面
 @RequestMapping(value = "/student/releasetopic")
 public String taskstudentreleasetopic() {
 
@@ -928,6 +929,7 @@ public String taskstudentreleasetopic() {
 
 }
 
+//添加学生申报题目操作
 @RequestMapping(value = "/student/releasetopic/form")
     public String taskstudentreleasetopicform(HttpServletRequest request, Task task, Model model){
 
@@ -989,6 +991,14 @@ public String taskstudentreleasetopic() {
 
 }
 
+
+//获取学生申报题目的列表
+//获取选题模式为学生申报（即pattern = 3）
+//    而且正常的（t.del_flag = 0）
+//    属于自己的（tc.chosen_student = #{userId}）
+//    而且是自己年级（t.grade = #{grade}）
+//    的课题
+//    最后一个年级主要是预防留级学生的获取
 @RequestMapping(value = "/student/releasetaskListData")
 @ResponseBody
 public Map<String, Object> taskstudentreleasetaskListData(int page, int rows){
@@ -1037,7 +1047,7 @@ public Map<String, Object> taskstudentreleasetaskListData(int page, int rows){
 
 }
 
-
+//保存申报题目操作（包括添加和修改操作）
     @RequestMapping(value = "/student/release/save")
     public String taskstudentreleasesave(Task task){
 
@@ -1111,6 +1121,7 @@ public Map<String, Object> taskstudentreleasetaskListData(int page, int rows){
 }
 
 ///student/modifytopic
+//    学生申报题目的修改
     @RequestMapping(value = "/student/modifytopic")
     public String taskstudentmodifytopic(HttpServletRequest request,Task task,Model model){
 
@@ -1134,6 +1145,7 @@ public Map<String, Object> taskstudentreleasetaskListData(int page, int rows){
 
     }
 
+//    学生申报题目的自我删除
     @RequestMapping(value = "/student/delete")
     public String taskstudentreleasefordelete(HttpServletRequest request, Task task, Model model) {
 
@@ -1155,6 +1167,7 @@ public Map<String, Object> taskstudentreleasetaskListData(int page, int rows){
     }
 
 //    /task/teacher/audit/studentrelese
+//    教师进入审核学生申报题目的信息的界面
 @RequestMapping(value = "/teacher/audit/studentrelese")
 public String taskteacherauditstudentrelese(HttpServletRequest request, Task task, Model model) {
 
@@ -1165,6 +1178,13 @@ public String taskteacherauditstudentrelese(HttpServletRequest request, Task tas
 
 }
 
+//教师获取学生申报题目列表
+
+//获取学生申报的（t.pattern = 3）
+//    指定自己的（t.teacher_id = #{userId}）
+//    当前年限的（t.grade = #{grade}）
+//    正常的（即没有被删除的）题目（t.del_flag = 0）
+//    由于没有中间人的审核，因此无所谓审核状态
 @RequestMapping(value = "/viewauditstudentreleaseListData")
 @ResponseBody
 public Map<String, Object> taskviewauditstudentreleaseListData(int page, int rows) {
@@ -1200,7 +1220,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 //        System.out.println("type:" + type);
 //        System.out.println("source:" + source);
 
-    List<Task> taskList = taskService.gettaskviewauditstudentreleaseListData(page, rows,userId);
+    List<Task> taskList = taskService.gettaskviewauditstudentreleaseListData(page, rows,userId,grade);
 
 
 //        System.out.print("taskList.get(0).getTopic():"+taskList.get(0));
@@ -1233,7 +1253,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 //
 //        String college_id_CN = office.getName();
 
-    Count = taskService.getdoubletaskListCountByPageAndRowsForAuditDouble(page, rows, grade, majorid);
+//    Count = taskService.getdoubletaskListCountByPageAndRowsForAuditDouble(page, rows, grade, majorid);
 
     map.put("total", Count);
 

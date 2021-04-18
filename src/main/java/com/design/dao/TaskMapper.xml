@@ -976,6 +976,7 @@
         WHERE t.pattern = 3
           AND t.teacher_id = #{userId}
           AND t.del_flag = 0
+          AND t.grade = #{grade}
         LIMIT #{page},#{rows}
 
 

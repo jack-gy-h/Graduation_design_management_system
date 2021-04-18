@@ -148,7 +148,7 @@ public interface TaskMapper {
 
     void updatetaskchosen(Task task);
 
-    List<Task> gettaskviewauditstudentreleaseListData(@Param("page")int page, @Param("rows")int rows, @Param("userId")String userId);
+    List<Task> gettaskviewauditstudentreleaseListData(@Param("page")int page, @Param("rows")int rows, @Param("userId")String userId, @Param("grade")String grade);
 
 
 //    List<Task> getdoubletaskListByPageAndRows(@Param("page")int page, @Param("rows")int rows, @Param("grade")String grade, @Param("majorid")String majorid);

@@ -31,6 +31,10 @@ public interface UserService {
 
     List<User> getGradeListById(String userid);
 
+    int updateuserByPrimaryKey(User user1);
+
+//    String getofficenameById(String collegeid);
+
 //    Object getGradeById(User user);
 //}}
 }

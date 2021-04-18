@@ -113,4 +113,6 @@ public interface OfficeMapper<T> {
     List<Office> getMajorByUserIdAndGradeIdAndCollegeidAndMajorId(String userid, String gradeid, String collegeid, String majorid);
 
     List<Office> getUserBymajorIdAndIdentitys(@Param("majorId") String majorId, @Param("identitys") String identitys,@Param("usergrade") String usergrade);
+
+    String getOfficeCnNameById(String Id);
 }

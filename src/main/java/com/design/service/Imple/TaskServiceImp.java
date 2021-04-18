@@ -179,9 +179,9 @@ public class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public List<Task> gettaskviewauditstudentreleaseListData(int page, int rows, String userId) {
+    public List<Task> gettaskviewauditstudentreleaseListData(int page, int rows, String userId,String grade) {
         page = (page - 1) * rows;
-        return taskMapper.gettaskviewauditstudentreleaseListData(page,rows,userId);
+        return taskMapper.gettaskviewauditstudentreleaseListData(page,rows,userId,grade);
     }
 
 

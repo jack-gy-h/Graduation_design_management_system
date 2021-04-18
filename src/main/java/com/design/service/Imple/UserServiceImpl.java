@@ -100,5 +100,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.getGradeListById(userid);
     }
 
+    @Override
+    public int updateuserByPrimaryKey(User user1) {
+        return userMapper.updateByPrimaryKey(user1);
+    }
+
 
 }

@@ -67,7 +67,7 @@ public interface TaskService {
 
     void updatetaskchosen(Task task);
 
-    List<Task> gettaskviewauditstudentreleaseListData(int page, int rows,String userId);
+    List<Task> gettaskviewauditstudentreleaseListData(int page, int rows,String userId,String grade);
 
 
 //    List<Task> gettaskListByPageAndRowsForAuditDouble(int page, int rows, String grade, String majorid);

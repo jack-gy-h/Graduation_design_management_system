@@ -70,6 +70,11 @@ public class OfficeServiceImp implements OfficeService {
         return officeMapper.getUserBymajorIdAndIdentitys(majorId,identitys, usergrade);
     }
 
+    @Override
+    public String getOfficeCnNameById(String Id) {
+        return officeMapper.getOfficeCnNameById(Id);
+    }
+
 //    @Override
 //    public Office selectById(String i) {
 //        return officeMapper.selectByPrimaryKey(i);

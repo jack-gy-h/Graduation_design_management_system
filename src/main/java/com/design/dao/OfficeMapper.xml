@@ -521,4 +521,9 @@ WHERE uia.major_id = #{majorId}
 AND uia.identitys_id = #{identitys}
 AND uia.grade = #{usergrade}
     </select>
+    <select id="getOfficeCnNameById" resultType="java.lang.String">
+        select name
+FROM office
+WHERE id = #{Id}
+    </select>
 </mapper>
