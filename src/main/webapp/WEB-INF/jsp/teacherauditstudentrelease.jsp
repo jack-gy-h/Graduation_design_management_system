@@ -46,7 +46,7 @@
                     alert("该学生已有选题，请退选");
                     return;
                 }else {
-                    window.location.href = '/teacher/task/chosenstudent?taskid=' + taskid+ '&choosestatusId=' + choosestatusId + '&studentId=' + studentId + '&status=2';
+                    window.location.href = '/teacher/task/chosenstudent?taskid=' + taskid+ '&choosestatusId=' + choosestatusId + '&studentId=' + studentId + '&status=2&studentrelease=1&auditstatus=1';
                 }
 
 
@@ -62,8 +62,8 @@
 
         function loadData(office, topic, teacher, teacheridentitynumber, type, source) {
             $("#dg").datagrid({
-                title: "审核双选题目信息列表",
-                url: "/task/viewchosenstudentallListData",
+                title: "审核学生申报题目信息列表",
+                url: "/task/viewauditstudentreleaseListData",
                 method: "POST",
                 pagination: true,
                 pageSize: 20,
@@ -122,9 +122,9 @@
 
         function formatTitle(val, row) {
             if (row.teacherchoosestatusId == 1) {
-                return "<a target = '_self'   style = 'text-decoration:none'href = 'javascript:judge(\"" + row.id + "\",\"" + row.teacherchoosestatusId+"\",\""+ row.studentId+"\",2)' > 通过 </a>&nbsp;<a target = '_self'   style = 'text-decoration:none'href = '/teacher/task/chosenstudent?taskid=" + row.id + "&choosestatusId=" + row.teacherchoosestatusId + "&studentId=" + row.studentId + "&status=3' > 不通过 </a>"
+                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/student/viewtopic?id=" + row.id + "' >查看详情 </a>&nbsp;<a target = '_self'   style = 'text-decoration:none'href = 'javascript:judge(\"" + row.id + "\",\"" + row.teacherchoosestatusId+"\",\""+ row.studentId+"\",2)' > 通过 </a>&nbsp;<a target = '_self'   style = 'text-decoration:none'href = '/teacher/task/chosenstudent?taskid=" + row.id + "&choosestatusId=" + row.teacherchoosestatusId + "&studentId=" + row.studentId + "&status=3&studentrelease=1&auditstatus=2' > 不通过 </a>"
             }else if(row.teacherchoosestatusId == 2){
-                return "<a target = '_self'   style = 'text-decoration:none'href = '/teacher/task/chosenstudent?taskid=" + row.id + "&choosestatusId=" + row.teacherchoosestatusId + "&studentId=" + row.studentId + "&status=3' > 更改为不通过 </a>"
+                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/student/viewtopic?id=" + row.id + "' >查看详情 </a><a target = '_self'   style = 'text-decoration:none'href = '/teacher/task/chosenstudent?taskid=" + row.id + "&choosestatusId=" + row.teacherchoosestatusId + "&studentId=" + row.studentId + "&status=3&studentrelease=1&auditstatus=2' > 更改为不通过 </a>"
             }
             // return "<a target='_self' style='text-decoration:none' href='/user/addUserRoleForm?userid=" + row.id + "'>添加用户角色</a> <a target='_self' style='text-decoration:none' href='/user/deleteUserRoleForm?userid=" + row.id + "&identitysid=" + row.identitysid + "&grade=" + row.grade + "&collegeid=" + row.collegeid + "&majorid=" + row.majorid + "&roleid=" + row.roleId + "'>删除</a>"
         }

@@ -452,7 +452,7 @@
             <form:input path="sourcename" class="required input-xlarge" readonly="true"/>
         </div>
     </div>
-
+    <c:if test="${task.canbechosentypename != null}" >
     <div class="control-group">
         <label class="control-label">可选专业:</label>
         <div class="controls">
@@ -475,6 +475,8 @@
             <form:input path="canbechosentypename" class="required input-xlarge" readonly="true"/>
         </div>
     </div>
+
+</c:if>
 
     <%--    <div class="control-group">--%>
     <%--        <label class="control-label"></label>--%>

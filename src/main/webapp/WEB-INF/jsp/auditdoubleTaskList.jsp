@@ -36,7 +36,7 @@
 
         function loadData() {
             $("#dg").datagrid({
-                title: "审核本专业课题",
+                title: "审核本专业双选课题",
                 url: "/task/audit/double/ListData",
                 method: "POST",
                 pagination: true,

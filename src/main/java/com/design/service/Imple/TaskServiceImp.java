@@ -151,6 +151,39 @@ public class TaskServiceImp implements TaskService {
         taskMapper.updateTaskChosenStatus(taskid, choosestatusId, studentId, status);
     }
 
+    @Override
+    public void inserttaskchosen(Task task) {
+        taskMapper.inserttaskchosen(task);
+
+    }
+
+    @Override
+    public List<Task> gettaskstudentreleasetaskListData(int page, int rows, String userId, String grade) {
+        page = (page - 1) * rows;
+        return taskMapper.gettaskstudentreleasetaskListData(page, rows, userId, grade);
+    }
+
+    @Override
+    public Task getTaskForstudentchoosemodifyById(String id) {
+        return taskMapper.getTaskForstudentchoosemodifyById(id);
+    }
+
+    @Override
+    public int updatetask(Task task) {
+        return taskMapper.updateByPrimaryKey(task);
+    }
+
+    @Override
+    public void updatetaskchosen(Task task) {
+        taskMapper.updatetaskchosen(task);
+    }
+
+    @Override
+    public List<Task> gettaskviewauditstudentreleaseListData(int page, int rows, String userId) {
+        page = (page - 1) * rows;
+        return taskMapper.gettaskviewauditstudentreleaseListData(page,rows,userId);
+    }
+
 
 //    @Override
 //    public int getdoubletaskListCountByPageAndRows(int page, int rows, String grade, String userId, String office, String topic, String teacher, String teacheridentitynumber, String type, String source) {

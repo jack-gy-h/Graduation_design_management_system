@@ -57,6 +57,18 @@ public interface TaskService {
 
     void updateTaskChosenStatus(String taskid, String choosestatusId, String studentId,String status);
 
+    void inserttaskchosen(Task task);
+
+    List<Task> gettaskstudentreleasetaskListData(int page, int rows, String userId, String grade);
+
+    Task getTaskForstudentchoosemodifyById(String id);
+
+    int updatetask(Task task);
+
+    void updatetaskchosen(Task task);
+
+    List<Task> gettaskviewauditstudentreleaseListData(int page, int rows,String userId);
+
 
 //    List<Task> gettaskListByPageAndRowsForAuditDouble(int page, int rows, String grade, String majorid);
 }

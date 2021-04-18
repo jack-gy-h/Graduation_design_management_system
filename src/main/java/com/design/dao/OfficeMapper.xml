@@ -513,4 +513,12 @@
           AND uia.college_id = #{param3}
           AND uia.major_id = #{param4}
     </select>
+    <select id="getUserBymajorIdAndIdentitys" resultType="com.design.entity.Office">
+        select u.*
+FROM user u
+LEFT JOIN user_info_all uia on u.id = uia.user_id
+WHERE uia.major_id = #{majorId}
+AND uia.identitys_id = #{identitys}
+AND uia.grade = #{usergrade}
+    </select>
 </mapper>

@@ -140,6 +140,16 @@ public interface TaskMapper {
 
     void updateTaskChosenStatus(@Param("taskid")String taskid, @Param("choosestatusId")String choosestatusId, @Param("studentId")String studentId, @Param("status") String status);
 
+    void inserttaskchosen(Task task);
+
+    List<Task> gettaskstudentreleasetaskListData(@Param("page") int page, @Param("rows") int rows, @Param("userId") String userId, @Param("grade") String grade);
+
+    Task getTaskForstudentchoosemodifyById(@Param("id")String id);
+
+    void updatetaskchosen(Task task);
+
+    List<Task> gettaskviewauditstudentreleaseListData(@Param("page")int page, @Param("rows")int rows, @Param("userId")String userId);
+
 
 //    List<Task> getdoubletaskListByPageAndRows(@Param("page")int page, @Param("rows")int rows, @Param("grade")String grade, @Param("majorid")String majorid);
 }

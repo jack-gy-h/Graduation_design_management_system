@@ -494,11 +494,18 @@
         set tc.task_id               = #{taskid},
             tc.chosen_student        = #{studentId},
             tc.teacher_choose_status = #{status}
-        where
-              tc.task_id = #{taskid}
+        where tc.task_id = #{taskid}
           AND tc.chosen_student = #{studentId}
           AND tc.teacher_choose_status = #{choosestatusId}
 
+    </update>
+    <update id="updatetaskchosen" parameterType="com.design.entity.Task">
+        update task_chosen tc
+        set tc.task_id               = #{id},
+            tc.chosen_student        = #{studentId},
+            tc.teacher_choose_status = 1
+        WHERE tc.task_id = #{id}
+          AND tc.chosen_student = #{studentId}
     </update>
     <delete id="deleteTaskOffice">
 
@@ -530,6 +537,13 @@
                                                                     graduation_design_management_system.task_chosen.chosen_student,
                                                                     graduation_design_management_system.task_chosen.teacher_choose_status)
         values (#{taskid}, #{userId}, 1)
+
+    </insert>
+    <insert id="inserttaskchosen" parameterType="com.design.entity.Task">
+
+        INSERT INTO task_chosen(task_id, chosen_student, teacher_choose_status)
+        values (#{id}, #{studentId}, 1)
+
 
     </insert>
     <select id="getTaskById" resultMap="BaseResultMap">
@@ -893,6 +907,77 @@
           AND tc.teacher_choose_status is not null
           AND t.grade = #{grade}
           AND t.pattern = 1
+
+    </select>
+    <select id="gettaskstudentreleasetaskListData" resultType="com.design.entity.Task">
+        SELECT t.id                       AS "id",
+               t.topic                    AS "topic",
+               co.NAME                    AS "collegeId",
+               tt.type                    AS "type",
+               ts.source                  AS "source",
+               u.NAME                     AS "teachername",
+               u.identity_number          AS "teacherId",
+               ma.NAME                    AS "majorname",
+               ttcs.teacher_choose_status AS "teacherchoosestatus",
+               ttcs.id                    AS "teacherchoosestatusId",
+               t.create_date              AS "createDate"
+        FROM task t
+                 LEFT JOIN office co ON t.college_id = co.id
+                 LEFT JOIN task_type tt ON tt.id = t.type
+                 LEFT JOIN task_source ts ON ts.id = t.source
+                 LEFT JOIN task_chosen tc ON t.id = tc.task_id
+                 LEFT JOIN task_teacher_choose_status ttcs ON ttcs.id = tc.teacher_choose_status
+                 LEFT JOIN `user` u ON t.teacher_id = u.id
+                 LEFT JOIN office ma ON t.major_id = ma.id
+        WHERE tc.chosen_student = #{userId}
+          AND t.grade = #{grade}
+          AND t.pattern = 3
+          AND t.del_flag = 0
+        LIMIT #{page},#{rows}
+
+    </select>
+    <select id="getTaskForstudentchoosemodifyById" resultType="com.design.entity.Task">
+        SELECT t.id                 AS "id",
+               t.pattern            AS "pattern",
+               t.topic              AS "topic",
+               t.college_id         AS "collegeId",
+               co.name              AS "collegename",
+               t.major_id           AS "majorId",
+               ma.`name`            AS "majorname",
+               t.teacher_id         AS "teacherId",
+               u.`name`             AS "teachername",
+               t.type               AS "type",
+               t.source             AS "source",
+               t.research_direction AS "researchDirection",
+               t.brief_introduction AS "briefIntroduction",
+               t.basic_requirements AS "basicRequirements",
+               t.reference_data     AS "referenceData",
+               t.grade              AS "grade",
+               t.create_date        AS "createDate"
+        FROM task t
+                 LEFT JOIN office co ON co.id = t.college_id
+                 LEFT JOIN office ma ON ma.id = t.major_id
+                 LEFT JOIN user u ON u.id = t.teacher_id
+        WHERE t.id = #{id}
+    </select>
+    <select id="gettaskviewauditstudentreleaseListData" resultType="com.design.entity.Task">
+        SELECT t.id                       AS "id",
+               t.topic                    AS "topic",
+               u.name                     AS "studentname",
+               ttcs.teacher_choose_status AS "teacherchoosestatus",
+               ttcs.id                    AS "teacherchoosestatusId",
+               u.id AS "studentId"
+
+
+        FROM task t
+                 LEFT JOIN task_chosen tc ON tc.task_id = t.id
+                 LEFT JOIN user u ON u.id = tc.chosen_student
+                 LEFT JOIN task_teacher_choose_status ttcs ON ttcs.id = tc.teacher_choose_status
+        WHERE t.pattern = 3
+          AND t.teacher_id = #{userId}
+          AND t.del_flag = 0
+        LIMIT #{page},#{rows}
+
 
     </select>
 

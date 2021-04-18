@@ -6,7 +6,6 @@ import com.design.entity.*;
 import com.design.service.LogServiceI;
 import com.design.service.OfficeService;
 import com.design.service.TaskService;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -408,7 +407,7 @@ public class TaskController {
 
     }
 
-
+//学生双选列表加载
     @RequestMapping(value = "/student/doubletaskListData")
     @ResponseBody
     public Map<String, Object> doubletaskListData(int page, int rows, String office, String topic, String teacher, String teacheridentitynumber, String type, String source) {
@@ -505,6 +504,7 @@ public class TaskController {
 
     }
 
+//    学生查看题目，附带日志记录
     @RequestMapping(value = "/student/viewtopic")
 
     public String studentviewtopic(Model model, HttpServletRequest request) {
@@ -709,7 +709,7 @@ public class TaskController {
 
 //    学生双选题目选择 插入操作
     @RequestMapping(value = "/student/double/choose")
-    public String taskstudentdoublechoose(HttpServletRequest request){
+    public String taskstudentdoublechoose(HttpServletRequest request,Log log){
 
         String taskid = request.getParameter("taskid");
 
@@ -718,6 +718,35 @@ public class TaskController {
         String userId = user.getId();
 
         taskService.studentdoublechoose(taskid,userId);
+
+        String id = UUID.randomUUID().toString().replace("-", "");
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+//        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+//            String userId = loginUser.getId();
+
+        String roleid = user.getRoleId();
+
+
+        log.setLid(id);
+
+        log.setLaction("选择");
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+        log.setLremark("课题");
+
+        log.setLtask(taskid);
+
+        log.setLcreatorrole(roleid);
+
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
 
         return "redirect:/task/student/doublechoselist";
 
@@ -772,6 +801,7 @@ public class TaskController {
 
     }
 
+//    学生取消选题
     @RequestMapping(value = "/student/deletehaschosentopic")
     public String taskstudentdeletehaschosentopic(HttpServletRequest request, Log log) {
 
@@ -876,8 +906,344 @@ public Map<String, Object> viewchosenstudentallListData(int page, int rows) {
 
 }
 
-//    /student/deletehaschosentopic
+    @RequestMapping(value = "/teacher/judge/haschosenAndPass")
+    @ResponseBody
+    public int taskteacherjudgehaschosenAndPass(String studentId) {
 
+        int Count = taskService.gettaskstudentjudgehaschosen(studentId);
+
+        return Count;
+
+
+    }
+
+//    /student/deletehaschosentopic
+@RequestMapping(value = "/student/releasetopic")
+public String taskstudentreleasetopic() {
+
+
+
+    return "studentReleaseTaskList";
+
+
+}
+
+@RequestMapping(value = "/student/releasetopic/form")
+    public String taskstudentreleasetopicform(HttpServletRequest request, Task task, Model model){
+
+    String id = request.getParameter("id");
+    String taskid = task.getId();
+
+
+    if (taskid != null) {
+        task = taskService.getTaskById(id);
+
+
+        model.addAttribute("task", task);
+//            System.out.println("id:"+id);
+        System.out.println("task.getCreateDate():" + task.getCreateDate());
+
+        System.out.print("task.getOfficeIdList():" + task.getOfficeIdList());
+
+        System.out.print("task.getOfficeIds()" + task.getOfficeIds());
+
+
+    }
+//        没有id肯定是添加操作
+//        这里就开始，什么都没有
+    else if (id == null) {
+        task = new Task();
+
+//            task.setCanbechosencollegeid("1");
+//            task.setCanbechosencollegeid("2");
+        model.addAttribute("task", task);
+    }
+//        有id肯定是修改操作
+    else if (id != null) {
+//            这里并不会提交表单，因此也不会有task传过来
+
+        task = taskService.getTaskById(id);
+
+
+        model.addAttribute("task", task);
+//            System.out.println("id:"+id);
+        System.out.println("task.getCreateDate():" + task.getCreateDate());
+
+        System.out.print("task.getOfficeIdList():" + task.getOfficeIdList());
+
+        System.out.print("task.getOfficeIds()" + task.getOfficeIds());
+    }
+//    List<Office> officeList = officeService.getOfficeParentListById("1");
+//    for (int i = 0; i < officeList.size(); i++) {
+//        System.out.println("officeList.get(" + i + ").getName():" + officeList.get(i).getName());
+//    }
+//
+//    model.addAttribute("UserParentOffice", officeList);
+    User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+    String usergrade = user.getGrade();
+
+    model.addAttribute("usergrade",usergrade);
+
+    return "studentreleasetopic";
+
+}
+
+@RequestMapping(value = "/student/releasetaskListData")
+@ResponseBody
+public Map<String, Object> taskstudentreleasetaskListData(int page, int rows){
+
+
+    int Count = 0;
+
+
+    Map<String, Object> map = Maps.newHashMap();
+
+//        }
+    User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+    String userId = user1.getId();
+
+
+    String grade = user1.getGrade();
+
+    String majorid = user1.getMajorid();
+
+//        System.out.println("page:" + page);
+//        System.out.println("rows:" + rows);
+//        System.out.println("grade:" + grade);
+//        System.out.println("userId:" + userId);
+//        System.out.println("office:" + office);
+//        System.out.println("topic:" + topic);
+//        System.out.println("teacher:" + teacher);
+//        System.out.println("teacheridentitynumber:" + teacheridentitynumber);
+//        System.out.println("type:" + type);
+
+    System.out.print("userId:" + userId);
+
+
+    List<Task> taskList = taskService.gettaskstudentreleasetaskListData(page, rows, userId, grade);
+
+
+//    Count = taskService.getviewchosenstudentallListDataCountByPageAndRows(page, rows, userId, grade);
+
+    map.put("total", Count);
+
+
+//        System.out.println("college_id_CN:" + college_id_CN);
+    map.put("rows", taskList);
+    return map;
+
+
+}
+
+
+    @RequestMapping(value = "/student/release/save")
+    public String taskstudentreleasesave(Task task){
+
+    User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+    String userId = user.getId().toString();
+
+    String grade = user.getGrade();
+
+    Date date = new Date();
+
+    System.out.print("task.getId():" + task.getId());
+
+    if (task.getId() == null || task.getId().equals("")){
+
+        String Id = UUIDUtil.getUUID();
+
+
+//            由于是添加操作，因此要添加taskid。
+        task.setId(Id);
+
+        task.setPattern("3");
+
+        task.setTeacherId(task.getTeachername());
+
+        task.setAuditStatus("3");
+
+        task.setGrade(grade);
+
+        task.setCreateDate(new Date());
+
+        task.setUpdateDate(new Date());
+
+        task.setDelFlag("0");
+
+        taskService.inserttask(task);
+
+        task.setStudentId(userId);
+
+        taskService.inserttaskchosen(task);
+
+
+
+
+
+//        task.setCanbechosencollegeid();
+
+    }else {
+        task.setAuditStatus("3");
+
+        task.setUpdateDate(new Date());
+
+        taskService.updatetask(task);
+
+        task.setStudentId(userId);
+
+        taskService.updatetaskchosen(task);
+
+
+
+
+
+
+
+
+    }
+
+    return "redirect:/task/student/releasetopic";
+
+
+}
+
+///student/modifytopic
+    @RequestMapping(value = "/student/modifytopic")
+    public String taskstudentmodifytopic(HttpServletRequest request,Task task,Model model){
+
+        String id = request.getParameter("id");
+
+        task = taskService.getTaskForstudentchoosemodifyById(id);
+
+
+        model.addAttribute("task", task);
+
+        return  "modifystudentreleasetopic";
+
+
+
+
+
+
+
+
+
+
+    }
+
+    @RequestMapping(value = "/student/delete")
+    public String taskstudentreleasefordelete(HttpServletRequest request, Task task, Model model) {
+
+        String id = request.getParameter("id");
+
+
+        task = taskService.getTaskById(id);
+
+        task.setDelFlag("1");
+
+        taskService.deleteTask(task);
+
+
+        model.addAttribute("task", task);
+
+        return "redirect:/task/student/releasetopic";
+
+
+    }
+
+//    /task/teacher/audit/studentrelese
+@RequestMapping(value = "/teacher/audit/studentrelese")
+public String taskteacherauditstudentrelese(HttpServletRequest request, Task task, Model model) {
+
+
+
+    return "teacherauditstudentrelease";
+
+
+}
+
+@RequestMapping(value = "/viewauditstudentreleaseListData")
+@ResponseBody
+public Map<String, Object> taskviewauditstudentreleaseListData(int page, int rows) {
+
+    //        List<Task> taskList = Lists.newArrayList();
+    int Count = 0;
+//        System.out.println("selectname:" + selectname);
+
+
+    Map<String, Object> map = Maps.newHashMap();
+//        if (selectname == null) {
+//            taskList = taskService.gettaskListByPageAndRows(page, rows);
+//            Count = taskService.getAllCount();
+//        }
+    User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+    String userId = user1.getId();
+
+//        String officet = office;
+
+    String grade = user1.getGrade();
+
+    String majorid = user1.getMajorid();
+
+//        System.out.println("page:" + page);
+//        System.out.println("rows:" + rows);
+//        System.out.println("grade:" + grade);
+//        System.out.println("userId:" + userId);
+//        System.out.println("office:" + office);
+//        System.out.println("topic:" + topic);
+//        System.out.println("teacher:" + teacher);
+//        System.out.println("teacheridentitynumber:" + teacheridentitynumber);
+//        System.out.println("type:" + type);
+//        System.out.println("source:" + source);
+
+    List<Task> taskList = taskService.gettaskviewauditstudentreleaseListData(page, rows,userId);
+
+
+//        System.out.print("taskList.get(0).getTopic():"+taskList.get(0));
+//
+//        System.out.print("taskList.get(0).getCreateDate():" + taskList.get(0).getCreateDate());
+
+//        System.out.print(taskList.get(0).get);
+
+
+//        System.out.println("taskList.get(0).getIdentityNumber():" + taskList.get(0).getIdentityNumber());
+//
+//        System.out.print("taskList.get(0).getCollegeid():" + taskList.get(0).getCollegeid());
+
+
+//        for (int i = 0; i < taskList.size(); i++) {
+//            String collegeid = taskList.get(i).getCollegeid();
+//
+//            if (collegeid != null) {
+//
+//                Office college = officeService.getOffice(collegeid);
+//
+//                String college_name = college.getName();
+//
+//                taskList.get(i).setCollegeid(college_name);
+//            }
+//
+//        }
+
+//        Office office = officeService.getOffice(college_id);
+//
+//        String college_id_CN = office.getName();
+
+    Count = taskService.getdoubletaskListCountByPageAndRowsForAuditDouble(page, rows, grade, majorid);
+
+    map.put("total", Count);
+
+
+//        System.out.println("college_id_CN:" + college_id_CN);
+    map.put("rows", taskList);
+    return map;
+
+
+}
 
 
 }

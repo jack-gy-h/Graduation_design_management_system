@@ -37,7 +37,7 @@ public class TeacherController {
     private LogServiceI logServiceI;
 
 
-//师生双选添加/删除功能
+//师生双选进入添加/修改界面
 
     @RequestMapping(value = "/task/form")
     public String releasetopic(Model model, HttpServletRequest request,Task task){
@@ -307,8 +307,9 @@ public class TeacherController {
         return "teacherchoosedouble";
     }
 
+//    审核选题学生
     @RequestMapping(value = "/task/chosenstudent")
-    public String teachertaskchosenstudent(HttpServletRequest request){
+    public String teachertaskchosenstudent(HttpServletRequest request,Log log){
         String taskid = request.getParameter("taskid");
 
         String choosestatusId = request.getParameter("choosestatusId");
@@ -316,6 +317,13 @@ public class TeacherController {
         String studentId = request.getParameter("studentId");
 
         String status = request.getParameter("status");
+
+//        studentrelease=1
+
+        String studentrelease = request.getParameter("studentrelease");
+
+        String auditstatus = request.getParameter("auditstatus");
+
 
         System.out.print("taskid:"+taskid);
 
@@ -326,6 +334,59 @@ public class TeacherController {
         System.out.print("status:" + status);
 
         taskService.updateTaskChosenStatus(taskid,choosestatusId,studentId,status);
+
+//        如果审核学生申请的题目的话。
+        if(studentrelease.equals("1")){
+
+            Task task = taskService.getTaskById(taskid);
+
+           task.setAuditStatus(auditstatus);
+
+            taskService.updateTask(task);
+
+
+//            Task task = taskService.getTaskById(taskid);
+
+
+            return "redirect:/task/teacher/audit/studentrelese";
+        }
+
+        String logid = UUID.randomUUID().toString().replace("-", "");
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = loginUser.getId();
+
+        String roleid = loginUser.getRoleId();
+
+
+        log.setLid(logid);
+
+        if (status.equals("2")) {
+
+            log.setLaction("确认通过");
+
+        } else if (status.equals("3")) {
+
+            log.setLaction("确认不通过");
+        }
+
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+        log.setLremark("双选课题选择");
+
+        log.setLtask(taskid);
+
+        log.setLcreatorrole(roleid);
+
+        log.setLcreatetime(new Date());
+
+        logServiceI.insertSelective(log);
 
         return "redirect:/teacher/task/doublechoosestudent";
     }

@@ -36,7 +36,7 @@
 
         function loadData(office, topic, teacher, teacheridentitynumber, type, source) {
             $("#dg").datagrid({
-                title: "用户信息列表",
+                title: "教师查看双选信息列表",
                 url: "/teacher/doubletaskListData",
                 method: "POST",
                 pagination: true,
