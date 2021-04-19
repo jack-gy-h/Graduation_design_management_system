@@ -507,6 +507,17 @@
         WHERE tc.task_id = #{id}
           AND tc.chosen_student = #{studentId}
     </update>
+    <update id="updatetaskteacherassign" parameterType="com.design.entity.Task">
+update task_chosen tc
+set tc.task_id = #{id},
+tc.chosen_student =#{studentId},
+    tc.teacher_choose_status = #{teacherchoosestatusId}
+WHERE tc.task_id = #{id}
+AND tc.chosen_student = #{studentId}
+
+
+
+    </update>
     <delete id="deleteTaskOffice">
 
         DELETE
@@ -943,9 +954,11 @@
                t.college_id         AS "collegeId",
                co.name              AS "collegename",
                t.major_id           AS "majorId",
-               ma.`name`            AS "majorname",
+               ma.name              AS "majorname",
                t.teacher_id         AS "teacherId",
-               u.`name`             AS "teachername",
+               u.name               AS "teachername",
+               u1.id AS 'studentId',
+               u1.name              AS "studentname",
                t.type               AS "type",
                t.source             AS "source",
                t.research_direction AS "researchDirection",
@@ -958,6 +971,8 @@
                  LEFT JOIN office co ON co.id = t.college_id
                  LEFT JOIN office ma ON ma.id = t.major_id
                  LEFT JOIN user u ON u.id = t.teacher_id
+                 LEFT JOIN task_chosen tc on t.id = tc.task_id
+                 LEFT JOIN user u1 ON tc.chosen_student = u1.id
         WHERE t.id = #{id}
     </select>
     <select id="gettaskviewauditstudentreleaseListData" resultType="com.design.entity.Task">
@@ -966,7 +981,7 @@
                u.name                     AS "studentname",
                ttcs.teacher_choose_status AS "teacherchoosestatus",
                ttcs.id                    AS "teacherchoosestatusId",
-               u.id AS "studentId"
+               u.id                       AS "studentId"
 
 
         FROM task t
@@ -979,6 +994,53 @@
           AND t.grade = #{grade}
         LIMIT #{page},#{rows}
 
+
+    </select>
+    <select id="gettaskteacherassignListData" resultType="com.design.entity.Task">
+        SELECT t.id                       AS 'id',
+               t.topic                    AS 'topic',
+               tt.type                    AS 'type',
+               ts.source                  AS 'source',
+               co.name                    AS 'collegename',
+               ma.`name`                  AS 'majorname',
+               u.`name`                   AS 'studentname',
+               ttcs.teacher_choose_status AS 'teacherchoosestatus',
+               ttcs.id                    AS 'teacherchoosestatusId',
+               t.create_date              AS 'createDate'
+
+
+        FROM task t
+                 LEFT JOIN task_type tt ON tt.id = t.type
+                 LEFT JOIN task_source ts ON ts.id = t.source
+                 LEFT JOIN office co ON co.id = t.college_id
+                 LEFT JOIN office ma ON ma.id = t.major_id
+                 LEFT JOIN task_chosen tc ON tc.task_id = t.id
+                 LEFT JOIN user u ON tc.chosen_student = u.id
+                 LEFT JOIN task_teacher_choose_status ttcs ON tc.teacher_choose_status = ttcs.id
+        WHERE t.teacher_id = #{userId}
+          AND t.del_flag = 0
+          AND t.grade = #{grade}
+          AND t.pattern = 2
+        LIMIT #{page},#{rows}
+
+
+    </select>
+    <select id="gettaskviewauditteacherassignListData" resultType="com.design.entity.Task">
+        SELECT t.id               AS 'id',
+               t.topic            AS 'topic',
+               u.`name`           AS 'studentname',
+               u1.`name`          AS 'teachername',
+               u1.identity_number AS 'teacherId',
+               u.id               AS 'studentId'
+        FROM task t
+                 LEFT JOIN task_chosen tc ON tc.task_id = t.id
+                 LEFT JOIN user u ON tc.chosen_student = u.id
+                 LEFT JOIN user u1 ON t.teacher_id = u1.id
+        WHERE t.grade = #{grade}
+          AND t.major_id = #{majorid}
+          AND t.del_flag = 0
+          AND t.pattern = 2
+AND t.audit_status = 3
 
     </select>
 

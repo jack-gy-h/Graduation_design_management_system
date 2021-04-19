@@ -69,6 +69,14 @@ public interface TaskService {
 
     List<Task> gettaskviewauditstudentreleaseListData(int page, int rows,String userId,String grade);
 
+    List<Task> gettaskteacherassignListData(int page, int rows, String userId, String grade);
+
+    List<Task> gettaskviewauditteacherassignListData(int page, int rows, String grade, String majorid);
+
+    void updatetaskteacherassign(Task task);
+
+//    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
+
 
 //    List<Task> gettaskListByPageAndRowsForAuditDouble(int page, int rows, String grade, String majorid);
 }

@@ -150,6 +150,14 @@ public interface TaskMapper {
 
     List<Task> gettaskviewauditstudentreleaseListData(@Param("page")int page, @Param("rows")int rows, @Param("userId")String userId, @Param("grade")String grade);
 
+    List<Task> gettaskteacherassignListData(@Param("page") int page, @Param("rows") int rows, @Param("userId") String userId, @Param("grade") String grade);
+
+    List<Task> gettaskviewauditteacherassignListData(@Param("page") int page, @Param("rows") int rows, @Param("grade") String grade, @Param("majorid")String majorid);
+
+    void updatetaskteacherassign(Task task);
+
+//    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
+
 
 //    List<Task> getdoubletaskListByPageAndRows(@Param("page")int page, @Param("rows")int rows, @Param("grade")String grade, @Param("majorid")String majorid);
 }

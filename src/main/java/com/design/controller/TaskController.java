@@ -408,6 +408,11 @@ public class TaskController {
     }
 
 //学生双选列表加载
+//    只能看你能选的（tc.CanBeChosenMajor = #{majorid}）
+//    双选的（t.pattern = 1）
+//    通过审核的（t.audit_status = 1）
+//    该学年的（t.grade = #{grade}）
+//    正常的题目（AND t.del_flag = 0）
     @RequestMapping(value = "/student/doubletaskListData")
     @ResponseBody
     public Map<String, Object> doubletaskListData(int page, int rows, String office, String topic, String teacher, String teacheridentitynumber, String type, String source) {
@@ -632,6 +637,10 @@ public class TaskController {
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
         String userId = user.getId();
+
+        String majorid = user.getMajorid();
+
+        String grade = user.getGrade();
 
         int Count = taskService.gettaskstudentjudgehaschosen(userId);
 
@@ -1264,6 +1273,385 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
 
 }
+
+    @RequestMapping(value = "/teacher/assignstudent")
+    public String taskteacherassignstudent() {
+
+
+        return "TeacherassignstudentTaskList";
+
+
+    }
+
+    @RequestMapping(value = "/teacher/assignstudent/form")
+    public String taskteacherassignstudentform(HttpServletRequest request, Task task, Model model) {
+
+        String id = request.getParameter("id");
+        String taskid = task.getId();
+
+
+        if (taskid != null) {
+            task = taskService.getTaskById(id);
+
+
+            model.addAttribute("task", task);
+//            System.out.println("id:"+id);
+            System.out.println("task.getCreateDate():" + task.getCreateDate());
+
+            System.out.print("task.getOfficeIdList():" + task.getOfficeIdList());
+
+            System.out.print("task.getOfficeIds()" + task.getOfficeIds());
+
+
+        }
+//        没有id肯定是添加操作
+//        这里就开始，什么都没有
+        else if (id == null) {
+            task = new Task();
+
+//            task.setCanbechosencollegeid("1");
+//            task.setCanbechosencollegeid("2");
+            model.addAttribute("task", task);
+        }
+//        有id肯定是修改操作
+        else if (id != null) {
+//            这里并不会提交表单，因此也不会有task传过来
+
+            task = taskService.getTaskById(id);
+
+
+            model.addAttribute("task", task);
+//            System.out.println("id:"+id);
+            System.out.println("task.getCreateDate():" + task.getCreateDate());
+
+            System.out.print("task.getOfficeIdList():" + task.getOfficeIdList());
+
+            System.out.print("task.getOfficeIds()" + task.getOfficeIds());
+        }
+//    List<Office> officeList = officeService.getOfficeParentListById("1");
+//    for (int i = 0; i < officeList.size(); i++) {
+//        System.out.println("officeList.get(" + i + ").getName():" + officeList.get(i).getName());
+//    }
+//
+//    model.addAttribute("UserParentOffice", officeList);
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String usergrade = user.getGrade();
+
+        model.addAttribute("usergrade", usergrade);
+
+        return "teacherassignstudent";
+
+    }
+
+
+    @RequestMapping(value = "/teacher/assignstudent/save")
+    public String taskteacherassignstudentsave(Task task) {
+
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user.getId().toString();
+
+        String grade = user.getGrade();
+
+        Date date = new Date();
+
+        System.out.print("task.getId():" + task.getId());
+
+        if (task.getId() == null || task.getId().equals("")) {
+
+            String Id = UUIDUtil.getUUID();
+
+
+//            由于是添加操作，因此要添加taskid。
+            task.setId(Id);
+
+            task.setPattern("2");
+
+            task.setTeacherId(userId);
+
+            task.setAuditStatus("3");
+
+            task.setGrade(grade);
+
+            task.setCreateDate(new Date());
+
+            task.setUpdateDate(new Date());
+
+            task.setDelFlag("0");
+
+            taskService.inserttask(task);
+
+            task.setStudentId(task.getStudentname());
+
+            taskService.inserttaskchosen(task);
+
+
+//        task.setCanbechosencollegeid();
+
+        } else {
+            task.setAuditStatus("3");
+
+            task.setUpdateDate(new Date());
+
+            taskService.updatetask(task);
+
+            taskService.updatetaskchosen(task);
+
+
+        }
+
+        return "redirect:/task/teacher/assignstudent";
+
+
+    }
+
+    @RequestMapping(value = "/teacherassignListData")
+    @ResponseBody
+    public Map<String, Object> taskteacherassignListData(int page, int rows) {
+
+
+        int Count = 0;
+
+
+        Map<String, Object> map = Maps.newHashMap();
+
+//        }
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+//        System.out.println("page:" + page);
+//        System.out.println("rows:" + rows);
+//        System.out.println("grade:" + grade);
+//        System.out.println("userId:" + userId);
+//        System.out.println("office:" + office);
+//        System.out.println("topic:" + topic);
+//        System.out.println("teacher:" + teacher);
+//        System.out.println("teacheridentitynumber:" + teacheridentitynumber);
+//        System.out.println("type:" + type);
+
+        System.out.print("userId:" + userId);
+
+
+        List<Task> taskList = taskService.gettaskteacherassignListData(page, rows, userId, grade);
+
+
+//    Count = taskService.getviewchosenstudentallListDataCountByPageAndRows(page, rows, userId, grade);
+
+        map.put("total", Count);
+
+
+//        System.out.println("college_id_CN:" + college_id_CN);
+        map.put("rows", taskList);
+        return map;
+
+
+    }
+
+    @RequestMapping(value = "/teacher/modifyassigntopic")
+    public String taskteachermodifyassigntopic(HttpServletRequest request, Task task, Model model) {
+
+        String id = request.getParameter("id");
+
+        task = taskService.getTaskForstudentchoosemodifyById(id);
+
+
+        model.addAttribute("task", task);
+
+        return "modifyteacherassigntopic";
+
+
+    }
+
+//    /task/audit/teacherassign
+
+    @RequestMapping(value = "/audit/teacherassign")
+    public String taskauditteacherassign(HttpServletRequest request, Task task, Model model) {
+
+
+        return "directorauditteacherassign";
+
+
+    }
+
+    @RequestMapping(value = "/viewauditteacherassignListData")
+    @ResponseBody
+    public Map<String, Object> taskviewauditteacherassignListData(int page, int rows) {
+
+        //        List<Task> taskList = Lists.newArrayList();
+        int Count = 0;
+//        System.out.println("selectname:" + selectname);
+
+
+        Map<String, Object> map = Maps.newHashMap();
+//        if (selectname == null) {
+//            taskList = taskService.gettaskListByPageAndRows(page, rows);
+//            Count = taskService.getAllCount();
+//        }
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+//        String officet = office;
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+//        System.out.println("page:" + page);
+//        System.out.println("rows:" + rows);
+//        System.out.println("grade:" + grade);
+//        System.out.println("userId:" + userId);
+//        System.out.println("office:" + office);
+//        System.out.println("topic:" + topic);
+//        System.out.println("teacher:" + teacher);
+//        System.out.println("teacheridentitynumber:" + teacheridentitynumber);
+//        System.out.println("type:" + type);
+//        System.out.println("source:" + source);
+
+        List<Task> taskList = taskService.gettaskviewauditteacherassignListData(page, rows, grade,majorid);
+
+
+//        System.out.print("taskList.get(0).getTopic():"+taskList.get(0));
+//
+//        System.out.print("taskList.get(0).getCreateDate():" + taskList.get(0).getCreateDate());
+
+//        System.out.print(taskList.get(0).get);
+
+
+//        System.out.println("taskList.get(0).getIdentityNumber():" + taskList.get(0).getIdentityNumber());
+//
+//        System.out.print("taskList.get(0).getCollegeid():" + taskList.get(0).getCollegeid());
+
+
+//        for (int i = 0; i < taskList.size(); i++) {
+//            String collegeid = taskList.get(i).getCollegeid();
+//
+//            if (collegeid != null) {
+//
+//                Office college = officeService.getOffice(collegeid);
+//
+//                String college_name = college.getName();
+//
+//                taskList.get(i).setCollegeid(college_name);
+//            }
+//
+//        }
+
+//        Office office = officeService.getOffice(college_id);
+//
+//        String college_id_CN = office.getName();
+
+//    Count = taskService.getdoubletaskListCountByPageAndRowsForAuditDouble(page, rows, grade, majorid);
+
+        map.put("total", Count);
+
+
+//        System.out.println("college_id_CN:" + college_id_CN);
+        map.put("rows", taskList);
+        return map;
+
+
+    }
+
+    @RequestMapping(value = "/audit/teacherassignTask")
+    public String auditteacherassign(HttpServletRequest request, Log log) {
+
+        String id = request.getParameter("id");
+
+        String audit_status = request.getParameter("audit_status");
+
+//        studentid
+
+        String studentid = request.getParameter("studentid");
+
+        String teacherchoosestatus = request.getParameter("teacherchoosestatus");
+
+//        teacherchoosestatus
+
+        System.out.print("id:" + id);
+
+        System.out.print("audit_status:" + audit_status);
+
+        if (audit_status.equals("1") || audit_status.equals("2")) {
+
+            Task task = taskService.getTaskById(id);
+
+            task.setAuditStatus(audit_status);
+
+            taskService.updateTask(task);
+
+            task.setStudentId(studentid);
+
+            task.setTeacherchoosestatusId(teacherchoosestatus);
+
+            taskService.updatetaskteacherassign(task);
+
+            String logid = UUID.randomUUID().toString().replace("-", "");
+
+            String requestUri = request.getRequestURI();//请求的Uri
+
+            User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+            String userId = loginUser.getId();
+
+            String roleid = loginUser.getRoleId();
+
+
+            log.setLid(logid);
+
+            if (audit_status.equals("1")) {
+
+                log.setLaction("通过");
+
+            } else if (audit_status.equals("2")) {
+
+                log.setLaction("不通过");
+            }
+
+
+            log.setLcreator(userId);
+
+            log.setIurl(requestUri);
+
+            log.setLremark("双选课题审核");
+
+            log.setLtask(id);
+
+            log.setLcreatorrole(roleid);
+
+            log.setLcreatetime(new Date());
+
+            logServiceI.insertSelective(log);
+
+
+        }
+        return "redirect:/task/audit/teacherassign";
+
+
+    }
+//    @RequestMapping(value = "/teacherassign/judge/studenthaschosenAndPass")
+//    @ResponseBody
+//    public int taskteacherassignjudgestudenthaschosenAndPass() {
+//
+//        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+//
+//        String userId = user.getId();
+//
+//        int Count = taskService.gettaskstudentjudgehaschosen(userId);
+//
+//        return Count;
+//
+//
+//    }
+
+
 
 
 }

@@ -184,6 +184,27 @@ public class TaskServiceImp implements TaskService {
         return taskMapper.gettaskviewauditstudentreleaseListData(page,rows,userId,grade);
     }
 
+    @Override
+    public List<Task> gettaskteacherassignListData(int page, int rows, String userId, String grade) {
+        page = (page - 1) * rows;
+        return taskMapper.gettaskteacherassignListData(page, rows, userId, grade);
+    }
+
+    @Override
+    public List<Task> gettaskviewauditteacherassignListData(int page, int rows, String grade, String majorid) {
+        return taskMapper.gettaskviewauditteacherassignListData(page, rows, grade, majorid);
+    }
+
+    @Override
+    public void updatetaskteacherassign(Task task) {
+        taskMapper.updatetaskteacherassign(task);
+    }
+
+//    @Override
+//    public List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid) {
+//        return taskMapper.getviewteacherassignListData(page, rows, grade, majorid);
+//    }
+
 
 //    @Override
 //    public int getdoubletaskListCountByPageAndRows(int page, int rows, String grade, String userId, String office, String topic, String teacher, String teacheridentitynumber, String type, String source) {
