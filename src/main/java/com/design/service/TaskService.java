@@ -75,6 +75,10 @@ public interface TaskService {
 
     void updatetaskteacherassign(Task task);
 
+    List<Task> getviewchosenstudentallForanypatternListData(int page, int rows, String userId, String grade);
+
+    Task getTaskByIdTrue(String id);
+
 //    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
 
 

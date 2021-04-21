@@ -17,6 +17,13 @@
 
     <script type="text/javascript">
 
+
+            //使用showContent方法把content显示在id是target的元素中。
+            function showContent(content, target) {
+                document.getElementById(target).innerHTML = content;
+            }
+
+
         function analysis() {
 
             var word = $("#task").val();
@@ -30,7 +37,7 @@
 
                 for(var i=0;i<data.length;i++){
 
-                    option += '<a href="https://www.baidu.com/s?wd=' + data[i] + '&rsv_spt=1&rsv_iqid=0xd528ceee0005105b&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_dl=tb&rsv_enter=1&rsv_sug3=12&rsv_sug1=5&rsv_sug7=101&rsv_sug2=0&rsv_btype=i&prefixsug=%25E6%2595%25B0%25E6%258D%25AE%25E6%258C%2596%25E6%258E%2598&rsp=5&inputT=3043&rsv_sug4=3879">'+data[i]+'</a>\n';
+                    option += '<a target="_blank" href="https://so.csdn.net/so/search/all?q=' + data[i] + '&t=all&p=1&s=0&tm=0&lv=-1&ft=0&l=&u=">'+data[i]+'</a>\n';
 
 
 
@@ -146,17 +153,20 @@
 <%--</div>--%>
 
 <body>
-<div class="main">
-    <div class="Dnews">
-        <div id="divNoticeHead" class="Dheadline"><h3>教育部关于印发《本科毕业论文（设计）抽检办法（试行）》的通知</h3>
-            <p class="NpublishTime">2021-01-11 17:01</p></div>
-        <!--下部分内容-->
-        <div class="Darticle">
-            <div id="pNoticeContent"><p>"教育部关于印发《本科毕业论文（设计）抽检办法（试行）》的通知"，请广大师生下载学习，并请严格按照毕业论文（设计）相关规定、规范做好各环节工作。</p>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+<%--<div class="main">--%>
+<%--    <div class="Dnews">--%>
+<%--        <div id="divNoticeHead" class="Dheadline"><h3>教育部关于印发《本科毕业论文（设计）抽检办法（试行）》的通知</h3>--%>
+<%--            <p class="NpublishTime">2021-01-11 17:01</p></div>--%>
+<%--        <!--下部分内容-->--%>
+<%--        <div class="Darticle">--%>
+<%--            <div id="pNoticeContent"><p>"教育部关于印发《本科毕业论文（设计）抽检办法（试行）》的通知"，请广大师生下载学习，并请严格按照毕业论文（设计）相关规定、规范做好各环节工作。</p>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
+
 
 
 

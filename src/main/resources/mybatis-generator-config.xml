@@ -57,7 +57,7 @@
 <!--               enableUpdateByExample="true"/>-->
 <!--        <table tableName="menu" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
 <!--               enableUpdateByExample="true"/>-->
-        <table tableName="announcement" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+        <table tableName="assignment_book" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                enableUpdateByExample="true"/>
 
 

@@ -21,12 +21,10 @@
         <result column="teacher_id" jdbcType="VARCHAR" property="teacherId"/>
         <result column="audit_status" jdbcType="VARCHAR" property="auditStatus"/>
         <result column="grade" jdbcType="VARCHAR" property="grade"/>
+        <result column="assignmentbook_id" jdbcType="VARCHAR" property="assignmentbookId"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
         <result column="del_flag" jdbcType="CHAR" property="delFlag"/>
-        <collection property="officeList" ofType="com.design.entity.Office">
-            <id property="id" column="CanBeChosenMajor"/>
-        </collection>
     </resultMap>
     <sql id="Example_Where_Clause">
         <!--
@@ -103,7 +101,7 @@
         -->
         id, topic, college_id, major_id, type, pattern, source, canBeChosencollegeid, research_direction,
         brief_introduction, basic_requirements, reference_data, teacher_id, audit_status,
-        grade, create_date, update_date, del_flag
+        grade, assignmentbook_id, create_date, update_date, del_flag
     </sql>
     <sql id="Base_Column_List1">
         <!--
@@ -113,7 +111,6 @@
         t.*,
         tc.CanBeChosenMajor
     </sql>
-
     <select id="selectByExample" parameterType="com.design.entity.TaskExample" resultMap="BaseResultMap">
         <!--
           WARNING - @mbggenerated
@@ -160,6 +157,8 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
+
+
     <insert id="insert" parameterType="com.design.entity.Task">
         <!--
           WARNING - @mbggenerated
@@ -170,15 +169,15 @@
         source, canBeChosencollegeid, research_direction,
         brief_introduction, basic_requirements, reference_data,
         teacher_id, audit_status, grade,
-        create_date, update_date, del_flag
-        )
+        assignmentbook_id, create_date, update_date,
+        del_flag)
         values (#{id,jdbcType=VARCHAR}, #{topic,jdbcType=VARCHAR}, #{collegeId,jdbcType=VARCHAR},
         #{majorId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{pattern,jdbcType=VARCHAR},
         #{source,jdbcType=VARCHAR}, #{canbechosencollegeid,jdbcType=VARCHAR}, #{researchDirection,jdbcType=VARCHAR},
         #{briefIntroduction,jdbcType=VARCHAR}, #{basicRequirements,jdbcType=VARCHAR}, #{referenceData,jdbcType=VARCHAR},
         #{teacherId,jdbcType=VARCHAR}, #{auditStatus,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR},
-        #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=CHAR}
-        )
+        #{assignmentbookId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP},
+        #{delFlag,jdbcType=CHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.design.entity.Task">
         <!--
@@ -231,6 +230,9 @@
             </if>
             <if test="grade != null">
                 grade,
+            </if>
+            <if test="assignmentbookId != null">
+                assignmentbook_id,
             </if>
             <if test="createDate != null">
                 create_date,
@@ -287,6 +289,9 @@
             </if>
             <if test="grade != null">
                 #{grade,jdbcType=VARCHAR},
+            </if>
+            <if test="assignmentbookId != null">
+                #{assignmentbookId,jdbcType=VARCHAR},
             </if>
             <if test="createDate != null">
                 #{createDate,jdbcType=TIMESTAMP},
@@ -361,6 +366,9 @@
             <if test="record.grade != null">
                 grade = #{record.grade,jdbcType=VARCHAR},
             </if>
+            <if test="record.assignmentbookId != null">
+                assignmentbook_id = #{record.assignmentbookId,jdbcType=VARCHAR},
+            </if>
             <if test="record.createDate != null">
                 create_date = #{record.createDate,jdbcType=TIMESTAMP},
             </if>
@@ -396,6 +404,7 @@
         teacher_id = #{record.teacherId,jdbcType=VARCHAR},
         audit_status = #{record.auditStatus,jdbcType=VARCHAR},
         grade = #{record.grade,jdbcType=VARCHAR},
+        assignmentbook_id = #{record.assignmentbookId,jdbcType=VARCHAR},
         create_date = #{record.createDate,jdbcType=TIMESTAMP},
         update_date = #{record.updateDate,jdbcType=TIMESTAMP},
         del_flag = #{record.delFlag,jdbcType=CHAR}
@@ -452,6 +461,9 @@
             <if test="grade != null">
                 grade = #{grade,jdbcType=VARCHAR},
             </if>
+            <if test="assignmentbookId != null">
+                assignmentbook_id = #{assignmentbookId,jdbcType=VARCHAR},
+            </if>
             <if test="createDate != null">
                 create_date = #{createDate,jdbcType=TIMESTAMP},
             </if>
@@ -484,6 +496,7 @@
         teacher_id = #{teacherId,jdbcType=VARCHAR},
         audit_status = #{auditStatus,jdbcType=VARCHAR},
         grade = #{grade,jdbcType=VARCHAR},
+        assignmentbook_id = #{assignmentbookId,jdbcType=VARCHAR},
         create_date = #{createDate,jdbcType=TIMESTAMP},
         update_date = #{updateDate,jdbcType=TIMESTAMP},
         del_flag = #{delFlag,jdbcType=CHAR}
@@ -508,13 +521,12 @@
           AND tc.chosen_student = #{studentId}
     </update>
     <update id="updatetaskteacherassign" parameterType="com.design.entity.Task">
-update task_chosen tc
-set tc.task_id = #{id},
-tc.chosen_student =#{studentId},
-    tc.teacher_choose_status = #{teacherchoosestatusId}
-WHERE tc.task_id = #{id}
-AND tc.chosen_student = #{studentId}
-
+        update task_chosen tc
+        set tc.task_id               = #{id},
+            tc.chosen_student        =#{studentId},
+            tc.teacher_choose_status = #{teacherchoosestatusId}
+        WHERE tc.task_id = #{id}
+          AND tc.chosen_student = #{studentId}
 
 
     </update>
@@ -897,7 +909,8 @@ AND tc.chosen_student = #{studentId}
                u.`name`                   AS 'studentname',
                ttcs.teacher_choose_status AS 'teacherchoosestatus',
                ttcs.id                    AS 'teacherchoosestatusId',
-               u.id                       AS 'studentId'
+               u.id                       AS 'studentId',
+               u.email                    AS 'email'
         FROM task t
                  LEFT JOIN task_chosen tc ON tc.task_id = t.id
                  LEFT JOIN user u ON tc.chosen_student = u.id
@@ -957,7 +970,7 @@ AND tc.chosen_student = #{studentId}
                ma.name              AS "majorname",
                t.teacher_id         AS "teacherId",
                u.name               AS "teachername",
-               u1.id AS 'studentId',
+               u1.id                AS 'studentId',
                u1.name              AS "studentname",
                t.type               AS "type",
                t.source             AS "source",
@@ -1040,8 +1053,36 @@ AND tc.chosen_student = #{studentId}
           AND t.major_id = #{majorid}
           AND t.del_flag = 0
           AND t.pattern = 2
-AND t.audit_status = 3
+          AND t.audit_status = 3
 
+    </select>
+    <select id="getviewchosenstudentallForanypatternListData" resultType="com.design.entity.Task">
+        SELECT t.id                              AS 'id',
+               t.topic                           AS 'topic',
+               u.`name`                          AS 'studentname',
+               tp.pattern                        AS 'pattern',
+               taas.task_assignment_audit_status AS 'auditStatus',
+               ab.audit_status                   AS 'auditStatusId',
+               t.assignmentbook_id               AS 'assignmentbookId'
+
+        FROM task t
+                 LEFT JOIN task_chosen tc ON tc.task_id = t.id
+                 LEFT JOIN task_teacher_choose_status ttcs ON ttcs.id = tc.teacher_choose_status
+                 LEFT JOIN user u ON tc.chosen_student = u.id
+                 LEFT JOIN task_pattern tp ON tp.id = t.pattern
+                 LEFT JOIN assignment_book ab on t.assignmentbook_id = ab.id
+                 LEFT JOIN task_assignment_audit_status taas ON taas.id = ab.audit_status
+        WHERE t.teacher_id = #{userId}
+          AND t.grade = #{grade}
+          AND t.del_flag = 0
+          AND tc.teacher_choose_status = 2
+
+
+    </select>
+    <select id="getTaskByIdTrue" resultMap="BaseResultMap">
+        select t.*
+        FROM task t
+        where t.id = #{id,jdbcType=VARCHAR}
     </select>
 
 </mapper>

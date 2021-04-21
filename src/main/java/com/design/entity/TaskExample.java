@@ -1245,6 +1245,76 @@ public class TaskExample {
             return (Criteria) this;
         }
 
+        public Criteria andAssignmentbookIdIsNull() {
+            addCriterion("assignmentbook_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssignmentbookIdIsNotNull() {
+            addCriterion("assignmentbook_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssignmentbookIdEqualTo(String value) {
+            addCriterion("assignmentbook_id =", value, "assignmentbookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssignmentbookIdNotEqualTo(String value) {
+            addCriterion("assignmentbook_id <>", value, "assignmentbookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssignmentbookIdGreaterThan(String value) {
+            addCriterion("assignmentbook_id >", value, "assignmentbookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssignmentbookIdGreaterThanOrEqualTo(String value) {
+            addCriterion("assignmentbook_id >=", value, "assignmentbookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssignmentbookIdLessThan(String value) {
+            addCriterion("assignmentbook_id <", value, "assignmentbookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssignmentbookIdLessThanOrEqualTo(String value) {
+            addCriterion("assignmentbook_id <=", value, "assignmentbookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssignmentbookIdLike(String value) {
+            addCriterion("assignmentbook_id like", value, "assignmentbookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssignmentbookIdNotLike(String value) {
+            addCriterion("assignmentbook_id not like", value, "assignmentbookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssignmentbookIdIn(List<String> values) {
+            addCriterion("assignmentbook_id in", values, "assignmentbookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssignmentbookIdNotIn(List<String> values) {
+            addCriterion("assignmentbook_id not in", values, "assignmentbookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssignmentbookIdBetween(String value1, String value2) {
+            addCriterion("assignmentbook_id between", value1, value2, "assignmentbookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssignmentbookIdNotBetween(String value1, String value2) {
+            addCriterion("assignmentbook_id not between", value1, value2, "assignmentbookId");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateDateIsNull() {
             addCriterion("create_date is null");
             return (Criteria) this;

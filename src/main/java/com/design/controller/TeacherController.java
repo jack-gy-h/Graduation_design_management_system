@@ -46,7 +46,7 @@ public class TeacherController {
 
 
         if (taskid != null) {
-            task = taskService.getTaskById(id);
+            task = taskService.getTaskByIdTrue(id);
 
 
             model.addAttribute("task", task);
@@ -72,7 +72,7 @@ public class TeacherController {
         else if(id != null){
 //            这里并不会提交表单，因此也不会有task传过来
 
-            task = taskService.getTaskById(id);
+            task = taskService.getTaskByIdTrue(id);
 
 
             model.addAttribute("task", task);
@@ -336,20 +336,24 @@ public class TeacherController {
         taskService.updateTaskChosenStatus(taskid,choosestatusId,studentId,status);
 
 //        如果审核学生申请的题目的话。
-        if(studentrelease.equals("1")){
 
-            Task task = taskService.getTaskById(taskid);
+        if (studentrelease !=null){
+            if (studentrelease.equals("1")) {
 
-           task.setAuditStatus(auditstatus);
+                Task task = taskService.getTaskById(taskid);
 
-            taskService.updateTask(task);
+                task.setAuditStatus(auditstatus);
+
+                taskService.updateTask(task);
 
 
 //            Task task = taskService.getTaskById(taskid);
 
 
-            return "redirect:/task/teacher/audit/studentrelese";
+                return "redirect:/task/teacher/audit/studentrelese";
+            }
         }
+
 
         String logid = UUID.randomUUID().toString().replace("-", "");
 

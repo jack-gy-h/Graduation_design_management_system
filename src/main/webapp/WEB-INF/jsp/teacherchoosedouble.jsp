@@ -84,6 +84,7 @@
                     {field: 'teacherchoosestatus', title: '选题状态', width: 200, align: 'center'},
                     {field: 'teacherchoosestatusId', title: "选题状态id", width: 200, hidden: true, align: 'center'},
                     {field: 'studentId', title: "学生id", width: 200, hidden: true, align: 'center'},
+                    {field: 'email', title: "学生联系方式", width: 200, align: 'center'},
                     {field: 'OperationItem', title: '操作列', width: 250, formatter: formatTitle}
 
                     // {field: 'grade', title: "年级ID", width: 200, hidden: true, align: 'center'},

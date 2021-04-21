@@ -23,7 +23,7 @@
     <script>
         var selectname = '';
         $(function () {
-            loadData();
+            loadData(selectname);
 
 
         });
@@ -91,7 +91,7 @@
     </script>
 </head>
 <body>
-用户名：<input class="easyui-textbox" id="btnSearchName" style="width:150px;height:32px;">
+身份码：<input class="easyui-textbox" id="btnSearchName" style="width:150px;height:32px;">
 <input type="button" value="搜索" onclick="search()"/>
 <input type="button" value="添加用户" onclick="opentable()"></input>
 <table id="dg"></table>

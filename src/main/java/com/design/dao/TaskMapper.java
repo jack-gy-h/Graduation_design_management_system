@@ -156,6 +156,10 @@ public interface TaskMapper {
 
     void updatetaskteacherassign(Task task);
 
+    List<Task> getviewchosenstudentallForanypatternListData(@Param("page") int page, @Param("rows") int rows, @Param("userId") String userId, @Param("grade") String grade);
+
+    Task getTaskByIdTrue(@Param("id")String id);
+
 //    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
 
 

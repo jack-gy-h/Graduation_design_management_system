@@ -200,6 +200,16 @@ public class TaskServiceImp implements TaskService {
         taskMapper.updatetaskteacherassign(task);
     }
 
+    @Override
+    public List<Task> getviewchosenstudentallForanypatternListData(int page, int rows, String userId, String grade) {
+        return taskMapper.getviewchosenstudentallForanypatternListData(page, rows, userId, grade);
+    }
+
+    @Override
+    public Task getTaskByIdTrue(String id) {
+        return taskMapper.getTaskByIdTrue(id);
+    }
+
 //    @Override
 //    public List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid) {
 //        return taskMapper.getviewteacherassignListData(page, rows, grade, majorid);

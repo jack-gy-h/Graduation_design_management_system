@@ -3,11 +3,14 @@ package com.design.controller;
 
 import com.design.Util.UUIDUtil;
 import com.design.entity.*;
+import com.design.service.AssignmentBookService;
 import com.design.service.LogServiceI;
 import com.design.service.OfficeService;
 import com.design.service.TaskService;
 import com.google.common.collect.Maps;
+import jdk.nashorn.internal.ir.Assignment;
 import org.apache.shiro.SecurityUtils;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +35,9 @@ public class TaskController {
 
     @Autowired
     private OfficeService officeService;
+
+    @Autowired
+    private AssignmentBookService assignmentBookService;
 
 
     //    师生双选保存功能
@@ -325,13 +331,13 @@ public class TaskController {
         if(audit_status.equals("1") || audit_status.equals("2")){
             System.out.print("111111111111111111111111");
 
-            Task task = taskService.getTaskById(id);
+            Task task = taskService.getTaskByIdTrue(id);
 
             System.out.print("2222222222222222222222222222");
 
             task.setAuditStatus(audit_status);
 
-            System.out.print("333333333333333333333333333");
+            System.out.print("task.getCreateDate():"+task.getCreateDate());
 
             taskService.updateTask(task);
 
@@ -537,6 +543,7 @@ public class TaskController {
 
     }
 
+//    获取当前课题下的操作日志记录数据
     @RequestMapping(value = "/viewlogDatafordoubletask")
     @ResponseBody
     public Map<String, Object> viewlogDatafordoubletask(int page, int rows,String taskid) {
@@ -902,6 +909,8 @@ public Map<String, Object> viewchosenstudentallListData(int page, int rows) {
 
 
     List<Task> taskList = taskService.getviewchosenstudentallListData(page, rows, userId,grade);
+
+//    System.out.print(taskList.get(0));
 
 
     Count = taskService.getviewchosenstudentallListDataCountByPageAndRows(page, rows, userId,grade);
@@ -1274,6 +1283,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
 }
 
+//教师申报题目列表界面
     @RequestMapping(value = "/teacher/assignstudent")
     public String taskteacherassignstudent() {
 
@@ -1283,6 +1293,8 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+//    教师申报题目
+//    添加/修改界面进入
     @RequestMapping(value = "/teacher/assignstudent/form")
     public String taskteacherassignstudentform(HttpServletRequest request, Task task, Model model) {
 
@@ -1344,7 +1356,8 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
-
+//教师申报题目
+// 保存功能
     @RequestMapping(value = "/teacher/assignstudent/save")
     public String taskteacherassignstudentsave(Task task) {
 
@@ -1406,6 +1419,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+//    教师申报题目列表数据获取
     @RequestMapping(value = "/teacherassignListData")
     @ResponseBody
     public Map<String, Object> taskteacherassignListData(int page, int rows) {
@@ -1454,6 +1468,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+//  教师修改申报课题界面进入
     @RequestMapping(value = "/teacher/modifyassigntopic")
     public String taskteachermodifyassigntopic(HttpServletRequest request, Task task, Model model) {
 
@@ -1465,12 +1480,15 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
         model.addAttribute("task", task);
 
         return "modifyteacherassigntopic";
+//
 
 
     }
 
 //    /task/audit/teacherassign
 
+
+//    系主任审核教师申报题目
     @RequestMapping(value = "/audit/teacherassign")
     public String taskauditteacherassign(HttpServletRequest request, Task task, Model model) {
 
@@ -1480,6 +1498,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+//    系主任获取教师申报题目列表数据
     @RequestMapping(value = "/viewauditteacherassignListData")
     @ResponseBody
     public Map<String, Object> taskviewauditteacherassignListData(int page, int rows) {
@@ -1560,6 +1579,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+//    系主任审核教师申报题目操作
     @RequestMapping(value = "/audit/teacherassignTask")
     public String auditteacherassign(HttpServletRequest request, Log log) {
 
@@ -1636,6 +1656,232 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
 
     }
+
+    //    教师进入自己
+    //    已经确认选题
+    //    的学生列表
+//    三种选题模式均可
+    @RequestMapping(value = "/assignment/bookList")
+    public String taskassignmentbookList() {
+
+
+        return "teacherAllWasChosen";
+
+
+    }
+
+    @RequestMapping(value = "/viewchosenstudentallForanypatternListData")
+    @ResponseBody
+    public Map<String, Object> viewchosenstudentallForanypatternListData(int page, int rows) {
+
+        int Count = 0;
+
+
+        Map<String, Object> map = Maps.newHashMap();
+
+//        }
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+//        System.out.println("page:" + page);
+//        System.out.println("rows:" + rows);
+//        System.out.println("grade:" + grade);
+//        System.out.println("userId:" + userId);
+//        System.out.println("office:" + office);
+//        System.out.println("topic:" + topic);
+//        System.out.println("teacher:" + teacher);
+//        System.out.println("teacheridentitynumber:" + teacheridentitynumber);
+//        System.out.println("type:" + type);
+
+        System.out.print("userId:" + userId);
+
+
+        List<Task> taskList = taskService.getviewchosenstudentallForanypatternListData(page, rows, userId, grade);
+
+
+        Count = taskService.getviewchosenstudentallListDataCountByPageAndRows(page, rows, userId, grade);
+
+        map.put("total", Count);
+
+
+//        System.out.println("college_id_CN:" + college_id_CN);
+        map.put("rows", taskList);
+        return map;
+
+    }
+
+    @RequestMapping(value = "/assignmentbook/form")
+    public String taskassignmentbookform(HttpServletRequest request, AssignmentBook assignmentBook, Model model) {
+
+        String taskid = request.getParameter("taskid");
+
+        String assignmentbookid = request.getParameter("assignmentbookid");
+
+        String viewid = request.getParameter("viewid");
+
+
+//        String taskid = task.getId();
+
+
+        if (assignmentbookid != null) {
+            assignmentBook = assignmentBookService.getAssignmentBookById(assignmentbookid);
+
+            if(viewid !=null){
+                if (viewid.equals("1")) {
+
+                    assignmentBook.setViewid(viewid);
+
+
+                }
+            }
+
+
+
+//            assignmentBook.setTaskid(taskid);
+
+
+            model.addAttribute("assignmentBook", assignmentBook);
+
+
+        }
+//        没有id肯定是添加操作
+//        这里就开始，什么都没有
+        else if (assignmentbookid == null) {
+
+            assignmentBook.setTaskid(taskid);
+
+            System.out.print("assignmentBook.getTaskid():"+assignmentBook.getTaskid());
+
+//            task.setCanbechosencollegeid("1");
+//            task.setCanbechosencollegeid("2");
+            model.addAttribute("assignmentBook", assignmentBook);
+        }
+
+
+        return "AssignmentForm";
+
+    }
+
+    @RequestMapping(value = "/assignmentbook/form/save")
+    public String taskassignmentbookformsave(AssignmentBook assignmentBook,Task task) {
+
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user.getId().toString();
+
+        String grade = user.getGrade();
+
+        Date date = new Date();
+
+//        System.out.print("task.getId():" + task.getId());
+
+        if (assignmentBook.getId() == null || assignmentBook.getId().equals("")) {
+
+            String Id = UUIDUtil.getUUID();
+
+
+//            由于是添加操作，因此要添加taskid。
+            assignmentBook.setId(Id);
+
+
+            assignmentBook.setAuditStatus("1");
+
+//            System.out.print("assignmentBook.getId():"+assignmentBook.getId());
+//
+//            System.out.print("assignmentBook.getContentRequirements():" + assignmentBook.getContentRequirements());
+//
+//            System.out.print(" assignmentBook.getReferences():" + assignmentBook.getReferences());
+//
+//            System.out.print("assignmentBook.getScheduling():" + assignmentBook.getScheduling());
+//
+//            System.out.print("assignmentBook.getAuditStatus():" + assignmentBook.getAuditStatus());
+//
+//            System.out.print("assignmentBook.getTaskid():" + assignmentBook.getTaskid());
+
+
+
+
+
+
+
+            assignmentBookService.insertassignmentBook(assignmentBook);
+
+//            要更新task表中任务书的id
+//            先按照传过来的taskid查询到相应的task
+//            再将任务书id set进去
+//            之后再进行update
+
+            task = taskService.getTaskByIdTrue(assignmentBook.getTaskid());
+
+            task.setAssignmentbookId(Id);
+
+            System.out.print("task.getAssignmentbookId():"+task.getAssignmentbookId());
+
+            taskService.updateTask(task);
+
+
+
+
+
+
+//        task.setCanbechosencollegeid();
+
+        } else {
+
+            System.out.print("assignmentBook.getId()111:" + assignmentBook.getId());
+
+
+
+            assignmentBook.setAuditStatus("1");
+
+            assignmentBookService.updateAssignmentBook(assignmentBook);
+
+
+
+
+
+//            task.setAuditStatus("3");
+//
+//            task.setUpdateDate(new Date());
+//
+//            taskService.updatetask(task);
+//
+//            taskService.updatetaskchosen(task);
+
+
+        }
+
+        return "redirect:/task/assignment/bookList";
+
+
+    }
+
+    @RequestMapping(value = "/assignmentbook/viewform")
+    public String taskassignmentbookviewform(HttpServletRequest request, AssignmentBook assignmentBook, Model model) {
+
+
+        String assignmentbookid = request.getParameter("assignmentbookid");
+
+
+
+            assignmentBook = assignmentBookService.getAssignmentBookById(assignmentbookid);
+
+            model.addAttribute("assignmentBook", assignmentBook);
+
+
+
+        return "AssignmentViewForm";
+
+    }
+
+
+
 //    @RequestMapping(value = "/teacherassign/judge/studenthaschosenAndPass")
 //    @ResponseBody
 //    public int taskteacherassignjudgestudenthaschosenAndPass() {

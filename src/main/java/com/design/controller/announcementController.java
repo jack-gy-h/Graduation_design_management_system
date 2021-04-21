@@ -162,6 +162,7 @@ public class announcementController {
 
 //    viewuserList
 
+//    用户查看的公告页面
     @RequestMapping(value = "/viewuserList")
     public String viewuserList(HttpServletRequest request, Model model, Announcement announcement) {
 
