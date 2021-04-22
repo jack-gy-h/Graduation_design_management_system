@@ -37,7 +37,7 @@
 
                 for(var i=0;i<data.length;i++){
 
-                    option += '<a target="_blank" href="https://so.csdn.net/so/search/all?q=' + data[i] + '&t=all&p=1&s=0&tm=0&lv=-1&ft=0&l=&u=">'+data[i]+'</a>\n';
+                    option += '<a target="_blank" href="https://www.baidu.com/s?wd=' + data[i] + '&rsv_spt=1&rsv_iqid=0x8a594f3500040c60&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=1&rsv_dl=tb&rsv_sug3=17&rsv_sug1=13&rsv_sug7=101&rsv_sug2=0&rsv_btype=i&prefixsug=%25E9%2580%2589%25E9%25A2%2598%25E5%2588%2586%25E6%259E%2590&rsp=5&inputT=4434&rsv_sug4=6213">'+data[i]+'</a>\n';
 
 
 
