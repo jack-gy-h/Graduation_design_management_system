@@ -8,9 +8,7 @@ import com.design.service.LogServiceI;
 import com.design.service.OfficeService;
 import com.design.service.TaskService;
 import com.google.common.collect.Maps;
-import jdk.nashorn.internal.ir.Assignment;
 import org.apache.shiro.SecurityUtils;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -1880,22 +1878,105 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+    @RequestMapping(value = "/audit/assignment/bookList")
+    public String taskauditassignmentbookList() {
 
 
-//    @RequestMapping(value = "/teacherassign/judge/studenthaschosenAndPass")
-//    @ResponseBody
-//    public int taskteacherassignjudgestudenthaschosenAndPass() {
-//
-//        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
-//
-//        String userId = user.getId();
-//
-//        int Count = taskService.gettaskstudentjudgehaschosen(userId);
-//
-//        return Count;
-//
-//
-//    }
+        return "directorauditassignment";
+
+
+    }
+
+    @RequestMapping(value = "/viewauditassignmentbookListData")
+    @ResponseBody
+    public Map<String, Object> taskviewauditassignmentbookListData(int page, int rows) {
+
+
+        int Count = 0;
+
+        Map<String, Object> map = Maps.newHashMap();
+
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+        List<Task> taskList = taskService.getviewauditassignmentbookListData(page, rows, majorid , grade);
+
+        map.put("total", Count);
+
+        map.put("rows", taskList);
+        return map;
+
+
+    }
+
+    @RequestMapping(value = "/assignmentbook/audit")
+    public String taskassignmentbookaudit(AssignmentBook assignmentBook, Task task, HttpServletRequest request) {
+
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user.getId().toString();
+
+        String grade = user.getGrade();
+
+        Date date = new Date();
+
+        String id = request.getParameter("id");
+
+        String assignmentid = request.getParameter("assignmentid");
+
+        assignmentBook = assignmentBookService.getAssignmentBookById(assignmentid);
+
+        if(id.equals("2")||id.equals("3")){
+
+            assignmentBook.setAuditStatus(id);
+
+            assignmentBookService.updateAssignmentBook(assignmentBook);
+
+        }
+
+
+        return "redirect:/task/audit/assignment/bookList";
+
+
+    }
+
+    @RequestMapping(value = "/view/assignmentBook")
+    public String taskviewassignmentBook() {
+
+
+        return "viewassignmentBook";
+
+
+    }
+
+    @RequestMapping(value = "/get/assignmentBook")
+    @ResponseBody
+    public List<AssignmentBook> taskgetassignmentBook() {
+
+
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+        List<AssignmentBook> assignmentBookList = assignmentBookService.getAssignmentBookByUser(userId);
+
+        return assignmentBookList;
+
+
+    }
+
+
+
+
 
 
 

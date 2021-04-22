@@ -32,8 +32,8 @@
 
         function loadData() {
             $("#dg").datagrid({
-                title: "所有确认选题学生列表",
-                url: "/task/viewchosenstudentallForanypatternListData",
+                title: "等待审核任务书列表",
+                url: "/task/viewauditassignmentbookListData",
                 method: "POST",
                 pagination: true,
                 pageSize: 20,
@@ -51,10 +51,10 @@
                     {field: 'id', title: '选题ID', width: 200, hidden: true, align: 'center'},
                     {field: 'topic', title: '题目名', width: 200, align: 'center'},
                     {field: 'studentname', title: '学生名', width: 200, align: 'center'},
+                    {field: 'teachername', title: '指导老师姓名', width: 200, align: 'center'},
                     {field: 'pattern', title: '选题模式', width: 200, align: 'center'},
                     {field: 'auditStatus', title: '审核状态', width: 200, align: 'center'},
-                    {field: 'OperationItem', title: '操作列', width: 250, formatter: formatTitle},
-                    {field: 'auditStatusId', title: "审核状态ID", width: 200, hidden: true, align: 'center'},
+                    {field: 'OperationItem', title: '操作列', width: 400, formatter: formatTitle},
                     {field: 'assignmentbookId', title: "课题任务书ID", width: 200, hidden: true, align: 'center'}
 
 
@@ -72,17 +72,8 @@
         }
 
         function formatTitle(val, row) {
+                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/student/viewtopic?id=" + row.id + "' > 查看题目详情 </a> <a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/viewform?assignmentbookid=" + row.assignmentbookId + "' > 查看任务书详情 </a> <a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/audit?assignmentid="+row.assignmentbookId+"&id=2' > 审核通过 </a><a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/audit?assignmentid=" + row.assignmentbookId + "&id=3' > 审核不通过 </a>"
 
-            if(row.auditStatusId == null){
-                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/form?taskid=" + row.id + "' > 提交 </a>"
-            }else if(row.auditStatusId == 1){
-                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/viewform?assignmentbookid=" + row.assignmentbookId + "' > 查看详情 </a> <a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/form?assignmentbookid=" + row.assignmentbookId + "' > 修改 </a>"
-            }else if (row.auditStatusId == 2){
-                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/viewform?assignmentbookid=" + row.assignmentbookId + "' > 查看详情 </a> <a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/form?assignmentbookid=" + row.assignmentbookId + "' > 修改 </a>"
-            }else if(row.auditStatusId == 3){
-                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/viewform?assignmentbookid=" + row.assignmentbookId + "' > 查看详情 </a> <a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/form?assignmentbookid=" + row.assignmentbookId + "' > 修改后再提交 </a>"
-
-            }
 
 
             // return "<a target='_self' style='text-decoration:none' href='/user/addUserRoleForm?userid=" + row.id + "'>添加用户角色</a> <a target='_self' style='text-decoration:none' href='/user/deleteUserRoleForm?userid=" + row.id + "&identitysid=" + row.identitysid + "&grade=" + row.grade + "&collegeid=" + row.collegeid + "&majorid=" + row.majorid + "&roleid=" + row.roleId + "'>删除</a>"

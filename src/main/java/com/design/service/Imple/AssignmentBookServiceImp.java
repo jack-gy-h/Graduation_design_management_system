@@ -6,6 +6,8 @@ import com.design.service.AssignmentBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AssignmentBookServiceImp implements AssignmentBookService {
 
@@ -25,5 +27,10 @@ public class AssignmentBookServiceImp implements AssignmentBookService {
     public void updateAssignmentBook(AssignmentBook assignmentBook) {
         assignmentBookMapper.updateAssignmentBook(assignmentBook);
 
+    }
+
+    @Override
+    public List<AssignmentBook> getAssignmentBookByUser(String userId) {
+        return assignmentBookMapper.getAssignmentBookByUser(userId);
     }
 }

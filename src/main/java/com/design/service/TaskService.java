@@ -79,6 +79,8 @@ public interface TaskService {
 
     Task getTaskByIdTrue(String id);
 
+    List<Task> getviewauditassignmentbookListData(int page, int rows, String majorid, String grade);
+
 //    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
 
 

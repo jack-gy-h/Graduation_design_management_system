@@ -1084,5 +1084,27 @@
         FROM task t
         where t.id = #{id,jdbcType=VARCHAR}
     </select>
+    <select id="getviewauditassignmentbookListData" resultType="com.design.entity.Task">
+        SELECT t.id                       AS 'id',
+               t.topic                    AS 'topic',
+               u.`name`                   AS 'studentname',
+               u1.`name`                  AS 'teachername',
+               tp.pattern                 AS 'pattern',
+               ttcs.teacher_choose_status AS 'auditStatus',
+               ab.id                      AS 'assignmentbookId'
+        FROM task t
+                 LEFT JOIN task_chosen tc ON t.id = tc.task_id
+                 LEFT JOIN `user` u ON tc.chosen_student = u.id
+                 LEFT JOIN task_pattern tp ON tp.id = t.pattern
+                 LEFT JOIN assignment_book ab ON ab.id = t.assignmentbook_id
+                 LEFT JOIN task_teacher_choose_status ttcs ON ab.audit_status = ttcs.id
+                 LEFT JOIN USER u1 ON t.teacher_id = u1.id
+        WHERE ab.audit_status = 1
+          AND t.major_id = #{majorid}
+          AND t.grade = #{grade}
+          AND t.del_flag = 0
+
+
+    </select>
 
 </mapper>

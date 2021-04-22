@@ -99,4 +99,6 @@ public interface AssignmentBookMapper {
     int insertassignmentBook(AssignmentBook assignmentBook);
 
     void updateAssignmentBook(AssignmentBook assignmentBook);
+
+    List<AssignmentBook> getAssignmentBookByUser(@Param("userId")String userId);
 }
