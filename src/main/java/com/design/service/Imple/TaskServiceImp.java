@@ -215,6 +215,11 @@ public class TaskServiceImp implements TaskService {
         return taskMapper.getviewauditassignmentbookListData(page, rows, majorid, grade);
     }
 
+    @Override
+    public List<Task> getbaseInformationForView(String userId) {
+        return taskMapper.getbaseInformationForView(userId);
+    }
+
 //    @Override
 //    public List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid) {
 //        return taskMapper.getviewteacherassignListData(page, rows, grade, majorid);

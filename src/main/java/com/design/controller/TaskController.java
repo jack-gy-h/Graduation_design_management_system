@@ -10,12 +10,19 @@ import com.design.service.TaskService;
 import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +31,9 @@ import java.util.UUID;
 @Controller
 @RequestMapping(value = "task")
 public class TaskController {
+
+    @Value("${UPLOAD_PATH}")
+    private String UPLOAD_PATH;
 
     @Autowired
     private TaskService taskService;
@@ -1971,6 +1981,186 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
         return assignmentBookList;
 
+
+    }
+
+//    uploadmaterial
+//进入上传材料界面
+    @RequestMapping(value = "uploadmaterial")
+    public String taskuploadmaterial(Model model) {
+
+//        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+//
+//        String userId = user1.getId();
+//
+//        List<Task> data = taskService.getbaseInformationForView(userId);
+//
+//
+//        model.addAttribute("data",data);
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+
+        List<Task> taskList = taskService.getbaseInformationForView(userId);
+
+        String materialfilename = taskList.get(0).getMaterialName();
+
+        System.out.print("materialfilename:"+materialfilename);
+
+        model.addAttribute("materialfilename", materialfilename);
+
+
+
+
+
+        return "uploadmaterial";
+
+
+    }
+
+//    获取学生已选课题的详细信息
+    @RequestMapping(value = "/get/task/baseInformation")
+    @ResponseBody
+    public List<Task> taskgettaskbaseInformation() {
+
+
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+        List<Task> taskList = taskService.getbaseInformationForView(userId);
+
+        return taskList;
+
+
+    }
+
+//    学生上传相关资料操作
+    @RequestMapping("/student/submitmaterial")
+    @ResponseBody
+    public String Upload(MultipartFile file, HttpServletRequest request) throws IOException {
+
+
+        String path = request.getServletContext().getRealPath(UPLOAD_PATH);
+        if (file == null) {
+            return "filenull";
+        }
+        String fileName = file.getOriginalFilename();
+        File dir = new File(path, fileName);
+//        System.out.println("filename" + fileName);
+//        System.out.println(dir.exists());
+//        System.out.println("file_status:" + file.isEmpty());
+
+//判断文件内容是否为空
+        if (file.isEmpty() == true) {
+            return "fileempty";
+        }
+//         判断指定文件夹是否存在
+        else if (!dir.exists()) {
+            System.out.println("111111111111111111111111111111111111111111111");
+            dir.mkdirs();
+            file.transferTo(dir);
+        } else {
+            file.transferTo(dir);
+
+        }
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+        List<Task> taskList = taskService.getbaseInformationForView(userId);
+
+        String taskid = taskList.get(0).getId();
+
+        Task task = taskService.getTaskByIdTrue(taskid);
+
+        task.setMaterialAddress(UPLOAD_PATH + "/" + fileName);
+
+        task.setMaterialName(fileName);
+
+        taskService.updateTask(task);
+
+//        Topic topic = topicService.getTopicById(id1);
+//        topic.setTopicAssignmentbookAddress(UPLOAD_PATH + "/" + fileName);
+//        topic.setTopicAssignmentbookName(fileName);
+//        System.out.println(UPLOAD_PATH + "/" + fileName);
+//        topicService.updateTopic(topic);
+
+        return "success";
+
+    }
+
+//    /task/get/material
+@RequestMapping(value = "/get/material")
+public String taskgetmaterial() {
+
+
+
+    return "teachergetmaterial";
+
+
+}
+
+    @RequestMapping(value = "downloadmaterial", method = RequestMethod.GET)
+    @ResponseBody
+    public void Upload(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        String id = request.getParameter("id");
+
+        Task task = taskService.getTaskByIdTrue(id);
+
+        String Totalpath = task.getMaterialAddress();
+
+
+//        Topic topic = topicService.getTopicById(id5);
+//
+//        String Totalpath = topic.getTopicReportAddress();
+
+        String path = request.getServletContext().getRealPath(Totalpath);
+
+        File fullURL = new File(path);
+
+//        System.out.println(fullURL.getName());
+//
+//        System.out.println(path);
+
+        InputStream bis = new BufferedInputStream(new FileInputStream(new File(path)));
+
+
+//        String Originfilename = path.substring(path.lastIndexOf("\\") + 1);
+        String filename = fullURL.getName();
+
+
+        filename = URLEncoder.encode(filename, "UTF-8");
+
+
+        response.addHeader("Content-Disposition", "attachment;filename=" + filename);
+
+
+        response.setContentType("multipart/form-data");
+
+
+        BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+
+        int len = 0;
+        while ((len = bis.read()) != -1) {
+            out.write(len);
+            out.flush();
+        }
+        out.close();
 
     }
 

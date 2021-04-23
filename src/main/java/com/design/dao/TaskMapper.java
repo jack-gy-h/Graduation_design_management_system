@@ -162,6 +162,8 @@ public interface TaskMapper {
 
     List<Task> getviewauditassignmentbookListData(@Param("page") int page, @Param("rows") int rows, @Param("majorid") String majorid , @Param("grade") String grade);
 
+    List<Task> getbaseInformationForView(@Param("userId")String userId);
+
 //    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
 
 
