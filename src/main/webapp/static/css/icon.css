@@ -2,13 +2,13 @@
 	background:url('/static/gif/blank.gif') no-repeat center center;
 }
 .icon-add{
-	background:url('icons/edit_add.png') no-repeat center center;
+	background:url('/static/icons/edit_add.png') no-repeat center center;
 }
 .icon-edit{
-	background:url('icons/pencil.png') no-repeat center center;
+	background:url('/static/icons/pencil.png') no-repeat center center;
 }
 .icon-clear{
-	background:url('icons/clear.png') no-repeat center center;
+	background:url('/static/icons/edit_remove.png') no-repeat center center;
 }
 .icon-remove{
 	background:url('icons/edit_remove.png') no-repeat center center;

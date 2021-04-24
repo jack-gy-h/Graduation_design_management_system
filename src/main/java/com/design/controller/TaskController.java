@@ -60,7 +60,7 @@ public class TaskController {
         System.out.print("task.getId():" + task.getId());
 
 //        如果id是空的，则说明是添加操作
-        if (task.getId() == null ||task.getId().equals("")) {
+        if (task.getId() == null || task.getId().equals("")) {
 
             String Id = UUIDUtil.getUUID();
 
@@ -85,11 +85,7 @@ public class TaskController {
             task.setUpdateDate(date);
 
 
-
-
 //            task.setDelFlag("0");
-
-
 
 
             taskService.inserttask(task);
@@ -103,7 +99,6 @@ public class TaskController {
 //            String userId = loginUser.getId();
 
             String roleid = loginUser.getRoleId();
-
 
 
             log.setLid(id);
@@ -127,7 +122,6 @@ public class TaskController {
         } else {
 
 //            task.setUpdateBy(userId);
-
 
 
 //修改之后肯定是未审核状态
@@ -155,7 +149,6 @@ public class TaskController {
 //            String userId = loginUser.getId();
 
             String roleid = loginUser.getRoleId();
-
 
 
             log.setLid(id);
@@ -197,10 +190,9 @@ public class TaskController {
 
     }
 
-//    系主任审核双选题目
+    //    系主任审核双选题目
     @RequestMapping(value = "/audit/doublelist")
     public String auditdoublelist(Task task, HttpServletRequest request, Log log) {
-
 
 
         return "auditdoubleTaskList";
@@ -209,7 +201,7 @@ public class TaskController {
     }
 
 
-//    整体思路：
+    //    整体思路：
 //    取出该学年的
 //    本专业下的
 //    双选题目（t.pattern=1）
@@ -250,7 +242,7 @@ public class TaskController {
 //        System.out.println("type:" + type);
 //        System.out.println("source:" + source);
 
-        List<Task> taskList = taskService.getdoubletaskListByPageAndRowsForAuditDouble(page, rows, grade,majorid);
+        List<Task> taskList = taskService.getdoubletaskListByPageAndRowsForAuditDouble(page, rows, grade, majorid);
 
 
 //        System.out.print("taskList.get(0).getTopic():"+taskList.get(0));
@@ -296,8 +288,7 @@ public class TaskController {
     }
 
 
-
-//    只有返回键的viewtopic
+    //    只有返回键的viewtopic
     @RequestMapping(value = "/viewtopic")
 
     public String viewtopic(Model model, HttpServletRequest request) {
@@ -326,17 +317,17 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/audit/double")
-    public String auditdouble(HttpServletRequest request,Log log){
+    public String auditdouble(HttpServletRequest request, Log log) {
 
         String id = request.getParameter("id");
 
         String audit_status = request.getParameter("audit_status");
 
-        System.out.print("id:"+id);
+        System.out.print("id:" + id);
 
         System.out.print("audit_status:" + audit_status);
 
-        if(audit_status.equals("1") || audit_status.equals("2")){
+        if (audit_status.equals("1") || audit_status.equals("2")) {
             System.out.print("111111111111111111111111");
 
             Task task = taskService.getTaskByIdTrue(id);
@@ -345,7 +336,7 @@ public class TaskController {
 
             task.setAuditStatus(audit_status);
 
-            System.out.print("task.getCreateDate():"+task.getCreateDate());
+            System.out.print("task.getCreateDate():" + task.getCreateDate());
 
             taskService.updateTask(task);
 
@@ -362,18 +353,16 @@ public class TaskController {
             String roleid = loginUser.getRoleId();
 
 
-
             log.setLid(logid);
 
-            if(audit_status.equals("1")){
+            if (audit_status.equals("1")) {
 
                 log.setLaction("通过");
 
-            }else if (audit_status.equals("2")){
+            } else if (audit_status.equals("2")) {
 
                 log.setLaction("不通过");
             }
-
 
 
             log.setLcreator(userId);
@@ -391,23 +380,15 @@ public class TaskController {
             logServiceI.insertSelective(log);
 
 
-
-
-
         }
         return "redirect:/task/audit/doublelist";
-
-
-
-
-
 
 
     }
 
     //    学生双选查看列表
     @RequestMapping(value = "/student/doublechoselist")
-    public String studentdoublechoselist(Model model){
+    public String studentdoublechoselist(Model model) {
 
         List<Office> officeList = officeService.getOfficeParentListById("1");
         for (int i = 0; i < officeList.size(); i++) {
@@ -421,7 +402,7 @@ public class TaskController {
 
     }
 
-//学生双选列表加载
+    //学生双选列表加载
 //    只能看你能选的（tc.CanBeChosenMajor = #{majorid}）
 //    双选的（t.pattern = 1）
 //    通过审核的（t.audit_status = 1）
@@ -461,7 +442,7 @@ public class TaskController {
         System.out.println("type:" + type);
 
 
-        List<Task> taskList = taskService.getstudentdoubletaskListByPageAndRows(page, rows, grade,majorid, office, topic, teacher, teacheridentitynumber, type, source);
+        List<Task> taskList = taskService.getstudentdoubletaskListByPageAndRows(page, rows, grade, majorid, office, topic, teacher, teacheridentitynumber, type, source);
 
 //        List<Task>  list = Lists.newArrayList();
 //
@@ -473,7 +454,6 @@ public class TaskController {
 //
 //            }
 //        }
-
 
 
 //        System.out.println("taskList.get(0).getTcs():" + taskList.get(0).getTcs());
@@ -523,7 +503,7 @@ public class TaskController {
 
     }
 
-//    学生查看题目，附带日志记录
+    //    学生查看题目，附带日志记录
     @RequestMapping(value = "/student/viewtopic")
 
     public String studentviewtopic(Model model, HttpServletRequest request) {
@@ -551,10 +531,10 @@ public class TaskController {
 
     }
 
-//    获取当前课题下的操作日志记录数据
+    //    获取当前课题下的操作日志记录数据
     @RequestMapping(value = "/viewlogDatafordoubletask")
     @ResponseBody
-    public Map<String, Object> viewlogDatafordoubletask(int page, int rows,String taskid) {
+    public Map<String, Object> viewlogDatafordoubletask(int page, int rows, String taskid) {
 //        List<Task> taskList = Lists.newArrayList();
         int Count = 0;
 //        System.out.println("selectname:" + selectname);
@@ -587,9 +567,9 @@ public class TaskController {
 //        System.out.println("source:" + source);
 
 //        遴选出属于这个选题的日志
-        List<Task> taskList = taskService.getviewlogDatafordoubletaskByPageAndRows(page, rows,taskid);
+        List<Task> taskList = taskService.getviewlogDatafordoubletaskByPageAndRows(page, rows, taskid);
 
-        System.out.print("taskList.get(0).getOperator():"+taskList.get(0).getOperator());
+        System.out.print("taskList.get(0).getOperator():" + taskList.get(0).getOperator());
 
 
 //        System.out.print("taskList.get(0).getTopic():"+taskList.get(0));
@@ -645,10 +625,10 @@ public class TaskController {
 
 //    而且teacher_choose_status为2（确认通过）（tc.teacher_choose_status = 2）
 
-//    这里无论是什么类型的选题，只要被选上都符合上面的条件
+    //    这里无论是什么类型的选题，只要被选上都符合上面的条件
     @RequestMapping(value = "/student/judge/haschosenAndPass")
     @ResponseBody
-    public int taskstudentjudgehaschosenAndPass(){
+    public int taskstudentjudgehaschosenAndPass() {
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
         String userId = user.getId();
@@ -674,7 +654,6 @@ public class TaskController {
 //          AND tc.teacher_choose_status = 1
 
 
-
     @RequestMapping(value = "/student/judge/haschosenThree")
     @ResponseBody
     public int taskstudentjudgehaschosenThree() {
@@ -689,7 +668,8 @@ public class TaskController {
 
 
     }
-//学生选题时
+
+    //学生选题时
 //判断选了几个人
 //            WHERE tc.task_id = #{taskid}
 //          AND tc.teacher_choose_status = 1
@@ -699,7 +679,7 @@ public class TaskController {
     @ResponseBody
     public int taskstudentjudgehaschosenPeople(String taskid) {
 
-        System.out.print("taskid:"+taskid);
+        System.out.print("taskid:" + taskid);
 
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
@@ -712,7 +692,7 @@ public class TaskController {
 
     }
 
-//    学生选题时
+    //    学生选题时
 //    判断是否选择了这个题目
     @RequestMapping(value = "/student/judge/whetherchoosethistask")
     @ResponseBody
@@ -724,16 +704,16 @@ public class TaskController {
 
         String userId = user.getId();
 
-        int Count = taskService.gettaskstudentjudgewhetherchoosethistask(taskid,userId);
+        int Count = taskService.gettaskstudentjudgewhetherchoosethistask(taskid, userId);
 
         return Count;
 
 
     }
 
-//    学生双选题目选择 插入操作
+    //    学生双选题目选择 插入操作
     @RequestMapping(value = "/student/double/choose")
-    public String taskstudentdoublechoose(HttpServletRequest request,Log log){
+    public String taskstudentdoublechoose(HttpServletRequest request, Log log) {
 
         String taskid = request.getParameter("taskid");
 
@@ -741,7 +721,7 @@ public class TaskController {
 
         String userId = user.getId();
 
-        taskService.studentdoublechoose(taskid,userId);
+        taskService.studentdoublechoose(taskid, userId);
 
         String id = UUID.randomUUID().toString().replace("-", "");
 
@@ -775,12 +755,9 @@ public class TaskController {
         return "redirect:/task/student/doublechoselist";
 
 
-
-
-
     }
 
-//    学生已经进行双选的题目列表
+    //    学生已经进行双选的题目列表
     @RequestMapping(value = "/student/haschosendoubletaskListData")
     @ResponseBody
     public Map<String, Object> taskstudenthaschosendoubletaskListData(int page, int rows) {
@@ -811,10 +788,10 @@ public class TaskController {
 //        System.out.println("type:" + type);
 
 
-        List<Task> taskList = taskService.gettaskstudenthaschosendoubletaskListDataByPageAndRows(page, rows,userId);
+        List<Task> taskList = taskService.gettaskstudenthaschosendoubletaskListDataByPageAndRows(page, rows, userId);
 
 
-        Count = taskService.gettaskstudenthaschosendoubletaskListDataCountByPageAndRows(page, rows,userId);
+        Count = taskService.gettaskstudenthaschosendoubletaskListDataCountByPageAndRows(page, rows, userId);
 
         map.put("total", Count);
 
@@ -825,19 +802,19 @@ public class TaskController {
 
     }
 
-//    学生取消选题
+    //    学生取消选题
     @RequestMapping(value = "/student/deletehaschosentopic")
     public String taskstudentdeletehaschosentopic(HttpServletRequest request, Log log) {
 
         String taskid = request.getParameter("taskid");
 
-        System.out.print("taskid:"+taskid);
+        System.out.print("taskid:" + taskid);
 
         User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
         String userId = loginUser.getId();
 
-        taskService.deletehaschosentopic(taskid,userId);
+        taskService.deletehaschosentopic(taskid, userId);
 
 //        Role role = roleService.getRoleById(id);
 //
@@ -848,9 +825,6 @@ public class TaskController {
         String id1 = UUID.randomUUID().toString().replace("-", "");
 
         String requestUri = request.getRequestURI();//请求的Uri
-
-
-
 
 
         String roleid = loginUser.getRoleId();
@@ -879,29 +853,29 @@ public class TaskController {
 
     }
 
-//    选出选了自己的题目的双选的学生
+    //    选出选了自己的题目的双选的学生
 //    选出自己的t.teacher_id = #{userId}
 //    审核状态不为空的AND tc.teacher_choose_status is not null
 //    而且属于自己学年的题目AND t.grade = #{grade}
 //    并且是双选的t.pattern = 1
-@RequestMapping(value = "/viewchosenstudentallListData")
-@ResponseBody
-public Map<String, Object> viewchosenstudentallListData(int page, int rows) {
+    @RequestMapping(value = "/viewchosenstudentallListData")
+    @ResponseBody
+    public Map<String, Object> viewchosenstudentallListData(int page, int rows) {
 
-    int Count = 0;
+        int Count = 0;
 
 
-    Map<String, Object> map = Maps.newHashMap();
+        Map<String, Object> map = Maps.newHashMap();
 
 //        }
-    User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
-    String userId = user1.getId();
+        String userId = user1.getId();
 
 
-    String grade = user1.getGrade();
+        String grade = user1.getGrade();
 
-    String majorid = user1.getMajorid();
+        String majorid = user1.getMajorid();
 
 //        System.out.println("page:" + page);
 //        System.out.println("rows:" + rows);
@@ -913,24 +887,24 @@ public Map<String, Object> viewchosenstudentallListData(int page, int rows) {
 //        System.out.println("teacheridentitynumber:" + teacheridentitynumber);
 //        System.out.println("type:" + type);
 
-    System.out.print("userId:"+userId);
+        System.out.print("userId:" + userId);
 
 
-    List<Task> taskList = taskService.getviewchosenstudentallListData(page, rows, userId,grade);
+        List<Task> taskList = taskService.getviewchosenstudentallListData(page, rows, userId, grade);
 
 //    System.out.print(taskList.get(0));
 
 
-    Count = taskService.getviewchosenstudentallListDataCountByPageAndRows(page, rows, userId,grade);
+        Count = taskService.getviewchosenstudentallListDataCountByPageAndRows(page, rows, userId, grade);
 
-    map.put("total", Count);
+        map.put("total", Count);
 
 
 //        System.out.println("college_id_CN:" + college_id_CN);
-    map.put("rows", taskList);
-    return map;
+        map.put("rows", taskList);
+        return map;
 
-}
+    }
 
     @RequestMapping(value = "/teacher/judge/haschosenAndPass")
     @ResponseBody
@@ -944,106 +918,105 @@ public Map<String, Object> viewchosenstudentallListData(int page, int rows) {
     }
 
 
-//    进入学生申报题目的发布界面
-@RequestMapping(value = "/student/releasetopic")
-public String taskstudentreleasetopic() {
+    //    进入学生申报题目的发布界面
+    @RequestMapping(value = "/student/releasetopic")
+    public String taskstudentreleasetopic() {
 
 
-
-    return "studentReleaseTaskList";
-
-
-}
-
-//添加学生申报题目操作
-@RequestMapping(value = "/student/releasetopic/form")
-    public String taskstudentreleasetopicform(HttpServletRequest request, Task task, Model model){
-
-    String id = request.getParameter("id");
-    String taskid = task.getId();
-
-
-    if (taskid != null) {
-        task = taskService.getTaskById(id);
-
-
-        model.addAttribute("task", task);
-//            System.out.println("id:"+id);
-        System.out.println("task.getCreateDate():" + task.getCreateDate());
-
-        System.out.print("task.getOfficeIdList():" + task.getOfficeIdList());
-
-        System.out.print("task.getOfficeIds()" + task.getOfficeIds());
+        return "studentReleaseTaskList";
 
 
     }
+
+    //添加学生申报题目操作
+    @RequestMapping(value = "/student/releasetopic/form")
+    public String taskstudentreleasetopicform(HttpServletRequest request, Task task, Model model) {
+
+        String id = request.getParameter("id");
+        String taskid = task.getId();
+
+
+        if (taskid != null) {
+            task = taskService.getTaskById(id);
+
+
+            model.addAttribute("task", task);
+//            System.out.println("id:"+id);
+            System.out.println("task.getCreateDate():" + task.getCreateDate());
+
+            System.out.print("task.getOfficeIdList():" + task.getOfficeIdList());
+
+            System.out.print("task.getOfficeIds()" + task.getOfficeIds());
+
+
+        }
 //        没有id肯定是添加操作
 //        这里就开始，什么都没有
-    else if (id == null) {
-        task = new Task();
+        else if (id == null) {
+            task = new Task();
 
 //            task.setCanbechosencollegeid("1");
 //            task.setCanbechosencollegeid("2");
-        model.addAttribute("task", task);
-    }
+            model.addAttribute("task", task);
+        }
 //        有id肯定是修改操作
-    else if (id != null) {
+        else if (id != null) {
 //            这里并不会提交表单，因此也不会有task传过来
 
-        task = taskService.getTaskById(id);
+            task = taskService.getTaskById(id);
 
 
-        model.addAttribute("task", task);
+            model.addAttribute("task", task);
 //            System.out.println("id:"+id);
-        System.out.println("task.getCreateDate():" + task.getCreateDate());
+            System.out.println("task.getCreateDate():" + task.getCreateDate());
 
-        System.out.print("task.getOfficeIdList():" + task.getOfficeIdList());
+            System.out.print("task.getOfficeIdList():" + task.getOfficeIdList());
 
-        System.out.print("task.getOfficeIds()" + task.getOfficeIds());
-    }
+            System.out.print("task.getOfficeIds()" + task.getOfficeIds());
+        }
 //    List<Office> officeList = officeService.getOfficeParentListById("1");
 //    for (int i = 0; i < officeList.size(); i++) {
 //        System.out.println("officeList.get(" + i + ").getName():" + officeList.get(i).getName());
 //    }
 //
 //    model.addAttribute("UserParentOffice", officeList);
-    User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
-    String usergrade = user.getGrade();
+        String usergrade = user.getGrade();
 
-    model.addAttribute("usergrade",usergrade);
+        model.addAttribute("usergrade", usergrade);
 
-    return "studentreleasetopic";
+        return "studentreleasetopic";
 
-}
+    }
 
 
-//获取学生申报题目的列表
+    //获取学生申报题目的列表
 //获取选题模式为学生申报（即pattern = 3）
 //    而且正常的（t.del_flag = 0）
 //    属于自己的（tc.chosen_student = #{userId}）
 //    而且是自己年级（t.grade = #{grade}）
 //    的课题
 //    最后一个年级主要是预防留级学生的获取
-@RequestMapping(value = "/student/releasetaskListData")
-@ResponseBody
-public Map<String, Object> taskstudentreleasetaskListData(int page, int rows){
+    @RequestMapping(value = "/student/releasetaskListData")
+    @ResponseBody
+    public Map<String, Object> taskstudentreleasetaskListData(int page, int rows) {
 
 
-    int Count = 0;
+        int Count = 0;
 
 
-    Map<String, Object> map = Maps.newHashMap();
+        Map<String, Object> map = Maps.newHashMap();
 
 //        }
-    User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
-    String userId = user1.getId();
+        String userId = user1.getId();
 
 
-    String grade = user1.getGrade();
+        String grade = user1.getGrade();
 
-    String majorid = user1.getMajorid();
+        String majorid = user1.getMajorid();
 
 //        System.out.println("page:" + page);
 //        System.out.println("rows:" + rows);
@@ -1055,101 +1028,92 @@ public Map<String, Object> taskstudentreleasetaskListData(int page, int rows){
 //        System.out.println("teacheridentitynumber:" + teacheridentitynumber);
 //        System.out.println("type:" + type);
 
-    System.out.print("userId:" + userId);
+        System.out.print("userId:" + userId);
 
 
-    List<Task> taskList = taskService.gettaskstudentreleasetaskListData(page, rows, userId, grade);
+        List<Task> taskList = taskService.gettaskstudentreleasetaskListData(page, rows, userId, grade);
 
 
 //    Count = taskService.getviewchosenstudentallListDataCountByPageAndRows(page, rows, userId, grade);
 
-    map.put("total", Count);
+        map.put("total", Count);
 
 
 //        System.out.println("college_id_CN:" + college_id_CN);
-    map.put("rows", taskList);
-    return map;
-
-
-}
-
-//保存申报题目操作（包括添加和修改操作）
-    @RequestMapping(value = "/student/release/save")
-    public String taskstudentreleasesave(Task task){
-
-    User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
-
-    String userId = user.getId().toString();
-
-    String grade = user.getGrade();
-
-    Date date = new Date();
-
-    System.out.print("task.getId():" + task.getId());
-
-    if (task.getId() == null || task.getId().equals("")){
-
-        String Id = UUIDUtil.getUUID();
-
-
-//            由于是添加操作，因此要添加taskid。
-        task.setId(Id);
-
-        task.setPattern("3");
-
-        task.setTeacherId(task.getTeachername());
-
-        task.setAuditStatus("3");
-
-        task.setGrade(grade);
-
-        task.setCreateDate(new Date());
-
-        task.setUpdateDate(new Date());
-
-        task.setDelFlag("0");
-
-        taskService.inserttask(task);
-
-        task.setStudentId(userId);
-
-        taskService.inserttaskchosen(task);
-
-
-
-
-
-//        task.setCanbechosencollegeid();
-
-    }else {
-        task.setAuditStatus("3");
-
-        task.setUpdateDate(new Date());
-
-        taskService.updatetask(task);
-
-        task.setStudentId(userId);
-
-        taskService.updatetaskchosen(task);
-
-
-
-
-
-
+        map.put("rows", taskList);
+        return map;
 
 
     }
 
-    return "redirect:/task/student/releasetopic";
+    //保存申报题目操作（包括添加和修改操作）
+    @RequestMapping(value = "/student/release/save")
+    public String taskstudentreleasesave(Task task) {
+
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user.getId().toString();
+
+        String grade = user.getGrade();
+
+        Date date = new Date();
+
+        System.out.print("task.getId():" + task.getId());
+
+        if (task.getId() == null || task.getId().equals("")) {
+
+            String Id = UUIDUtil.getUUID();
 
 
-}
+//            由于是添加操作，因此要添加taskid。
+            task.setId(Id);
 
-///student/modifytopic
+            task.setPattern("3");
+
+            task.setTeacherId(task.getTeachername());
+
+            task.setAuditStatus("3");
+
+            task.setGrade(grade);
+
+            task.setCreateDate(new Date());
+
+            task.setUpdateDate(new Date());
+
+            task.setDelFlag("0");
+
+            taskService.inserttask(task);
+
+            task.setStudentId(userId);
+
+            taskService.inserttaskchosen(task);
+
+
+//        task.setCanbechosencollegeid();
+
+        } else {
+            task.setAuditStatus("3");
+
+            task.setUpdateDate(new Date());
+
+            taskService.updatetask(task);
+
+            task.setStudentId(userId);
+
+            taskService.updatetaskchosen(task);
+
+
+        }
+
+        return "redirect:/task/student/releasetopic";
+
+
+    }
+
+    ///student/modifytopic
 //    学生申报题目的修改
     @RequestMapping(value = "/student/modifytopic")
-    public String taskstudentmodifytopic(HttpServletRequest request,Task task,Model model){
+    public String taskstudentmodifytopic(HttpServletRequest request, Task task, Model model) {
 
         String id = request.getParameter("id");
 
@@ -1158,20 +1122,12 @@ public Map<String, Object> taskstudentreleasetaskListData(int page, int rows){
 
         model.addAttribute("task", task);
 
-        return  "modifystudentreleasetopic";
-
-
-
-
-
-
-
-
+        return "modifystudentreleasetopic";
 
 
     }
 
-//    学生申报题目的自我删除
+    //    学生申报题目的自我删除
     @RequestMapping(value = "/student/delete")
     public String taskstudentreleasefordelete(HttpServletRequest request, Task task, Model model) {
 
@@ -1192,48 +1148,47 @@ public Map<String, Object> taskstudentreleasetaskListData(int page, int rows){
 
     }
 
-//    /task/teacher/audit/studentrelese
+    //    /task/teacher/audit/studentrelese
 //    教师进入审核学生申报题目的信息的界面
-@RequestMapping(value = "/teacher/audit/studentrelese")
-public String taskteacherauditstudentrelese(HttpServletRequest request, Task task, Model model) {
+    @RequestMapping(value = "/teacher/audit/studentrelese")
+    public String taskteacherauditstudentrelese(HttpServletRequest request, Task task, Model model) {
 
 
+        return "teacherauditstudentrelease";
 
-    return "teacherauditstudentrelease";
 
-
-}
+    }
 
 //教师获取学生申报题目列表
 
-//获取学生申报的（t.pattern = 3）
+    //获取学生申报的（t.pattern = 3）
 //    指定自己的（t.teacher_id = #{userId}）
 //    当前年限的（t.grade = #{grade}）
 //    正常的（即没有被删除的）题目（t.del_flag = 0）
 //    由于没有中间人的审核，因此无所谓审核状态
-@RequestMapping(value = "/viewauditstudentreleaseListData")
-@ResponseBody
-public Map<String, Object> taskviewauditstudentreleaseListData(int page, int rows) {
+    @RequestMapping(value = "/viewauditstudentreleaseListData")
+    @ResponseBody
+    public Map<String, Object> taskviewauditstudentreleaseListData(int page, int rows) {
 
-    //        List<Task> taskList = Lists.newArrayList();
-    int Count = 0;
+        //        List<Task> taskList = Lists.newArrayList();
+        int Count = 0;
 //        System.out.println("selectname:" + selectname);
 
 
-    Map<String, Object> map = Maps.newHashMap();
+        Map<String, Object> map = Maps.newHashMap();
 //        if (selectname == null) {
 //            taskList = taskService.gettaskListByPageAndRows(page, rows);
 //            Count = taskService.getAllCount();
 //        }
-    User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
-    String userId = user1.getId();
+        String userId = user1.getId();
 
 //        String officet = office;
 
-    String grade = user1.getGrade();
+        String grade = user1.getGrade();
 
-    String majorid = user1.getMajorid();
+        String majorid = user1.getMajorid();
 
 //        System.out.println("page:" + page);
 //        System.out.println("rows:" + rows);
@@ -1246,7 +1201,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 //        System.out.println("type:" + type);
 //        System.out.println("source:" + source);
 
-    List<Task> taskList = taskService.gettaskviewauditstudentreleaseListData(page, rows,userId,grade);
+        List<Task> taskList = taskService.gettaskviewauditstudentreleaseListData(page, rows, userId, grade);
 
 
 //        System.out.print("taskList.get(0).getTopic():"+taskList.get(0));
@@ -1281,17 +1236,17 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
 //    Count = taskService.getdoubletaskListCountByPageAndRowsForAuditDouble(page, rows, grade, majorid);
 
-    map.put("total", Count);
+        map.put("total", Count);
 
 
 //        System.out.println("college_id_CN:" + college_id_CN);
-    map.put("rows", taskList);
-    return map;
+        map.put("rows", taskList);
+        return map;
 
 
-}
+    }
 
-//教师申报题目列表界面
+    //教师申报题目列表界面
     @RequestMapping(value = "/teacher/assignstudent")
     public String taskteacherassignstudent() {
 
@@ -1301,7 +1256,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
-//    教师申报题目
+    //    教师申报题目
 //    添加/修改界面进入
     @RequestMapping(value = "/teacher/assignstudent/form")
     public String taskteacherassignstudentform(HttpServletRequest request, Task task, Model model) {
@@ -1364,7 +1319,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
-//教师申报题目
+    //教师申报题目
 // 保存功能
     @RequestMapping(value = "/teacher/assignstudent/save")
     public String taskteacherassignstudentsave(Task task) {
@@ -1427,7 +1382,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
-//    教师申报题目列表数据获取
+    //    教师申报题目列表数据获取
     @RequestMapping(value = "/teacherassignListData")
     @ResponseBody
     public Map<String, Object> taskteacherassignListData(int page, int rows) {
@@ -1476,7 +1431,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
-//  教师修改申报课题界面进入
+    //  教师修改申报课题界面进入
     @RequestMapping(value = "/teacher/modifyassigntopic")
     public String taskteachermodifyassigntopic(HttpServletRequest request, Task task, Model model) {
 
@@ -1496,7 +1451,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 //    /task/audit/teacherassign
 
 
-//    系主任审核教师申报题目
+    //    系主任审核教师申报题目
     @RequestMapping(value = "/audit/teacherassign")
     public String taskauditteacherassign(HttpServletRequest request, Task task, Model model) {
 
@@ -1506,7 +1461,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
-//    系主任获取教师申报题目列表数据
+    //    系主任获取教师申报题目列表数据
     @RequestMapping(value = "/viewauditteacherassignListData")
     @ResponseBody
     public Map<String, Object> taskviewauditteacherassignListData(int page, int rows) {
@@ -1542,7 +1497,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 //        System.out.println("type:" + type);
 //        System.out.println("source:" + source);
 
-        List<Task> taskList = taskService.gettaskviewauditteacherassignListData(page, rows, grade,majorid);
+        List<Task> taskList = taskService.gettaskviewauditteacherassignListData(page, rows, grade, majorid);
 
 
 //        System.out.print("taskList.get(0).getTopic():"+taskList.get(0));
@@ -1587,7 +1542,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
-//    系主任审核教师申报题目操作
+    //    系主任审核教师申报题目操作
     @RequestMapping(value = "/audit/teacherassignTask")
     public String auditteacherassign(HttpServletRequest request, Log log) {
 
@@ -1678,6 +1633,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+    //    获取所有确认选题学生的列表
     @RequestMapping(value = "/viewchosenstudentallForanypatternListData")
     @ResponseBody
     public Map<String, Object> viewchosenstudentallForanypatternListData(int page, int rows) {
@@ -1724,6 +1680,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+    //    进入添加/修改任务书界面
     @RequestMapping(value = "/assignmentbook/form")
     public String taskassignmentbookform(HttpServletRequest request, AssignmentBook assignmentBook, Model model) {
 
@@ -1740,7 +1697,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
         if (assignmentbookid != null) {
             assignmentBook = assignmentBookService.getAssignmentBookById(assignmentbookid);
 
-            if(viewid !=null){
+            if (viewid != null) {
                 if (viewid.equals("1")) {
 
                     assignmentBook.setViewid(viewid);
@@ -1748,7 +1705,6 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
                 }
             }
-
 
 
 //            assignmentBook.setTaskid(taskid);
@@ -1764,7 +1720,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
             assignmentBook.setTaskid(taskid);
 
-            System.out.print("assignmentBook.getTaskid():"+assignmentBook.getTaskid());
+            System.out.print("assignmentBook.getTaskid():" + assignmentBook.getTaskid());
 
 //            task.setCanbechosencollegeid("1");
 //            task.setCanbechosencollegeid("2");
@@ -1776,8 +1732,9 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+    //    添加/保存任务书操作
     @RequestMapping(value = "/assignmentbook/form/save")
-    public String taskassignmentbookformsave(AssignmentBook assignmentBook,Task task) {
+    public String taskassignmentbookformsave(AssignmentBook assignmentBook, Task task) {
 
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
@@ -1813,11 +1770,6 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 //            System.out.print("assignmentBook.getTaskid():" + assignmentBook.getTaskid());
 
 
-
-
-
-
-
             assignmentBookService.insertassignmentBook(assignmentBook);
 
 //            要更新task表中任务书的id
@@ -1829,13 +1781,9 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
             task.setAssignmentbookId(Id);
 
-            System.out.print("task.getAssignmentbookId():"+task.getAssignmentbookId());
+            System.out.print("task.getAssignmentbookId():" + task.getAssignmentbookId());
 
             taskService.updateTask(task);
-
-
-
-
 
 
 //        task.setCanbechosencollegeid();
@@ -1845,13 +1793,9 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
             System.out.print("assignmentBook.getId()111:" + assignmentBook.getId());
 
 
-
             assignmentBook.setAuditStatus("1");
 
             assignmentBookService.updateAssignmentBook(assignmentBook);
-
-
-
 
 
 //            task.setAuditStatus("3");
@@ -1870,6 +1814,8 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+
+    //教师查看任务书详情
     @RequestMapping(value = "/assignmentbook/viewform")
     public String taskassignmentbookviewform(HttpServletRequest request, AssignmentBook assignmentBook, Model model) {
 
@@ -1877,17 +1823,16 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
         String assignmentbookid = request.getParameter("assignmentbookid");
 
 
+        assignmentBook = assignmentBookService.getAssignmentBookById(assignmentbookid);
 
-            assignmentBook = assignmentBookService.getAssignmentBookById(assignmentbookid);
-
-            model.addAttribute("assignmentBook", assignmentBook);
-
+        model.addAttribute("assignmentBook", assignmentBook);
 
 
         return "AssignmentViewForm";
 
     }
 
+    //    进入审核教师任务书列表界面
     @RequestMapping(value = "/audit/assignment/bookList")
     public String taskauditassignmentbookList() {
 
@@ -1897,6 +1842,10 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+    //系主任获取当前专业（t.major_id = #{majorid}）
+//    当前年级下（t.grade = #{grade}）
+//    未审核的（ab.audit_status = 1）
+//    状态正常的t.del_flag = 0的任务书
     @RequestMapping(value = "/viewauditassignmentbookListData")
     @ResponseBody
     public Map<String, Object> taskviewauditassignmentbookListData(int page, int rows) {
@@ -1914,7 +1863,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
         String majorid = user1.getMajorid();
 
-        List<Task> taskList = taskService.getviewauditassignmentbookListData(page, rows, majorid , grade);
+        List<Task> taskList = taskService.getviewauditassignmentbookListData(page, rows, majorid, grade);
 
         map.put("total", Count);
 
@@ -1924,6 +1873,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+    //    系主任审核任务书操作
     @RequestMapping(value = "/assignmentbook/audit")
     public String taskassignmentbookaudit(AssignmentBook assignmentBook, Task task, HttpServletRequest request) {
 
@@ -1941,7 +1891,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
         assignmentBook = assignmentBookService.getAssignmentBookById(assignmentid);
 
-        if(id.equals("2")||id.equals("3")){
+        if (id.equals("2") || id.equals("3")) {
 
             assignmentBook.setAuditStatus(id);
 
@@ -1955,6 +1905,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+    //查看任务书操作
     @RequestMapping(value = "/view/assignmentBook")
     public String taskviewassignmentBook() {
 
@@ -1964,6 +1915,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
+    //    获取学生个人任务书数据
     @RequestMapping(value = "/get/assignmentBook")
     @ResponseBody
     public List<AssignmentBook> taskgetassignmentBook() {
@@ -1984,7 +1936,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
-//    uploadmaterial
+    //    uploadmaterial
 //进入上传材料界面
     @RequestMapping(value = "uploadmaterial")
     public String taskuploadmaterial(Model model) {
@@ -2010,12 +1962,9 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
         String materialfilename = taskList.get(0).getMaterialName();
 
-        System.out.print("materialfilename:"+materialfilename);
+        System.out.print("materialfilename:" + materialfilename);
 
         model.addAttribute("materialfilename", materialfilename);
-
-
-
 
 
         return "uploadmaterial";
@@ -2023,7 +1972,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
-//    获取学生已选课题的详细信息
+    //    获取学生已选课题的详细信息
     @RequestMapping(value = "/get/task/baseInformation")
     @ResponseBody
     public List<Task> taskgettaskbaseInformation() {
@@ -2044,7 +1993,7 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
-//    学生上传相关资料操作
+    //    学生上传相关资料操作
     @RequestMapping("/student/submitmaterial")
     @ResponseBody
     public String Upload(MultipartFile file, HttpServletRequest request) throws IOException {
@@ -2103,17 +2052,18 @@ public Map<String, Object> taskviewauditstudentreleaseListData(int page, int row
 
     }
 
-//    /task/get/material
-@RequestMapping(value = "/get/material")
-public String taskgetmaterial() {
+    //    /task/get/material
+//    教师进入获取学生材料界面
+    @RequestMapping(value = "/get/material")
+    public String taskgetmaterial() {
 
 
+        return "teachergetmaterial";
 
-    return "teachergetmaterial";
 
+    }
 
-}
-
+    //教师下载材料
     @RequestMapping(value = "downloadmaterial", method = RequestMethod.GET)
     @ResponseBody
     public void Upload(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -2164,11 +2114,82 @@ public String taskgetmaterial() {
 
     }
 
+    //    进入提交成绩界面。
+    @RequestMapping(value = "/set/score")
+    public String tasksetscore() {
 
 
+        return "teachersetscore";
 
 
+    }
 
+    //    添加成绩操作
+    @RequestMapping(value = "/teacher/set/score")
+    @ResponseBody
+    public String taskteachersetscore(HttpServletRequest request, Task task) {
+
+
+        String id = request.getParameter("id");
+
+//        获取该选题的所有信息，用于查看是否已经存在成绩
+//        以及作为update的载体
+        Task task1 = taskService.getTaskByIdTrue(id);
+
+        if (task1.getScore() != null) {
+            return "falseadd";
+
+        } else if (Integer.parseInt(task.getScore()) < 0 || Integer.parseInt(task.getScore()) > 100) {
+            return "illegal";
+        }
+        task1.setScore(task.getScore());
+
+        taskService.updateTask(task1);
+
+        return "success";
+
+
+    }
+//修改成绩操作
+    @RequestMapping(value = "/teacher/modify/score")
+    @ResponseBody
+    public String taskteachermodifyscore(HttpServletRequest request, Task task) {
+
+
+        String id = request.getParameter("id");
+
+//        获取该选题的所有信息，用于查看是否已经存在成绩
+//        以及作为update的载体
+        Task task1 = taskService.getTaskByIdTrue(id);
+
+        if (Integer.parseInt(task.getScore()) < 0 || Integer.parseInt(task.getScore()) > 100) {
+            return "illegal";
+        }
+        task1.setScore(task.getScore());
+
+        taskService.updateTask(task1);
+
+        return "success";
+
+
+    }
+
+    @RequestMapping(value = "/student/see/final/score")
+    public String taskstudentseefinalscore(Model model) {
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+
+        List<Task> taskList = taskService.getbaseInformationForView(userId);
+
+        model.addAttribute("task", taskList.get(0));
+
+
+        return "studentseefinalscore";
+
+
+    }
 
 
 }

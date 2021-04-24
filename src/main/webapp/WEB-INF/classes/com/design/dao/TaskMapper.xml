@@ -24,6 +24,7 @@
         <result column="assignmentbook_id" jdbcType="VARCHAR" property="assignmentbookId"/>
         <result column="material_address" jdbcType="VARCHAR" property="materialAddress"/>
         <result column="material_name" jdbcType="VARCHAR" property="materialName"/>
+        <result column="score" jdbcType="VARCHAR" property="score"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
         <result column="del_flag" jdbcType="CHAR" property="delFlag"/>
@@ -103,9 +104,10 @@
         -->
         id, topic, college_id, major_id, type, pattern, source, canBeChosencollegeid, research_direction,
         brief_introduction, basic_requirements, reference_data, teacher_id, audit_status,
-        grade, assignmentbook_id, material_address, material_name, create_date, update_date,
+        grade, assignmentbook_id, material_address, material_name, score, create_date, update_date,
         del_flag
     </sql>
+
     <sql id="Base_Column_List1">
         <!--
           WARNING - @mbggenerated
@@ -171,16 +173,16 @@
         brief_introduction, basic_requirements, reference_data,
         teacher_id, audit_status, grade,
         assignmentbook_id, material_address, material_name,
-        create_date, update_date, del_flag
-        )
+        score, create_date, update_date,
+        del_flag)
         values (#{id,jdbcType=VARCHAR}, #{topic,jdbcType=VARCHAR}, #{collegeId,jdbcType=VARCHAR},
         #{majorId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{pattern,jdbcType=VARCHAR},
         #{source,jdbcType=VARCHAR}, #{canbechosencollegeid,jdbcType=VARCHAR}, #{researchDirection,jdbcType=VARCHAR},
         #{briefIntroduction,jdbcType=VARCHAR}, #{basicRequirements,jdbcType=VARCHAR}, #{referenceData,jdbcType=VARCHAR},
         #{teacherId,jdbcType=VARCHAR}, #{auditStatus,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR},
         #{assignmentbookId,jdbcType=VARCHAR}, #{materialAddress,jdbcType=VARCHAR}, #{materialName,jdbcType=VARCHAR},
-        #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=CHAR}
-        )
+        #{score,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP},
+        #{delFlag,jdbcType=CHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.design.entity.Task">
         <!--
@@ -242,6 +244,9 @@
             </if>
             <if test="materialName != null">
                 material_name,
+            </if>
+            <if test="score != null">
+                score,
             </if>
             <if test="createDate != null">
                 create_date,
@@ -307,6 +312,9 @@
             </if>
             <if test="materialName != null">
                 #{materialName,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=VARCHAR},
             </if>
             <if test="createDate != null">
                 #{createDate,jdbcType=TIMESTAMP},
@@ -390,6 +398,9 @@
             <if test="record.materialName != null">
                 material_name = #{record.materialName,jdbcType=VARCHAR},
             </if>
+            <if test="record.score != null">
+                score = #{record.score,jdbcType=VARCHAR},
+            </if>
             <if test="record.createDate != null">
                 create_date = #{record.createDate,jdbcType=TIMESTAMP},
             </if>
@@ -428,6 +439,7 @@
         assignmentbook_id = #{record.assignmentbookId,jdbcType=VARCHAR},
         material_address = #{record.materialAddress,jdbcType=VARCHAR},
         material_name = #{record.materialName,jdbcType=VARCHAR},
+        score = #{record.score,jdbcType=VARCHAR},
         create_date = #{record.createDate,jdbcType=TIMESTAMP},
         update_date = #{record.updateDate,jdbcType=TIMESTAMP},
         del_flag = #{record.delFlag,jdbcType=CHAR}
@@ -493,6 +505,9 @@
             <if test="materialName != null">
                 material_name = #{materialName,jdbcType=VARCHAR},
             </if>
+            <if test="score != null">
+                score = #{score,jdbcType=VARCHAR},
+            </if>
             <if test="createDate != null">
                 create_date = #{createDate,jdbcType=TIMESTAMP},
             </if>
@@ -528,6 +543,7 @@
         assignmentbook_id = #{assignmentbookId,jdbcType=VARCHAR},
         material_address = #{materialAddress,jdbcType=VARCHAR},
         material_name = #{materialName,jdbcType=VARCHAR},
+        score = #{score,jdbcType=VARCHAR},
         create_date = #{createDate,jdbcType=TIMESTAMP},
         update_date = #{updateDate,jdbcType=TIMESTAMP},
         del_flag = #{delFlag,jdbcType=CHAR}
@@ -867,7 +883,6 @@
         LIMIT #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
 
 
-
     </select>
     <select id="getviewlogDatafordoubletaskCountByPageAndRows" resultType="java.lang.Integer">
         select count(*)
@@ -1094,6 +1109,7 @@
         SELECT t.id                              AS 'id',
                t.topic                           AS 'topic',
                t.material_name                   AS 'materialName',
+               t.score                           AS 'score',
                u.`name`                          AS 'studentname',
                tp.pattern                        AS 'pattern',
                taas.task_assignment_audit_status AS 'auditStatus',
@@ -1145,6 +1161,7 @@
         SELECT t.id               AS 'id',
                t.topic            AS 'topic',
                t.material_name    AS 'materialName',
+               t.score            AS 'score',
                tc.canbechosentype AS 'canbechosencollegeid',
                t.create_date      AS 'createDate',
                tt.type            AS 'typename',
