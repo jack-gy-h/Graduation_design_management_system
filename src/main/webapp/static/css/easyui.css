@@ -149,22 +149,22 @@
   background: url('/static/gif/loading.gif') no-repeat 10px 10px;
 }
 .panel-tool-close {
-  background: url('images/panel_tools.png') no-repeat -16px 0px;
+  background: url('/static/png/panel_tools.png') no-repeat -16px 0px;
 }
 .panel-tool-min {
-  background: url('images/panel_tools.png') no-repeat 0px 0px;
+  background: url('/static/png/panel_tools.png') no-repeat 0px 0px;
 }
 .panel-tool-max {
-  background: url('images/panel_tools.png') no-repeat 0px -16px;
+  background: url('/static/png/panel_tools.png') no-repeat 0px -16px;
 }
 .panel-tool-restore {
-  background: url('images/panel_tools.png') no-repeat -16px -16px;
+  background: url('/static/png/panel_tools.png') no-repeat -16px -16px;
 }
 .panel-tool-collapse {
-  background: url('images/panel_tools.png') no-repeat -32px 0;
+  background: url('/static/png/panel_tools.png') no-repeat -32px 0;
 }
 .panel-tool-expand {
-  background: url('images/panel_tools.png') no-repeat -32px -16px;
+  background: url('/static/png/panel_tools.png') no-repeat -32px -16px;
 }
 .panel-header,
 .panel-body {
@@ -3041,16 +3041,16 @@
   margin: 0 10px 10px 0;
 }
 .messager-error {
-  background: url('images/messager_icons.png') no-repeat scroll -64px 0;
+  background: url('/static/png/messager_icons.png') no-repeat scroll -64px 0;
 }
 .messager-info {
-  background: url('images/messager_icons.png') no-repeat scroll 0 0;
+  background: url('/static/png/messager_icons.png') no-repeat scroll 0 0;
 }
 .messager-question {
-  background: url('images/messager_icons.png') no-repeat scroll -32px 0;
+  background: url('/static/png/messager_icons.png') no-repeat scroll -32px 0;
 }
 .messager-warning {
-  background: url('images/messager_icons.png') no-repeat scroll -96px 0;
+  background: url('/static/png/messager_icons.png') no-repeat scroll -96px 0;
 }
 .messager-progress {
   padding: 10px;

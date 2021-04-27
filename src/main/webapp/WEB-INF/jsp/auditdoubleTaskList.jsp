@@ -48,6 +48,7 @@
                 border: false,
                 idField: "id",
                 fitColumns: true, //去除滚动条
+                toolbar:"#tb",
                 // showHeader:false,
                 columns: [[
                     {field: 'ck', checkbox: true},
@@ -81,6 +82,29 @@
                 ]]
 
             })
+        }
+
+        function commentReview(state) {
+            var selectedRows = $("#dg").datagrid("getSelections");
+            if (selectedRows.length == 0) {
+                $.messager.alert("系统提示", "请选择要操作的数据！");
+                return;
+            }
+            var strIds = [];
+            for (var i = 0; i < selectedRows.length; i++) {
+                strIds.push(selectedRows[i].id);
+            }
+            var idss = strIds.join(",");
+            $.messager.confirm("系统提示", "您确定要审核这<font color=red>" + selectedRows.length + "</font>条题目吗？", function (r) {
+                if (r) {
+                    $.post("/task/audit/double", {idss:idss,state:state},function (data) {
+
+                        $("#dg").datagrid("reload");
+
+
+                    });
+                }
+            });
         }
 
         // function search() {
@@ -173,5 +197,11 @@
 <%--<input type="button" value="搜索" onclick="search()"/>--%>
 <%--<input type="button" value="添加用户" onclick="opentable()"></input>--%>
 <table id="dg"></table>
+<div id="tb">
+    <div>
+        <a href="javascript:commentReview('1')" class="easyui-linkbutton" iconCls="icon-ok" plain="true">审核通过</a>
+        <a href="javascript:commentReview('2')" class="easyui-linkbutton" iconCls="icon-no" plain="true">审核不通过</a>
+    </div>
+</div>
 </body>
 </html>

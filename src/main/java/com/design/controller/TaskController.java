@@ -327,60 +327,129 @@ public class TaskController {
 
         System.out.print("audit_status:" + audit_status);
 
-        if (audit_status.equals("1") || audit_status.equals("2")) {
-            System.out.print("111111111111111111111111");
+        String idss = request.getParameter("idss");
 
-            Task task = taskService.getTaskByIdTrue(id);
+        String state = request.getParameter("state");
 
-            System.out.print("2222222222222222222222222222");
+        if (audit_status != null) {
+            if (audit_status.equals("1") || audit_status.equals("2")) {
+                System.out.print("111111111111111111111111");
 
-            task.setAuditStatus(audit_status);
+                Task task = taskService.getTaskByIdTrue(id);
 
-            System.out.print("task.getCreateDate():" + task.getCreateDate());
+                System.out.print("2222222222222222222222222222");
 
-            taskService.updateTask(task);
+                task.setAuditStatus(audit_status);
 
-            System.out.print("444444444444444444444444");
+                System.out.print("task.getCreateDate():" + task.getCreateDate());
 
-            String logid = UUID.randomUUID().toString().replace("-", "");
+                taskService.updateTask(task);
 
-            String requestUri = request.getRequestURI();//请求的Uri
+                System.out.print("444444444444444444444444");
 
-            User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+                String logid = UUID.randomUUID().toString().replace("-", "");
 
-            String userId = loginUser.getId();
+                String requestUri = request.getRequestURI();//请求的Uri
 
-            String roleid = loginUser.getRoleId();
+                User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+                String userId = loginUser.getId();
+
+                String roleid = loginUser.getRoleId();
 
 
-            log.setLid(logid);
+                log.setLid(logid);
 
-            if (audit_status.equals("1")) {
+                if (audit_status.equals("1")) {
 
-                log.setLaction("通过");
+                    log.setLaction("通过");
 
-            } else if (audit_status.equals("2")) {
+                } else if (audit_status.equals("2")) {
 
-                log.setLaction("不通过");
+                    log.setLaction("不通过");
+                }
+
+
+                log.setLcreator(userId);
+
+                log.setIurl(requestUri);
+
+                log.setLremark("双选课题审核");
+
+                log.setLtask(id);
+
+                log.setLcreatorrole(roleid);
+
+                log.setLcreatetime(new Date());
+
+                logServiceI.insertSelective(log);
+
+
             }
 
+        }
 
-            log.setLcreator(userId);
 
-            log.setIurl(requestUri);
+        if (state != null) {
+            if (state.equals("1") || state.equals("2")) {
+                String[] strings = idss.split(",");
+                for (String str : strings) {
 
-            log.setLremark("双选课题审核");
+                    Task task = taskService.getTaskByIdTrue(str);
 
-            log.setLtask(id);
+                    task.setAuditStatus(state);
 
-            log.setLcreatorrole(roleid);
+                    taskService.updateTask(task);
 
-            log.setLcreatetime(new Date());
+                    String logid = UUID.randomUUID().toString().replace("-", "");
 
-            logServiceI.insertSelective(log);
+                    String requestUri = request.getRequestURI();//请求的Uri
 
+                    User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+                    String userId = loginUser.getId();
+
+                    String roleid = loginUser.getRoleId();
+
+
+                    log.setLid(logid);
+
+                    if (state.equals("1")) {
+
+                        log.setLaction("通过");
+
+                    } else if (state.equals("2")) {
+
+                        log.setLaction("不通过");
+                    }
+
+
+                    log.setLcreator(userId);
+
+                    log.setIurl(requestUri);
+
+                    log.setLremark("双选课题审核");
+
+                    log.setLtask(str);
+
+                    log.setLcreatorrole(roleid);
+
+                    log.setLcreatetime(new Date());
+
+                    logServiceI.insertSelective(log);
+//                int id = Integer.parseInt(str);
+//                Topic topic = topicService.getTopicById(id);
+//                topic.setTopicAuditStatus(state);
+//                topicService.updateTopic(topic);
+//            Blog blog = blogService.getBlogById(comment.getBlogId());
+//            blog.setReplyCount(commentService.getPassedCommentCountByBlogId(blog.getId()));
+//            blogService.updateBlog(blog);
+                }
+
+            }
 
         }
+
         return "redirect:/task/audit/doublelist";
 
 
@@ -2150,7 +2219,8 @@ public class TaskController {
 
 
     }
-//修改成绩操作
+
+    //修改成绩操作
     @RequestMapping(value = "/teacher/modify/score")
     @ResponseBody
     public String taskteachermodifyscore(HttpServletRequest request, Task task) {
@@ -2192,7 +2262,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/set/replytime")
-    public String tasksetreplytime(Task task){
+    public String tasksetreplytime(Task task) {
 //        task用于传输页面传过来的数据的Task载体
 
 //        task1用于获取当前专业下答辩时间的Task载体
@@ -2207,7 +2277,7 @@ public class TaskController {
 
         String majorid = user1.getMajorid();
 
-        System.out.print("majorid:"+majorid);
+        System.out.print("majorid:" + majorid);
 
         Task task1 = taskService.getreplytimeBymajorid(majorid);
 
@@ -2227,9 +2297,7 @@ public class TaskController {
             taskService.updateschedule(task3);
 
 
-
-
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Task task2 = new Task();
 
             task2.setMajorId(majorid);
@@ -2248,8 +2316,6 @@ public class TaskController {
 
 
         return "redirect:/review/schedule";
-
-
 
 
     }

@@ -20,10 +20,10 @@
 	background:url('icons/cut.png') no-repeat center center;
 }
 .icon-ok{
-	background:url('icons/ok.png') no-repeat center center;
+	background:url('/static/png/ok.png') no-repeat center center;
 }
 .icon-no{
-	background:url('icons/no.png') no-repeat center center;
+	background:url('/static/png/no.png') no-repeat center center;
 }
 .icon-cancel{
 	background:url('icons/cancel.png') no-repeat center center;
