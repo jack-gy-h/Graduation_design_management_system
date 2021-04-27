@@ -137,7 +137,9 @@
 <body>
 
 <%--<input type="button" value="添加用户" onclick="opentable()"></input>--%>
-<table id="dg"></table>
+<table id="dg">
+
+</table>
 <%--<a href="javascript:select()"></a>--%>
 </body>
 </html>

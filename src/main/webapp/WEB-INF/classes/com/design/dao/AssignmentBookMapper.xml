@@ -298,7 +298,8 @@ WHERE ab.id = #{assignmentbookid}
     <select id="getAssignmentBookByUser" resultType="com.design.entity.AssignmentBook">
       SELECT ab.Content_requirements AS 'contentRequirements',
              ab.scheduling           AS 'scheduling',
-             ab.`references`         AS 'references'
+             ab.`references`         AS 'references',
+             t.major_id AS 'majorId'
       FROM assignment_book ab
              LEFT JOIN task t ON t.assignmentbook_id = ab.id
              LEFT JOIN task_chosen tc ON tc.task_id = t.id

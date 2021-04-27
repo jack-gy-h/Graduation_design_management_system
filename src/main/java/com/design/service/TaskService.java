@@ -83,6 +83,12 @@ public interface TaskService {
 
     List<Task> getbaseInformationForView(String userId);
 
+    Task getreplytimeBymajorid(String majorid);
+
+    void insertreplytime(Task task1);
+
+    void updateschedule(Task task3);
+
 //    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
 
 

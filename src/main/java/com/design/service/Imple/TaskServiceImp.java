@@ -220,6 +220,23 @@ public class TaskServiceImp implements TaskService {
         return taskMapper.getbaseInformationForView(userId);
     }
 
+    @Override
+    public Task getreplytimeBymajorid(String majorid) {
+        return taskMapper.getreplytimeBymajorid(majorid);
+    }
+
+    @Override
+    public void insertreplytime(Task task1) {
+        taskMapper.insertreplytime(task1);
+    }
+
+    @Override
+    public void updateschedule(Task task3) {
+
+        taskMapper.updateschedule(task3);
+
+    }
+
 //    @Override
 //    public List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid) {
 //        return taskMapper.getviewteacherassignListData(page, rows, grade, majorid);

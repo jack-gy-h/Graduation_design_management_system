@@ -1070,7 +1070,7 @@
   overflow: auto;
 }
 .combo-arrow {
-  background: url('images/combo_arrow.png') no-repeat center center;
+  background: url('/static/png/combo_arrow.png') no-repeat center center;
 }
 .combo-panel {
   background-color: #ffffff;
@@ -2480,7 +2480,7 @@
   float: right;
 }
 .datebox .combo-arrow {
-  background-image: url('images/datebox_arrow.png');
+  background-image: url('/static/png/datebox_arrow.png');
   background-position: center center;
 }
 .datebox-button {

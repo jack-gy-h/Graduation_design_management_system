@@ -1188,5 +1188,27 @@
           AND tch.teacher_choose_status = 2
 
     </select>
+    <select id="getreplytimeBymajorid" resultType="com.design.entity.Task">
+        select start_time AS 'starttime',
+               end_time   AS 'endtime'
+        FROM schedule
+        WHERE major_id = #{majorid}
+
+
+    </select>
+    <insert id="insertreplytime" parameterType="com.design.entity.Task">
+
+        INSERT INTO schedule(major_id, start_time, end_time)
+        values (#{majorId}, #{starttime}, #{endtime})
+
+
+    </insert>
+
+    <update id="updateschedule" parameterType="com.design.entity.Task">
+        update schedule
+        set start_time = #{starttime},
+            end_time   = #{endtime}
+        WHERE major_id = #{majorId}
+    </update>
 
 </mapper>

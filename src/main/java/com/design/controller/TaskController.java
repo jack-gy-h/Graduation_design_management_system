@@ -2191,5 +2191,68 @@ public class TaskController {
 
     }
 
+    @RequestMapping(value = "/set/replytime")
+    public String tasksetreplytime(Task task){
+//        task用于传输页面传过来的数据的Task载体
+
+//        task1用于获取当前专业下答辩时间的Task载体
+
+//        task2用于insert操作下插入数据的Task载体
+
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+        System.out.print("majorid:"+majorid);
+
+        Task task1 = taskService.getreplytimeBymajorid(majorid);
+
+
+        try {
+//            String replytime = task1.getReplytime();
+            String starttime = task1.getStarttime();
+
+            Task task3 = new Task();
+
+            task3.setMajorId(majorid);
+
+            task3.setStarttime(task.getStarttime());
+
+            task3.setEndtime(task.getEndtime());
+
+            taskService.updateschedule(task3);
+
+
+
+
+        }catch (NullPointerException e){
+            Task task2 = new Task();
+
+            task2.setMajorId(majorid);
+
+//            task2.setReplytime(task.getReplytime());
+
+            task2.setStarttime(task.getStarttime());
+
+            task2.setEndtime(task.getEndtime());
+
+            taskService.insertreplytime(task2);
+        }
+
+
+//        如果是空的，说明还没有时间安排，是插入操作
+
+
+        return "redirect:/review/schedule";
+
+
+
+
+    }
+
 
 }

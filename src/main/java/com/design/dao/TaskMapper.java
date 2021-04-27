@@ -164,6 +164,12 @@ public interface TaskMapper {
 
     List<Task> getbaseInformationForView(@Param("userId")String userId);
 
+    Task getreplytimeBymajorid(@Param("majorid") String majorid);
+
+    void insertreplytime(Task task1);
+
+    void updateschedule(Task task3);
+
 //    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
 
 

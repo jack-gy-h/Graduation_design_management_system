@@ -119,7 +119,7 @@
 		<div class="form-actions">
 			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
-			<span><font color="red" id="error">${errorInfo }</font></span>
+<%--			<span><font color="red" id="error">${errorInfo }</font></span>--%>
 		</div>
 	</form:form>
 

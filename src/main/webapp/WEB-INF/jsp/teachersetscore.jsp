@@ -86,7 +86,7 @@
                 return;
             }
             var row = selectedRows[0];
-            $("#dlg1").dialog("open").dialog("setTitle", "编辑用户信息");
+            $("#dlg1").dialog("open").dialog("setTitle", "修改用户信息");
             $("#fm1").form("load", row);
             url = "/task/teacher/modify/score?id=" + row.id;
         }
