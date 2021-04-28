@@ -33,4 +33,9 @@ public class AssignmentBookServiceImp implements AssignmentBookService {
     public List<AssignmentBook> getAssignmentBookByUser(String userId) {
         return assignmentBookMapper.getAssignmentBookByUser(userId);
     }
+
+    @Override
+    public List<AssignmentBook> getAssignmentBookListById(String assignmentbookid) {
+        return assignmentBookMapper.getAssignmentBookListById(assignmentbookid);
+    }
 }

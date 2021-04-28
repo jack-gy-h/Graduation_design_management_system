@@ -23,6 +23,8 @@ public class scheduleController {
     @Autowired
     private AssignmentBookService assignmentBookService;
 
+
+//    系主任进入设置专业答辩时间界面
     @RequestMapping(value = "/schedule")
     public String schedule(Task task, Model model){
 
@@ -71,6 +73,16 @@ public class scheduleController {
 
     }
 
+//    学生查看答辩时间
+//    学生的答辩时间由课题所属专业的系主任决定
+//   因此，限制条件是：
+//            WHERE ab.audit_status = 2
+//          AND tc.chosen_student = #{userId}
+//          AND tc.teacher_choose_status = 2、
+//    通过的任务书
+//    以及选题学生是自己的
+//    而且通过审核的
+//    代表是自己被选上的而且是任务书的课题的所属专业
     @RequestMapping(value = "/task/schedule")
     public String reviewtaskschedule(Model model){
 
@@ -85,6 +97,8 @@ public class scheduleController {
         List<AssignmentBook> assignmentBookList = assignmentBookService.getAssignmentBookByUser(userId);
 
         String majorid = assignmentBookList.get(0).getMajorId();
+
+        System.out.print("majoeid11:"+majorid);
 
         Task task1 = taskService.getreplytimeBymajorid(majorid);
 

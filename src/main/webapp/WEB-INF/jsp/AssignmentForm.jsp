@@ -37,73 +37,28 @@
         $(function () {
 
 
-
-
-
             $("#inputForm").validate({
 
                 submitHandler: function (form) {
 
-                    var canbechosencollegeid = $("#canbechosencollegeid").val();
-
-                    if (canbechosencollegeid == 1) {
-
-                        var ids = [], nodes = tree1.getCheckedNodes(true);
-                        // alert("1");
-                        for (var i = 0; i < nodes.length; i++) {
-
-                            if (nodes[i].isParent == false) {
-                                ids.push(nodes[i].id);
-                            }
 
 
-                            // ids.push(nodes[i].id);
+                    var contentRequirements = $("#contentRequirements").val();
+
+                    var scheduling = $("#scheduling").val();
+
+                    var references = $("#references").val();
 
 
-                        }
-                        // alert("ids:"+ids);
-                        //少了这一行相当于不更新menuids也就无法更新数据
-                        $("#officeIds").val(ids);
 
-
-                    } else if (canbechosencollegeid == 2) {
-
-                        var ids = [], nodes = tree.getCheckedNodes(true);
-                        // alert("1");
-                        for (var i = 0; i < nodes.length; i++) {
-
-                            if (nodes[i].isParent == false) {
-                                ids.push(nodes[i].id);
-                            }
-
-
-                            // ids.push(nodes[i].id);
-
-                            $("#officeIds").val(ids);
-
-
-                        }
-
-                    } else if (canbechosencollegeid == 3) {
-
-
-                        var ids = $("#majorId").val();
-
-                        $("#officeIds").val(ids);
-                    }
-
-                    var type = $("#type").val();
-
-                    var source = $("#source").val();
-
-                    if (type == 0) {
-                        alert("请填写题目类型");
+                    if (contentRequirements.equals("")) {
+                        alert("请填写内容要求");
                         return;
-                    } else if (source == 0) {
-                        alert("请填写题目来源");
+                    } else if (scheduling.equals("")) {
+                        alert("请填写进度安排");
                         return;
-                    } else if (canbechosencollegeid == 0) {
-                        alert("请选择可选专业");
+                    } else if (references.equals("")) {
+                        alert("请选择参考文献");
                         return;
                     }
 
@@ -112,6 +67,7 @@
 
                 }
             })
+        })
 
 
 

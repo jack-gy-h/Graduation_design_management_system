@@ -1,6 +1,7 @@
 package com.design.controller;
 
 
+import com.design.Util.ExportExcel;
 import com.design.Util.UUIDUtil;
 import com.design.entity.*;
 import com.design.service.AssignmentBookService;
@@ -2261,6 +2262,7 @@ public class TaskController {
 
     }
 
+//    提交专业答辩时间安排
     @RequestMapping(value = "/set/replytime")
     public String tasksetreplytime(Task task) {
 //        task用于传输页面传过来的数据的Task载体
@@ -2320,5 +2322,45 @@ public class TaskController {
 
     }
 
+
+    @RequestMapping(value = "/student/submit/thesisproposal")
+    public String taskstudentsubmitthesisproposal(){
+
+
+        return "studentviewthesisproposal";
+
+
+
+
+
+
+    }
+
+    @RequestMapping(value = "/teacher/exportExcelForAssignmentbook", method = RequestMethod.GET)
+    public void export(HttpServletResponse response, HttpServletRequest request) {
+
+        String assignmentbookid = request.getParameter("assignmentbookid");
+
+//        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+//
+//        String TeacherName = user.getName();
+//
+//        System.out.println(TeacherName + "111111111111111");
+
+        List<AssignmentBook> assignmentBookList = assignmentBookService.getAssignmentBookListById(assignmentbookid);
+
+        System.out.println("22222");
+
+//        System.out.println(topicList.get(33).getTopicSource() +"--------------------------------------------------------");
+
+        ExportExcel<AssignmentBook> ee = new ExportExcel<AssignmentBook>();
+
+        String[] headers = {"内容要求", "进度安排", "参考文献"};
+
+        String fileName = "个人任务书";
+
+        ee.exportExcel(headers, assignmentBookList, fileName, response);
+
+    }
 
 }

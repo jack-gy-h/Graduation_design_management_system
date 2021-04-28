@@ -82,12 +82,9 @@ public class ExportExcel<T> {
                 // 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
                 Field[] fields = t.getClass().getDeclaredFields();
 //                for (short i = 0; i < 19; i++) {
-                write(0,0,row,fields,t);
-                write(1,1,row,fields,t);
-                write(2,2,row,fields,t);
-                write(3,12,row,fields,t);
-                write(4,18,row,fields,t);
-
+                write(0,1,row,fields,t);
+                write(1,2,row,fields,t);
+                write(2,3,row,fields,t);
 //                }
             }
             getExportedFile(workbook, fileName, response);

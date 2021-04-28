@@ -12,4 +12,6 @@ public interface AssignmentBookService {
     void updateAssignmentBook(AssignmentBook assignmentBook);
 
     List<AssignmentBook> getAssignmentBookByUser(String userId);
+
+    List<AssignmentBook> getAssignmentBookListById(String assignmentbookid);
 }

@@ -101,4 +101,6 @@ public interface AssignmentBookMapper {
     void updateAssignmentBook(AssignmentBook assignmentBook);
 
     List<AssignmentBook> getAssignmentBookByUser(@Param("userId")String userId);
+
+    List<AssignmentBook> getAssignmentBookListById(String assignmentbookid);
 }

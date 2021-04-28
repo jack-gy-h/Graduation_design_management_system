@@ -78,7 +78,7 @@
             }else if(row.auditStatusId == 1){
                 return "<a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/viewform?assignmentbookid=" + row.assignmentbookId + "' > 查看详情 </a> <a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/form?assignmentbookid=" + row.assignmentbookId + "' > 修改 </a>"
             }else if (row.auditStatusId == 2){
-                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/viewform?assignmentbookid=" + row.assignmentbookId + "' > 查看详情 </a> <a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/form?assignmentbookid=" + row.assignmentbookId + "' > 修改 </a>"
+                return "<a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/viewform?assignmentbookid=" + row.assignmentbookId + "' > 查看详情 </a> <a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/form?assignmentbookid=" + row.assignmentbookId + "' > 修改 </a> <a target = '_self'   style = 'text-decoration:none'href = '/task/teacher/exportExcelForAssignmentbook?assignmentbookid=" + row.assignmentbookId + "' > 导出文档 </a>"
             }else if(row.auditStatusId == 3){
                 return "<a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/viewform?assignmentbookid=" + row.assignmentbookId + "' > 查看详情 </a> <a target = '_self'   style = 'text-decoration:none'href = '/task/assignmentbook/form?assignmentbookid=" + row.assignmentbookId + "' > 修改后再提交 </a>"
 

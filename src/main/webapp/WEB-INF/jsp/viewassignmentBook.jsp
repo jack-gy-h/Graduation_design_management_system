@@ -40,7 +40,7 @@
 
                 if (data[0] == null) {
                     alert("您尚未有任务书");
-                    return ;
+                    return;
                 } else {
                     var option = '\n' +
                         '<div class="main">\n' +
@@ -52,15 +52,19 @@
                         '            <ul class="gxf_designTable_box" id="designTaskTable" style="">\n' +
                         '                <li><p><b style="color: #f00;position:relative;top:3px;"> * </b>毕业设计（论文）的内容要求<span\n' +
                         '                        class="statement margl"></span></p>\n' +
-                        '                    <div class="gxf_designTable_detailes clearfix">'+data[0].contentRequirements+'</div>\n' +
+                        '                    <div class="gxf_designTable_detailes clearfix">' + data[0].contentRequirements + '</div>\n' +
                         '                </li>\n' +
                         '                <li><p><b style="color: #f00;position:relative;top:3px;"> * </b>进度安排<span\n' +
                         '                        class="statement margl"></span></p>\n' +
-                        '                    <div class="gxf_designTable_detailes clearfix">'+ data[0].scheduling+'</div>\n' +
+                        '                    <div class="gxf_designTable_detailes clearfix">' + data[0].scheduling + '</div>\n' +
                         '                </li>\n' +
                         '                <li><p><b style="color: #f00;position:relative;top:3px;"> * </b>参考文献<span\n' +
                         '                        class="statement margl"></span></p>\n' +
-                        '                    <div class="gxf_designTable_detailes clearfix">'+data[0].references+'</div>\n' +
+                        '                    <div class="gxf_designTable_detailes clearfix">' + data[0].references + '</div>\n' +
+                        '                </li>\n' +
+                        '                <li><p><b style="color: #f00;position:relative;top:3px;"> * </b>导出任务书<span\n' +
+                        '                        class="statement margl"></span></p>\n' +
+                        '                    <div class="gxf_designTable_detailes clearfix"><a target = "_self"   style = "text-decoration:none" href = "/task/teacher/exportExcelForAssignmentbook?assignmentbookid=' + data[0].id + '" > 导出文档 </a></div>\n' +
                         '                </li>\n' +
                         '            </ul>\n' +
                         '            <!--  附件 -->\n' +
@@ -86,6 +90,7 @@
 
 
 </div>
+
 
 
 </body>
