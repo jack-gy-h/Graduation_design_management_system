@@ -170,6 +170,14 @@ public interface TaskMapper {
 
     void updateschedule(Task task3);
 
+    void insertfinalpaper(Task task);
+
+    List<Task> getviewstudentfinalpaperListData(@Param("page") int page, @Param("rows") int rows,@Param("userId") String userId);
+
+    List<Task> getfinalpaperByid(Task task);
+
+    void updatefinalpaper(Task task);
+
 //    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
 
 

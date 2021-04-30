@@ -89,6 +89,14 @@ public interface TaskService {
 
     void updateschedule(Task task3);
 
+    void insertfinalpaper(Task task);
+
+    List<Task> getviewstudentfinalpaperListData(int page, int rows, String userId);
+
+    List<Task> getfinalpaperByid(Task task);
+
+    void updatefinalpaper(Task task);
+
 //    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
 
 

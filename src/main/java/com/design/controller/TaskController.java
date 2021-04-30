@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -2323,19 +2322,20 @@ public class TaskController {
     }
 
 
-    @RequestMapping(value = "/student/submit/thesisproposal")
-    public String taskstudentsubmitthesisproposal(){
+//    @RequestMapping(value = "/student/submit/thesisproposal")
+//    public String taskstudentsubmitthesisproposal(){
+//
+//
+//        return "studentviewthesisproposal";
+//
+//
+//
+//
+//
+//
+//    }
 
-
-        return "studentviewthesisproposal";
-
-
-
-
-
-
-    }
-
+//    教师导出任务书功能
     @RequestMapping(value = "/teacher/exportExcelForAssignmentbook", method = RequestMethod.GET)
     public void export(HttpServletResponse response, HttpServletRequest request) {
 
@@ -2362,5 +2362,296 @@ public class TaskController {
         ee.exportExcel(headers, assignmentBookList, fileName, response);
 
     }
+
+//    进入学提交毕业设计（论文）最终版界面
+//    /task/submit/graduationproject
+@RequestMapping(value = "/submit/graduationproject")
+public String tasksubmitgraduationproject() {
+
+
+    return "studentviewsubmitgraduationproject";
+
+
+}
+
+//进入提交毕业设计（论文）最终版表单 界面
+    @RequestMapping(value = "/submit/graduationproject/form")
+    public String tasksubmitgraduationprojectform(HttpServletRequest request, Model model) {
+
+        String id = request.getParameter("id");
+
+        Task task1 = new Task();
+
+        if (id !=null){
+
+
+
+            task1.setFinalPaperid(id);
+
+
+            List<Task> finalpaperList = taskService.getfinalpaperByid(task1);
+
+            Task task = finalpaperList.get(0);
+
+            model.addAttribute("task",task);
+
+
+
+
+
+
+
+        }else {
+            model.addAttribute("task",task1);
+        }
+
+
+
+
+
+        return "studentviewsubmitgraduationprojectform";
+
+
+    }
+
+
+//保存提交毕业设计（论文）最终版 操作
+    @RequestMapping(value = "/submit/graduationproject/save", method = RequestMethod.POST)
+    @ResponseBody
+    public String upload(MultipartFile file,String finalPaperid,String keywords, String innovationpoint, String chineseabstract, String englishabstract, String other, HttpServletRequest request) throws IOException{
+
+        System.out.print("finalPaperid:"+ finalPaperid);
+
+        String path = request.getServletContext().getRealPath(UPLOAD_PATH);
+        if (file == null) {
+            return "filenull";
+        }
+        String fileName = file.getOriginalFilename();
+        File dir = new File(path, fileName);
+//        System.out.println("filename" + fileName);
+//        System.out.println(dir.exists());
+//        System.out.println("file_status:" + file.isEmpty());
+
+//判断文件内容是否为空
+        if (file.isEmpty() == true) {
+            return "fileempty";
+        }
+//         判断指定文件夹是否存在
+        else if (!dir.exists()) {
+            System.out.println("111111111111111111111111111111111111111111111");
+            dir.mkdirs();
+            file.transferTo(dir);
+        } else {
+            file.transferTo(dir);
+
+        }
+
+
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+        List<Task> taskList = taskService.getbaseInformationForView(userId);
+
+        String taskid = taskList.get(0).getId();
+
+        Task task = taskService.getTaskByIdTrue(taskid);
+
+        task.setKeywords(keywords);
+
+        task.setInnovationpoint(innovationpoint);
+
+        task.setChineseabstract(chineseabstract);
+
+        task.setEnglishabstract(englishabstract);
+
+        task.setOther(other);
+
+        task.setFileaddress(UPLOAD_PATH + "/" + fileName);
+
+        task.setFilename(fileName);
+
+
+
+
+
+        if(finalPaperid == null||finalPaperid.equals("")){
+
+
+            String finalpaperid = UUIDUtil.getUUID();
+
+            task.setFinalPaperid(finalpaperid);
+
+//        task.setMaterialName(fileName);
+
+            taskService.updateTask(task);
+
+            task.setCreateDate(new Date());
+
+            taskService.insertfinalpaper(task);
+
+//        Topic topic = topicService.getTopicById(id1);
+//        topic.setTopicAssignmentbookAddress(UPLOAD_PATH + "/" + fileName);
+//        topic.setTopicAssignmentbookName(fileName);
+//        System.out.println(UPLOAD_PATH + "/" + fileName);
+//        topicService.updateTopic(topic);
+
+            System.out.print("1111111111111111111111111111111111");
+
+            return "success";
+
+
+        }else {
+            task.setFinalPaperid(finalPaperid);
+
+            task.setCreateDate(new Date());
+
+            taskService.updatefinalpaper(task);
+        }
+
+
+
+        return "success";
+
+
+
+
+
+    }
+
+//    获取学生本人毕业设计（论文）最终版
+    @RequestMapping(value = "/viewstudentfinalpaperListData")
+    @ResponseBody
+    public Map<String, Object> taskviewstudentfinalpaperListData(int page, int rows) {
+
+
+        int Count = 1;
+
+        Map<String, Object> map = Maps.newHashMap();
+
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+        List<Task> taskList = taskService.getviewstudentfinalpaperListData(page, rows,userId);
+
+        map.put("total", Count);
+
+        map.put("rows", taskList);
+        return map;
+
+
+    }
+
+
+    @RequestMapping(value = "/view/studentfinalpaper")
+    public String taskviewstudentfinalpaper(HttpServletRequest request, Model model) {
+
+        String id = request.getParameter("id");
+
+        model.addAttribute("finalpaperid",id);
+
+
+
+
+        return "viewstudentfinalpaper";
+
+
+    }
+
+    @RequestMapping(value = "/get/finalpaper")
+    @ResponseBody
+    public List<Task> taskgetfinalpaper(String finalpaperid,Task task) {
+
+
+//        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+//
+//        String userId = user1.getId();
+//
+//        String grade = user1.getGrade();
+//
+//        String majorid = user1.getMajorid();
+        task.setFinalPaperid(finalpaperid);
+
+        List<Task> finalpaperList = taskService.getfinalpaperByid(task);
+
+        return finalpaperList;
+
+
+    }
+
+    @RequestMapping(value = "/downloadfinalpaperfile", method = RequestMethod.GET)
+    @ResponseBody
+    public void downloadfinalpaperfile(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        String finalpaperid = request.getParameter("finalpaperid");
+
+        Task task = new Task();
+
+        task.setFinalPaperid(finalpaperid);
+
+
+        List<Task> taskList = taskService.getfinalpaperByid(task);
+
+        String Totalpath = taskList.get(0).getFileaddress();
+
+        System.out.print("Totalpath:"+Totalpath);
+
+//        Task task = taskService.getTaskByIdTrue(id);
+
+//        String Totalpath = task.getMaterialAddress();
+
+
+//        Topic topic = topicService.getTopicById(id5);
+//
+//        String Totalpath = topic.getTopicReportAddress();
+
+        String path = request.getServletContext().getRealPath(Totalpath);
+
+        System.out.print("path:" + path);
+
+        File fullURL = new File(path);
+
+//        System.out.println(fullURL.getName());
+//
+//        System.out.println(path);
+
+        InputStream bis = new BufferedInputStream(new FileInputStream(new File(path)));
+
+
+//        String Originfilename = path.substring(path.lastIndexOf("\\") + 1);
+        String filename = fullURL.getName();
+
+
+        filename = URLEncoder.encode(filename, "UTF-8");
+
+
+        response.addHeader("Content-Disposition", "attachment;filename=" + filename);
+
+
+        response.setContentType("multipart/form-data");
+
+
+        BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+
+        int len = 0;
+        while ((len = bis.read()) != -1) {
+            out.write(len);
+            out.flush();
+        }
+        out.close();
+
+    }
+
+
+
 
 }

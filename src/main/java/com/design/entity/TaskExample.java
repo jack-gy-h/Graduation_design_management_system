@@ -1455,6 +1455,76 @@ public class TaskExample {
             return (Criteria) this;
         }
 
+        public Criteria andFinalPaperidIsNull() {
+            addCriterion("final_paperid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalPaperidIsNotNull() {
+            addCriterion("final_paperid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalPaperidEqualTo(String value) {
+            addCriterion("final_paperid =", value, "finalPaperid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalPaperidNotEqualTo(String value) {
+            addCriterion("final_paperid <>", value, "finalPaperid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalPaperidGreaterThan(String value) {
+            addCriterion("final_paperid >", value, "finalPaperid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalPaperidGreaterThanOrEqualTo(String value) {
+            addCriterion("final_paperid >=", value, "finalPaperid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalPaperidLessThan(String value) {
+            addCriterion("final_paperid <", value, "finalPaperid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalPaperidLessThanOrEqualTo(String value) {
+            addCriterion("final_paperid <=", value, "finalPaperid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalPaperidLike(String value) {
+            addCriterion("final_paperid like", value, "finalPaperid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalPaperidNotLike(String value) {
+            addCriterion("final_paperid not like", value, "finalPaperid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalPaperidIn(List<String> values) {
+            addCriterion("final_paperid in", values, "finalPaperid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalPaperidNotIn(List<String> values) {
+            addCriterion("final_paperid not in", values, "finalPaperid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalPaperidBetween(String value1, String value2) {
+            addCriterion("final_paperid between", value1, value2, "finalPaperid");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalPaperidNotBetween(String value1, String value2) {
+            addCriterion("final_paperid not between", value1, value2, "finalPaperid");
+            return (Criteria) this;
+        }
+
         public Criteria andScoreIsNull() {
             addCriterion("score is null");
             return (Criteria) this;

@@ -298,7 +298,7 @@
 
     </select>
     <select id="getAssignmentBookByUser" resultType="com.design.entity.AssignmentBook">
-        SELECT t.major_id AS'majorId',
+        SELECT t.major_id              AS 'majorId',
                ab.id                   AS 'id',
                ab.Content_requirements AS 'contentRequirements',
                ab.scheduling           AS 'scheduling',

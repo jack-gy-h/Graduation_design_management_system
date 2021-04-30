@@ -237,6 +237,26 @@ public class TaskServiceImp implements TaskService {
 
     }
 
+    @Override
+    public void insertfinalpaper(Task task) {
+        taskMapper.insertfinalpaper(task);
+    }
+
+    @Override
+    public List<Task> getviewstudentfinalpaperListData(int page, int rows, String userId) {
+        return taskMapper.getviewstudentfinalpaperListData(page, rows, userId);
+    }
+
+    @Override
+    public List<Task> getfinalpaperByid(Task task) {
+        return taskMapper.getfinalpaperByid(task);
+    }
+
+    @Override
+    public void updatefinalpaper(Task task) {
+        taskMapper.updatefinalpaper(task);
+    }
+
 //    @Override
 //    public List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid) {
 //        return taskMapper.getviewteacherassignListData(page, rows, grade, majorid);

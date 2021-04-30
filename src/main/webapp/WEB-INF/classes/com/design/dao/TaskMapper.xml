@@ -24,6 +24,7 @@
         <result column="assignmentbook_id" jdbcType="VARCHAR" property="assignmentbookId"/>
         <result column="material_address" jdbcType="VARCHAR" property="materialAddress"/>
         <result column="material_name" jdbcType="VARCHAR" property="materialName"/>
+        <result column="final_paperid" jdbcType="VARCHAR" property="finalPaperid"/>
         <result column="score" jdbcType="VARCHAR" property="score"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
@@ -97,6 +98,7 @@
             </foreach>
         </where>
     </sql>
+
     <sql id="Base_Column_List">
         <!--
           WARNING - @mbggenerated
@@ -104,8 +106,8 @@
         -->
         id, topic, college_id, major_id, type, pattern, source, canBeChosencollegeid, research_direction,
         brief_introduction, basic_requirements, reference_data, teacher_id, audit_status,
-        grade, assignmentbook_id, material_address, material_name, score, create_date, update_date,
-        del_flag
+        grade, assignmentbook_id, material_address, material_name, final_paperid, score,
+        create_date, update_date, del_flag
     </sql>
 
     <sql id="Base_Column_List1">
@@ -173,16 +175,16 @@
         brief_introduction, basic_requirements, reference_data,
         teacher_id, audit_status, grade,
         assignmentbook_id, material_address, material_name,
-        score, create_date, update_date,
-        del_flag)
+        final_paperid, score, create_date,
+        update_date, del_flag)
         values (#{id,jdbcType=VARCHAR}, #{topic,jdbcType=VARCHAR}, #{collegeId,jdbcType=VARCHAR},
         #{majorId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{pattern,jdbcType=VARCHAR},
         #{source,jdbcType=VARCHAR}, #{canbechosencollegeid,jdbcType=VARCHAR}, #{researchDirection,jdbcType=VARCHAR},
         #{briefIntroduction,jdbcType=VARCHAR}, #{basicRequirements,jdbcType=VARCHAR}, #{referenceData,jdbcType=VARCHAR},
         #{teacherId,jdbcType=VARCHAR}, #{auditStatus,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR},
         #{assignmentbookId,jdbcType=VARCHAR}, #{materialAddress,jdbcType=VARCHAR}, #{materialName,jdbcType=VARCHAR},
-        #{score,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP},
-        #{delFlag,jdbcType=CHAR})
+        #{finalPaperid,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+        #{updateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=CHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.design.entity.Task">
         <!--
@@ -244,6 +246,9 @@
             </if>
             <if test="materialName != null">
                 material_name,
+            </if>
+            <if test="finalPaperid != null">
+                final_paperid,
             </if>
             <if test="score != null">
                 score,
@@ -312,6 +317,9 @@
             </if>
             <if test="materialName != null">
                 #{materialName,jdbcType=VARCHAR},
+            </if>
+            <if test="finalPaperid != null">
+                #{finalPaperid,jdbcType=VARCHAR},
             </if>
             <if test="score != null">
                 #{score,jdbcType=VARCHAR},
@@ -398,6 +406,9 @@
             <if test="record.materialName != null">
                 material_name = #{record.materialName,jdbcType=VARCHAR},
             </if>
+            <if test="record.finalPaperid != null">
+                final_paperid = #{record.finalPaperid,jdbcType=VARCHAR},
+            </if>
             <if test="record.score != null">
                 score = #{record.score,jdbcType=VARCHAR},
             </if>
@@ -439,6 +450,7 @@
         assignmentbook_id = #{record.assignmentbookId,jdbcType=VARCHAR},
         material_address = #{record.materialAddress,jdbcType=VARCHAR},
         material_name = #{record.materialName,jdbcType=VARCHAR},
+        final_paperid = #{record.finalPaperid,jdbcType=VARCHAR},
         score = #{record.score,jdbcType=VARCHAR},
         create_date = #{record.createDate,jdbcType=TIMESTAMP},
         update_date = #{record.updateDate,jdbcType=TIMESTAMP},
@@ -505,6 +517,9 @@
             <if test="materialName != null">
                 material_name = #{materialName,jdbcType=VARCHAR},
             </if>
+            <if test="finalPaperid != null">
+                final_paperid = #{finalPaperid,jdbcType=VARCHAR},
+            </if>
             <if test="score != null">
                 score = #{score,jdbcType=VARCHAR},
             </if>
@@ -543,6 +558,7 @@
         assignmentbook_id = #{assignmentbookId,jdbcType=VARCHAR},
         material_address = #{materialAddress,jdbcType=VARCHAR},
         material_name = #{materialName,jdbcType=VARCHAR},
+        final_paperid = #{finalPaperid,jdbcType=VARCHAR},
         score = #{score,jdbcType=VARCHAR},
         create_date = #{createDate,jdbcType=TIMESTAMP},
         update_date = #{updateDate,jdbcType=TIMESTAMP},
@@ -1002,10 +1018,10 @@
                  LEFT JOIN task_teacher_choose_status ttcs ON ttcs.id = tc.teacher_choose_status
                  LEFT JOIN `user` u ON t.teacher_id = u.id E      LEFT JOIN office ma
         ON t.major_id = ma.id
-        WHER tc.chosen_student = #{userId}
-          AND t.grade = #{grade}
-          AND t.pattern = 3
-          AND t.del_flag = 0
+            WHER tc.chosen_student = #{userId}
+            AND t.grade = #{grade}
+            AND t.pattern = 3
+            AND t.del_flag = 0
         LIMIT #{page},#{rows}
 
     </select>
@@ -1163,6 +1179,7 @@
                t.material_name    AS 'materialName',
                t.score            AS 'score',
                tc.canbechosentype AS 'canbechosencollegeid',
+               t.final_paperid    AS 'finalPaperid',
                t.create_date      AS 'createDate',
                tt.type            AS 'typename',
                ts.source          AS 'source',
@@ -1209,6 +1226,61 @@
         set start_time = #{starttime},
             end_time   = #{endtime}
         WHERE major_id = #{majorId}
+    </update>
+    <insert id="insertfinalpaper" parameterType="com.design.entity.Task">
+
+        INSERT INTO final_paper(id, keywords, innovation_point, chinese_abstract, english_abstract, other, file_address,
+                                file_name, create_date, audit_status)
+        values (#{finalPaperid}, #{keywords}, #{innovationpoint}, #{chineseabstract}, #{englishabstract}, #{other},
+                #{fileaddress}, #{filename}, #{createDate}, 1)
+
+
+    </insert>
+    <select id="getviewstudentfinalpaperListData" resultType="com.design.entity.Task">
+        SELECT fp.id                              AS 'id',
+               fp.file_name                      AS 'filename',
+               u.`name`                          AS 'studentname',
+               fp.create_date                    AS 'createDate',
+               taas.task_assignment_audit_status AS 'auditStatus',
+               taas.id                           AS 'auditStatusId'
+        FROM final_paper fp
+                 LEFT JOIN task t ON t.final_paperid = fp.id
+                 LEFT JOIN task_chosen tc ON tc.task_id = t.id
+                 LEFT JOIN `user` u ON u.id = tc.chosen_student
+                 LEFT JOIN task_assignment_audit_status taas ON taas.id = fp.audit_status
+        WHERE tc.teacher_choose_status = 2
+          AND tc.chosen_student = #{userId}
+
+    </select>
+
+    <select id="getfinalpaperByid" resultType="com.design.entity.Task">
+        SELECT fp.id AS 'finalPaperid',
+               fp.keywords         AS 'keywords',
+               fp.innovation_point AS 'innovationpoint',
+               fp.chinese_abstract AS 'chineseabstract',
+               fp.english_abstract AS 'englishabstract',
+               fp.other            AS 'other',
+               fp.file_name        AS 'filename',
+               fp.file_address AS 'fileaddress'
+        FROM final_paper fp
+        WHERE fp.id = #{finalPaperid}
+
+
+    </select>
+    <update id="updatefinalpaper" parameterType="com.design.entity.Task">
+        update final_paper
+        set keywords         = #{keywords},
+            innovation_point = #{innovationpoint},
+            chinese_abstract = #{chineseabstract},
+            english_abstract = #{englishabstract},
+            other = #{other},
+            file_address = #{fileaddress},
+            file_name = #{filename},
+            create_date = #{createDate},
+            audit_status = 1
+
+
+        WHERE id = #{finalPaperid}
     </update>
 
 </mapper>
