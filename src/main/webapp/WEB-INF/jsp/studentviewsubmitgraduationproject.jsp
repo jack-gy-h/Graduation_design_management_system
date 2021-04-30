@@ -117,7 +117,8 @@
             }else if (row.auditStatusId == 2){
                 return "<a target='_self'  style='text-decoration:none' href='/task/view/studentfinalpaper?id=" + row.id + "'>查看详情</a>";
             }else if (row.auditStatusId == 3){
-            return "<a target = '_self' style = 'text-decoration:none' href = '/task/viewtopic?id=" + row.id + "' > 修改后提交 </a>";
+            return "<a target = '_self' style = 'text-decoration:none' href = '/task/submit/graduationproject/form?id=" + row.id + "'> 修改后提交 </a>";
+            //'/task/submit/graduationproject/form?id=" + row.id + "'
             }
             // return "<a target='_self' style='text-decoration:none' href='/user/addUserRoleForm?userid=" + row.id + "'>添加用户角色</a> <a target='_self' style='text-decoration:none' href='/user/deleteUserRoleForm?userid=" + row.id + "&identitysid=" + row.identitysid + "&grade=" + row.grade + "&collegeid=" + row.collegeid + "&majorid=" + row.majorid + "&roleid=" + row.roleId + "'>删除</a>"
         }

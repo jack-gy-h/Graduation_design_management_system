@@ -1260,8 +1260,10 @@
                fp.chinese_abstract AS 'chineseabstract',
                fp.english_abstract AS 'englishabstract',
                fp.other            AS 'other',
+               fp.file_address AS 'fileaddress',
                fp.file_name        AS 'filename',
-               fp.file_address AS 'fileaddress'
+               fp.create_date AS 'createDate'
+
         FROM final_paper fp
         WHERE fp.id = #{finalPaperid}
 
@@ -1277,10 +1279,41 @@
             file_address = #{fileaddress},
             file_name = #{filename},
             create_date = #{createDate},
-            audit_status = 1
+            audit_status = #{auditStatusId}
 
 
         WHERE id = #{finalPaperid}
     </update>
+    <select id="getteacherviewstudentfinalpaperListData" resultType="com.design.entity.Task">
+        SELECT fp.id                             AS 'id',
+               fp.file_name                      AS 'filename',
+               u.NAME                            AS 'studentname',
+               fp.create_date                    AS 'createDate',
+               taas.task_assignment_audit_status AS 'auditStatus',
+               fp.audit_status                   AS 'auditStatusId'
+        FROM final_paper fp
+                 LEFT JOIN task t ON fp.id = t.final_paperid
+                 LEFT JOIN task_chosen tc ON tc.task_id = t.id
+                 LEFT JOIN `user` u ON u.id = tc.chosen_student
+                 LEFT JOIN task_assignment_audit_status taas ON taas.id = fp.audit_status
+        WHERE t.teacher_id = #{userId}
+          AND t.grade = #{grade}
+          AND t.del_flag = 0
+          AND tc.teacher_choose_status = 2
+        LIMIT #{page},#{rows}
+
+
+    </select>
+
+    <select id="getteacherviewstudentfinalpaperCountListData" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM task t
+                 LEFT JOIN task_chosen tc ON tc.task_id = t.id
+        WHERE t.teacher_id = #{userId}
+          AND t.grade = #{grade}
+          AND t.del_flag = 0
+          AND tc.teacher_choose_status = 2
+
+    </select>
 
 </mapper>

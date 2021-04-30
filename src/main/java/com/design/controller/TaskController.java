@@ -1735,7 +1735,7 @@ public class TaskController {
         System.out.print("userId:" + userId);
 
 
-        List<Task> taskList = taskService.getviewchosenstudentallForanypatternListData(page, rows, userId, grade);
+        List<Task> taskList = taskService.getviewchosenstudentallForanypatternListData(page, rows,userId,grade);
 
 
         Count = taskService.getviewchosenstudentallListDataCountByPageAndRows(page, rows, userId, grade);
@@ -2415,7 +2415,7 @@ public String tasksubmitgraduationproject() {
     }
 
 
-//保存提交毕业设计（论文）最终版 操作
+//添加、修改提交毕业设计（论文）最终版 操作
     @RequestMapping(value = "/submit/graduationproject/save", method = RequestMethod.POST)
     @ResponseBody
     public String upload(MultipartFile file,String finalPaperid,String keywords, String innovationpoint, String chineseabstract, String englishabstract, String other, HttpServletRequest request) throws IOException{
@@ -2510,6 +2510,8 @@ public String tasksubmitgraduationproject() {
 
             task.setCreateDate(new Date());
 
+            task.setAuditStatusId("1");
+
             taskService.updatefinalpaper(task);
         }
 
@@ -2551,7 +2553,7 @@ public String tasksubmitgraduationproject() {
 
     }
 
-
+//查看毕业设计（论文）最终版详细页
     @RequestMapping(value = "/view/studentfinalpaper")
     public String taskviewstudentfinalpaper(HttpServletRequest request, Model model) {
 
@@ -2567,6 +2569,7 @@ public String tasksubmitgraduationproject() {
 
     }
 
+//    根据paperid获取毕业设计（论文）最终版数据
     @RequestMapping(value = "/get/finalpaper")
     @ResponseBody
     public List<Task> taskgetfinalpaper(String finalpaperid,Task task) {
@@ -2588,6 +2591,7 @@ public String tasksubmitgraduationproject() {
 
     }
 
+//    下载毕业设计（论文）最终版附带文件
     @RequestMapping(value = "/downloadfinalpaperfile", method = RequestMethod.GET)
     @ResponseBody
     public void downloadfinalpaperfile(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -2650,6 +2654,78 @@ public String tasksubmitgraduationproject() {
         out.close();
 
     }
+
+    @RequestMapping(value = "/teacher/audit/finalpaper")
+    public String taskteacherauditfinalpaper() {
+
+
+        return "taskteacherauditfinalpaper";
+
+
+    }
+
+    @RequestMapping(value = "/teacherviewstudentfinalpaperListData")
+    @ResponseBody
+    public Map<String, Object> taskteacherviewstudentfinalpaperListData(int page, int rows) {
+
+
+        int Count = 0;
+
+        Map<String, Object> map = Maps.newHashMap();
+
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+        List<Task> taskList = taskService.getteacherviewstudentfinalpaperListData(page, rows, userId, grade);
+
+        Count = taskService.getteacherviewstudentfinalpaperCountListData(page, rows, userId, grade);
+
+
+
+        map.put("total", Count);
+
+        map.put("rows", taskList);
+        return map;
+
+
+    }
+
+
+    @RequestMapping(value = "/audit/finalpaper")
+    public String taskauditfinalpaper(HttpServletRequest request){
+
+        String id = request.getParameter("id");
+
+        String audit_status = request.getParameter("audit_status");
+
+        Task task = new Task();
+
+        task.setFinalPaperid(id);
+
+
+
+        List<Task> taskList = taskService.getfinalpaperByid(task);
+
+        Task task1 = taskList.get(0);
+
+        task1.setAuditStatusId(audit_status);
+
+        taskService.updatefinalpaper(task1);
+
+        return "redirect:/task/teacher/audit/finalpaper";
+
+
+
+
+
+
+    }
+
 
 
 

@@ -63,6 +63,7 @@ public class TaskServiceImp implements TaskService {
 
     @Override
     public List<Task> getdoubletaskListByPageAndRowsForAuditDouble(int page, int rows, String grade, String majorid) {
+        page = (page - 1) * rows;
         return taskMapper.getdoubletaskListByPageAndRowsForAuditDouble(page,rows,grade,majorid);
     }
 
@@ -192,6 +193,7 @@ public class TaskServiceImp implements TaskService {
 
     @Override
     public List<Task> gettaskviewauditteacherassignListData(int page, int rows, String grade, String majorid) {
+        page = (page - 1) * rows;
         return taskMapper.gettaskviewauditteacherassignListData(page, rows, grade, majorid);
     }
 
@@ -202,6 +204,7 @@ public class TaskServiceImp implements TaskService {
 
     @Override
     public List<Task> getviewchosenstudentallForanypatternListData(int page, int rows, String userId, String grade) {
+        page = (page - 1) * rows;
         return taskMapper.getviewchosenstudentallForanypatternListData(page, rows, userId, grade);
     }
 
@@ -212,6 +215,7 @@ public class TaskServiceImp implements TaskService {
 
     @Override
     public List<Task> getviewauditassignmentbookListData(int page, int rows, String majorid, String grade) {
+        page = (page - 1) * rows;
         return taskMapper.getviewauditassignmentbookListData(page, rows, majorid, grade);
     }
 
@@ -244,6 +248,7 @@ public class TaskServiceImp implements TaskService {
 
     @Override
     public List<Task> getviewstudentfinalpaperListData(int page, int rows, String userId) {
+        page = (page - 1) * rows;
         return taskMapper.getviewstudentfinalpaperListData(page, rows, userId);
     }
 
@@ -255,6 +260,17 @@ public class TaskServiceImp implements TaskService {
     @Override
     public void updatefinalpaper(Task task) {
         taskMapper.updatefinalpaper(task);
+    }
+
+    @Override
+    public List<Task> getteacherviewstudentfinalpaperListData(int page, int rows, String userId, String grade) {
+        page = (page - 1) * rows;
+        return taskMapper.getteacherviewstudentfinalpaperListData(page, rows, userId, grade);
+    }
+
+    @Override
+    public int getteacherviewstudentfinalpaperCountListData(int page, int rows, String userId, String grade) {
+        return taskMapper.getteacherviewstudentfinalpaperCountListData(page, rows, userId, grade);
     }
 
 //    @Override

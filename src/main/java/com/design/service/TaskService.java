@@ -97,6 +97,10 @@ public interface TaskService {
 
     void updatefinalpaper(Task task);
 
+    List<Task> getteacherviewstudentfinalpaperListData(int page, int rows, String userId, String grade);
+
+    int getteacherviewstudentfinalpaperCountListData(int page, int rows, String userId, String grade);
+
 //    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
 
 
