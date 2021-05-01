@@ -35,9 +35,9 @@
 
                     var endtime = $("#endtime").datebox("getValue");
 
-                    alert("starttime:"+starttime);
-
-                    alert("endtime:" + endtime);
+                    // alert("starttime:"+starttime);
+                    //
+                    // alert("endtime:" + endtime);
 
                     if (starttime == null||starttime == ''){
                         alert("请输入答辩起始时间");

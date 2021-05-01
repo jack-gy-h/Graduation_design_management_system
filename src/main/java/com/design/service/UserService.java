@@ -33,6 +33,8 @@ public interface UserService {
 
     int updateuserByPrimaryKey(User user1);
 
+    String getrolenameByroleid(String roleId);
+
 //    String getofficenameById(String collegeid);
 
 //    Object getGradeById(User user);

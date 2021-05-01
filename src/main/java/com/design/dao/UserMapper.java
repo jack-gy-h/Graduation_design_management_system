@@ -114,5 +114,7 @@ public interface UserMapper {
 
     List<User> getGradeListById(String userid);
 
+    String getrolenameByroleid(@Param("roleId")String roleId);
+
 //    User getUserByUserId(String userid);
 }

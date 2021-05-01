@@ -105,5 +105,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.updateByPrimaryKey(user1);
     }
 
+    @Override
+    public String getrolenameByroleid(String roleId) {
+        return userMapper.getrolenameByroleid(roleId);
+    }
+
 
 }

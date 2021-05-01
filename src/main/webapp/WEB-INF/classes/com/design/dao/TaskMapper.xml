@@ -1016,12 +1016,12 @@
                  LEFT JOIN task_source ts ON ts.id = t.source
                  LEFT JOIN task_chosen tc ON t.id = tc.task_id
                  LEFT JOIN task_teacher_choose_status ttcs ON ttcs.id = tc.teacher_choose_status
-                 LEFT JOIN `user` u ON t.teacher_id = u.id E      LEFT JOIN office ma
-        ON t.major_id = ma.id
-            WHER tc.chosen_student = #{userId}
-            AND t.grade = #{grade}
-            AND t.pattern = 3
-            AND t.del_flag = 0
+                 LEFT JOIN `user` u ON t.teacher_id = u.id
+            LEFT JOIN office ma ON t.major_id = ma.id
+        WHERE tc.chosen_student = #{userId}
+          AND t.grade = #{grade}
+          AND t.pattern = 3
+          AND t.del_flag = 0
         LIMIT #{page},#{rows}
 
     </select>

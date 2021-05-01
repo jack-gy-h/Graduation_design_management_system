@@ -35,10 +35,10 @@
         });
 
         function judge(taskid, choosestatusId, studentId, status) {
-            alert("taskid:"+taskid);
-            alert("choosestatusId:"+choosestatusId);
-            alert("studentId:"+studentId);
-            alert("status:"+status);
+            // alert("taskid:"+taskid);
+            // alert("choosestatusId:"+choosestatusId);
+            // alert("studentId:"+studentId);
+            // alert("status:"+status);
 
             $.post("/task/teacher/judge/haschosenAndPass/", {studentId:studentId}, function (data) {
 

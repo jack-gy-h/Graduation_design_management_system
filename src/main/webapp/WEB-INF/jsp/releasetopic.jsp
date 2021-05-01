@@ -231,7 +231,7 @@
         function getThree() {//如果第一个下拉列表的值改变则调用此方法
 
             var code = $("#canbechosencollegeid option:selected").attr("value");//得到第一个下拉列表的值
-            alert("code:" + code);
+            // alert("code:" + code);
             if (code == 2) {
                 $("#officeTree").show();
 

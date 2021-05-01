@@ -77,7 +77,7 @@
                     contentType: false, //必须*/
                     success: function (data) {
 
-                        alert("result:" + data);
+                        // alert("result:" + data);
 
                         if (data == "success") {
                             alert("提交毕业设计（论文）最终版成功!");

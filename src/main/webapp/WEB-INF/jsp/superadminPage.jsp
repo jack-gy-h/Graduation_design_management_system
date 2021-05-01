@@ -189,7 +189,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">1
+            <div class="modal-body">
                 您确定要退出系统吗？
             </div>
             <div class="modal-footer">

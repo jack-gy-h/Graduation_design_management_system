@@ -621,6 +621,8 @@ public class UserController {
 
         user1.setRoleId(roleId);
 
+        user1.setRoleCnName(userService.getrolenameByroleid(roleId));
+
         SecurityUtils.getSubject().getSession().setAttribute("user",user1);
 
         System.out.print("((User) SecurityUtils.getSubject().getSession().getAttribute(\"user\")).getName():"+((User) SecurityUtils.getSubject().getSession().getAttribute("user")).getName());

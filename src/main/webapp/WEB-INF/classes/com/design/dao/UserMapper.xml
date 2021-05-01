@@ -465,6 +465,13 @@
           AND u.id = #{userid}
         order by uia.grade
     </select>
+
+    <select id="getrolenameByroleid" resultType="java.lang.String">
+        SELECT r.`name` AS 'roleCnName'
+        FROM role r
+        WHERE r.id = #{roleId}
+          AND r.del_flag = 0
+    </select>
     <!--    <select id="getUserByUserId" resultType="com.design.entity.User">-->
     <!--        select-->
     <!--        <include refid="Base_Column_List"/>-->

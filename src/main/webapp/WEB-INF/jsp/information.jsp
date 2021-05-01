@@ -15,13 +15,13 @@
 <script>
     function submit() {
 
-        alert("1");
+        // alert("1");
 
         var email = $("#email").val();
 
         var gender = $("#gender").val();
 
-        alert("email:"+email);
+        // alert("email:"+email);
 
 
         $.post("/information/save",{email:email,gender:gender},function (data){
