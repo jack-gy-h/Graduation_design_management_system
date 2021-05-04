@@ -26,6 +26,8 @@
         <result column="material_name" jdbcType="VARCHAR" property="materialName"/>
         <result column="final_paperid" jdbcType="VARCHAR" property="finalPaperid"/>
         <result column="score" jdbcType="VARCHAR" property="score"/>
+        <result column="assess_teacher" jdbcType="VARCHAR" property="assessTeacher"/>
+        <result column="assess_score" jdbcType="VARCHAR" property="assessScore"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
         <result column="del_flag" jdbcType="CHAR" property="delFlag"/>
@@ -107,7 +109,7 @@
         id, topic, college_id, major_id, type, pattern, source, canBeChosencollegeid, research_direction,
         brief_introduction, basic_requirements, reference_data, teacher_id, audit_status,
         grade, assignmentbook_id, material_address, material_name, final_paperid, score,
-        create_date, update_date, del_flag
+        assess_teacher, assess_score, create_date, update_date, del_flag
     </sql>
 
     <sql id="Base_Column_List1">
@@ -175,16 +177,18 @@
         brief_introduction, basic_requirements, reference_data,
         teacher_id, audit_status, grade,
         assignmentbook_id, material_address, material_name,
-        final_paperid, score, create_date,
-        update_date, del_flag)
+        final_paperid, score, assess_teacher,
+        assess_score, create_date, update_date,
+        del_flag)
         values (#{id,jdbcType=VARCHAR}, #{topic,jdbcType=VARCHAR}, #{collegeId,jdbcType=VARCHAR},
         #{majorId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{pattern,jdbcType=VARCHAR},
         #{source,jdbcType=VARCHAR}, #{canbechosencollegeid,jdbcType=VARCHAR}, #{researchDirection,jdbcType=VARCHAR},
         #{briefIntroduction,jdbcType=VARCHAR}, #{basicRequirements,jdbcType=VARCHAR}, #{referenceData,jdbcType=VARCHAR},
         #{teacherId,jdbcType=VARCHAR}, #{auditStatus,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR},
         #{assignmentbookId,jdbcType=VARCHAR}, #{materialAddress,jdbcType=VARCHAR}, #{materialName,jdbcType=VARCHAR},
-        #{finalPaperid,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
-        #{updateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=CHAR})
+        #{finalPaperid,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, #{assessTeacher,jdbcType=VARCHAR},
+        #{assessScore,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP},
+        #{delFlag,jdbcType=CHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.design.entity.Task">
         <!--
@@ -252,6 +256,12 @@
             </if>
             <if test="score != null">
                 score,
+            </if>
+            <if test="assessTeacher != null">
+                assess_teacher,
+            </if>
+            <if test="assessScore != null">
+                assess_score,
             </if>
             <if test="createDate != null">
                 create_date,
@@ -323,6 +333,12 @@
             </if>
             <if test="score != null">
                 #{score,jdbcType=VARCHAR},
+            </if>
+            <if test="assessTeacher != null">
+                #{assessTeacher,jdbcType=VARCHAR},
+            </if>
+            <if test="assessScore != null">
+                #{assessScore,jdbcType=VARCHAR},
             </if>
             <if test="createDate != null">
                 #{createDate,jdbcType=TIMESTAMP},
@@ -412,6 +428,12 @@
             <if test="record.score != null">
                 score = #{record.score,jdbcType=VARCHAR},
             </if>
+            <if test="record.assessTeacher != null">
+                assess_teacher = #{record.assessTeacher,jdbcType=VARCHAR},
+            </if>
+            <if test="record.assessScore != null">
+                assess_score = #{record.assessScore,jdbcType=VARCHAR},
+            </if>
             <if test="record.createDate != null">
                 create_date = #{record.createDate,jdbcType=TIMESTAMP},
             </if>
@@ -452,6 +474,8 @@
         material_name = #{record.materialName,jdbcType=VARCHAR},
         final_paperid = #{record.finalPaperid,jdbcType=VARCHAR},
         score = #{record.score,jdbcType=VARCHAR},
+        assess_teacher = #{record.assessTeacher,jdbcType=VARCHAR},
+        assess_score = #{record.assessScore,jdbcType=VARCHAR},
         create_date = #{record.createDate,jdbcType=TIMESTAMP},
         update_date = #{record.updateDate,jdbcType=TIMESTAMP},
         del_flag = #{record.delFlag,jdbcType=CHAR}
@@ -523,6 +547,12 @@
             <if test="score != null">
                 score = #{score,jdbcType=VARCHAR},
             </if>
+            <if test="assessTeacher != null">
+                assess_teacher = #{assessTeacher,jdbcType=VARCHAR},
+            </if>
+            <if test="assessScore != null">
+                assess_score = #{assessScore,jdbcType=VARCHAR},
+            </if>
             <if test="createDate != null">
                 create_date = #{createDate,jdbcType=TIMESTAMP},
             </if>
@@ -560,6 +590,8 @@
         material_name = #{materialName,jdbcType=VARCHAR},
         final_paperid = #{finalPaperid,jdbcType=VARCHAR},
         score = #{score,jdbcType=VARCHAR},
+        assess_teacher = #{assessTeacher,jdbcType=VARCHAR},
+        assess_score = #{assessScore,jdbcType=VARCHAR},
         create_date = #{createDate,jdbcType=TIMESTAMP},
         update_date = #{updateDate,jdbcType=TIMESTAMP},
         del_flag = #{delFlag,jdbcType=CHAR}
@@ -1017,7 +1049,7 @@
                  LEFT JOIN task_chosen tc ON t.id = tc.task_id
                  LEFT JOIN task_teacher_choose_status ttcs ON ttcs.id = tc.teacher_choose_status
                  LEFT JOIN `user` u ON t.teacher_id = u.id
-            LEFT JOIN office ma ON t.major_id = ma.id
+                 LEFT JOIN office ma ON t.major_id = ma.id
         WHERE tc.chosen_student = #{userId}
           AND t.grade = #{grade}
           AND t.pattern = 3
@@ -1178,6 +1210,8 @@
                t.topic            AS 'topic',
                t.material_name    AS 'materialName',
                t.score            AS 'score',
+               u2.name AS 'assessTeachername',
+               t.assess_score AS 'assessScore',
                tc.canbechosentype AS 'canbechosencollegeid',
                t.final_paperid    AS 'finalPaperid',
                t.create_date      AS 'createDate',
@@ -1201,6 +1235,7 @@
                  LEFT JOIN `user` u ON u.id = t.teacher_id
                  LEFT JOIN task_chosen tch ON tch.task_id = t.id
                  LEFT JOIN user u1 ON u1.id = tch.chosen_student
+                 LEFT JOIN user u2 ON u2.id = t.assess_teacher
         WHERE tch.chosen_student = #{userId}
           AND tch.teacher_choose_status = 2
 
@@ -1237,7 +1272,7 @@
 
     </insert>
     <select id="getviewstudentfinalpaperListData" resultType="com.design.entity.Task">
-        SELECT fp.id                              AS 'id',
+        SELECT fp.id                             AS 'id',
                fp.file_name                      AS 'filename',
                u.`name`                          AS 'studentname',
                fp.create_date                    AS 'createDate',
@@ -1254,15 +1289,15 @@
     </select>
 
     <select id="getfinalpaperByid" resultType="com.design.entity.Task">
-        SELECT fp.id AS 'finalPaperid',
+        SELECT fp.id               AS 'finalPaperid',
                fp.keywords         AS 'keywords',
                fp.innovation_point AS 'innovationpoint',
                fp.chinese_abstract AS 'chineseabstract',
                fp.english_abstract AS 'englishabstract',
                fp.other            AS 'other',
-               fp.file_address AS 'fileaddress',
+               fp.file_address     AS 'fileaddress',
                fp.file_name        AS 'filename',
-               fp.create_date AS 'createDate'
+               fp.create_date      AS 'createDate'
 
         FROM final_paper fp
         WHERE fp.id = #{finalPaperid}
@@ -1275,11 +1310,11 @@
             innovation_point = #{innovationpoint},
             chinese_abstract = #{chineseabstract},
             english_abstract = #{englishabstract},
-            other = #{other},
-            file_address = #{fileaddress},
-            file_name = #{filename},
-            create_date = #{createDate},
-            audit_status = #{auditStatusId}
+            other            = #{other},
+            file_address     = #{fileaddress},
+            file_name        = #{filename},
+            create_date      = #{createDate},
+            audit_status     = #{auditStatusId}
 
 
         WHERE id = #{finalPaperid}
@@ -1313,6 +1348,114 @@
           AND t.grade = #{grade}
           AND t.del_flag = 0
           AND tc.teacher_choose_status = 2
+
+    </select>
+    <select id="gettaskallocateassessteacherListData" resultType="com.design.entity.Task">
+        SELECT t.id AS 'id',
+        u.name AS 'studentname',
+        u.identity_number AS 'studentidentitynumber',
+        u1.name AS 'teachername',
+        u1.identity_number AS 'teacheridentitynumber',
+        t.topic AS 'topic',
+        u2.name AS 'assessTeachername',
+        u2.identity_number AS 'assessTeacheridentitynumber',
+        t.assess_score AS 'assessScore'
+        FROM task t
+        LEFT JOIN task_chosen tc ON tc.task_id = t.id
+        LEFT JOIN user u ON tc.chosen_student = u.id
+        LEFT JOIN user u1 ON t.teacher_id = u1.id
+        LEFT JOIN user u2 ON t.assess_teacher = u2.id
+        WHERE t.grade = #{grade}
+        AND t.major_id = #{majorid}
+        AND tc.teacher_choose_status = 2
+        <if test="studentname != null">
+            AND u.name LIKE '%${studentname}%'
+        </if>
+        <if test="studentidentitynumber != null">
+            AND u.identity_number LIKE '%${studentidentitynumber}%'
+        </if>
+        <if test="teachername != null">
+            AND u1.name LIKE '%${teachername}%'
+        </if>
+        <if test="teacheridentitynumber != null">
+            AND u1.identity_number LIKE '%${teacheridentitynumber}%'
+        </if>
+        <if test="topic != null">
+            AND t.topic LIKE '%${topic}%'
+        </if>
+        <if test="assessTeachername != null">
+            <if test="assessTeachername !=''">
+                AND u2.name LIKE '%${assessTeachername}%'
+            </if>
+
+
+        </if>
+        <if test="assessTeacheridentitynumber != null">
+            <if test="assessTeacheridentitynumber!= ''">
+                AND u2.identity_number LIKE '%${assessTeacheridentitynumber}%'
+
+            </if>
+
+        </if>
+        LIMIT #{page},#{rows}
+
+
+    </select>
+    <select id="gettaskallocateassessteacherCountListData" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM task t
+        LEFT JOIN task_chosen tc ON tc.task_id = t.id
+        LEFT JOIN user u ON tc.chosen_student = u.id
+        LEFT JOIN user u1 ON t.teacher_id = u1.id
+        LEFT JOIN user u2 ON t.assess_teacher = u2.id
+        WHERE t.grade = #{grade}
+        AND t.major_id = #{majorid}
+        AND tc.teacher_choose_status = 2
+        <if test="studentname != null">
+            AND u.name LIKE '%${studentname}%'
+        </if>
+        <if test="studentidentitynumber != null">
+            AND u.identity_number LIKE '%${studentidentitynumber}%'
+        </if>
+        <if test="teachername != null">
+            AND u1.name LIKE '%${teachername}%'
+        </if>
+        <if test="teacheridentitynumber != null">
+            AND u1.identity_number LIKE '%${teacheridentitynumber}%'
+        </if>
+        <if test="topic != null">
+            AND t.topic LIKE '%${topic}%'
+        </if>
+        <if test="assessTeachername != null">
+            <if test="assessTeachername !=''">
+                AND u2.name LIKE '%${assessTeachername}%'
+            </if>
+
+
+        </if>
+        <if test="assessTeacheridentitynumber != null">
+            <if test="assessTeacheridentitynumber!= ''">
+                AND u2.identity_number LIKE '%${assessTeacheridentitynumber}%'
+
+            </if>
+
+        </if>
+    </select>
+    <select id="gettaskviewAllAssessStudentListData" resultType="com.design.entity.Task">
+        SELECT t.id            AS 'id',
+               t.final_paperid AS 'finalPaperid',
+               t.topic         AS 'topic',
+               u.`name`        AS 'studentname',
+               t.assess_score  AS 'assessScore'
+        FROM task t
+                 LEFT JOIN task_chosen tc ON tc.task_id = t.id
+                 LEFT JOIN user u ON u.id = tc.chosen_student
+        WHERE t.assess_teacher = #{userId}
+          AND t.grade = #{grade}
+
+
+        LIMIT #{page},#{rows}
+
 
     </select>
 

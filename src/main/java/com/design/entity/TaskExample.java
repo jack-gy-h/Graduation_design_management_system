@@ -1595,6 +1595,146 @@ public class TaskExample {
             return (Criteria) this;
         }
 
+        public Criteria andAssessTeacherIsNull() {
+            addCriterion("assess_teacher is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessTeacherIsNotNull() {
+            addCriterion("assess_teacher is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessTeacherEqualTo(String value) {
+            addCriterion("assess_teacher =", value, "assessTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessTeacherNotEqualTo(String value) {
+            addCriterion("assess_teacher <>", value, "assessTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessTeacherGreaterThan(String value) {
+            addCriterion("assess_teacher >", value, "assessTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessTeacherGreaterThanOrEqualTo(String value) {
+            addCriterion("assess_teacher >=", value, "assessTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessTeacherLessThan(String value) {
+            addCriterion("assess_teacher <", value, "assessTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessTeacherLessThanOrEqualTo(String value) {
+            addCriterion("assess_teacher <=", value, "assessTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessTeacherLike(String value) {
+            addCriterion("assess_teacher like", value, "assessTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessTeacherNotLike(String value) {
+            addCriterion("assess_teacher not like", value, "assessTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessTeacherIn(List<String> values) {
+            addCriterion("assess_teacher in", values, "assessTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessTeacherNotIn(List<String> values) {
+            addCriterion("assess_teacher not in", values, "assessTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessTeacherBetween(String value1, String value2) {
+            addCriterion("assess_teacher between", value1, value2, "assessTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessTeacherNotBetween(String value1, String value2) {
+            addCriterion("assess_teacher not between", value1, value2, "assessTeacher");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreIsNull() {
+            addCriterion("assess_score is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreIsNotNull() {
+            addCriterion("assess_score is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreEqualTo(String value) {
+            addCriterion("assess_score =", value, "assessScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreNotEqualTo(String value) {
+            addCriterion("assess_score <>", value, "assessScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreGreaterThan(String value) {
+            addCriterion("assess_score >", value, "assessScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreGreaterThanOrEqualTo(String value) {
+            addCriterion("assess_score >=", value, "assessScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreLessThan(String value) {
+            addCriterion("assess_score <", value, "assessScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreLessThanOrEqualTo(String value) {
+            addCriterion("assess_score <=", value, "assessScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreLike(String value) {
+            addCriterion("assess_score like", value, "assessScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreNotLike(String value) {
+            addCriterion("assess_score not like", value, "assessScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreIn(List<String> values) {
+            addCriterion("assess_score in", values, "assessScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreNotIn(List<String> values) {
+            addCriterion("assess_score not in", values, "assessScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreBetween(String value1, String value2) {
+            addCriterion("assess_score between", value1, value2, "assessScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssessScoreNotBetween(String value1, String value2) {
+            addCriterion("assess_score not between", value1, value2, "assessScore");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateDateIsNull() {
             addCriterion("create_date is null");
             return (Criteria) this;

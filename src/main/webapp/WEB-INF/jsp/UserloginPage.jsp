@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
-    <title>'${user.roleCnName}'操作界面</title>
+    <title>毕业设计（论文）管理系统</title>
 
     <link rel="canonical" href="/static/html/dashboard-index.html">
 

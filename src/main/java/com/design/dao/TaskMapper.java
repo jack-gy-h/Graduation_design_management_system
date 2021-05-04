@@ -182,6 +182,12 @@ public interface TaskMapper {
 
     int getteacherviewstudentfinalpaperCountListData(@Param("page") int page, @Param("rows") int rows, @Param("userId") String userId, @Param("grade") String grade);
 
+    List<Task> gettaskallocateassessteacherListData(@Param("page") int page, @Param("rows") int rows, @Param("grade") String grade, @Param("majorid") String majorid, @Param("studentname")String studentname, @Param("studentidentitynumber")String studentidentitynumber, @Param("teachername")String teachername, @Param("teacheridentitynumber") String teacheridentitynumber, @Param("topic")String topic, @Param("assessTeachername") String assessTeachername, @Param("assessTeacheridentitynumber")String assessTeacheridentitynumber);
+
+    int gettaskallocateassessteacherCountListData(@Param("page") int page, @Param("rows") int rows, @Param("grade") String grade, @Param("majorid") String majorid, @Param("studentname") String studentname, @Param("studentidentitynumber") String studentidentitynumber, @Param("teachername") String teachername, @Param("teacheridentitynumber") String teacheridentitynumber, @Param("topic") String topic, @Param("assessTeachername") String assessTeachername, @Param("assessTeacheridentitynumber") String assessTeacheridentitynumber);
+
+    List<Task> gettaskviewAllAssessStudentListData(@Param("page") int page, @Param("rows") int rows, @Param("userId") String userId, @Param("grade") String grade);
+
 //    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
 
 

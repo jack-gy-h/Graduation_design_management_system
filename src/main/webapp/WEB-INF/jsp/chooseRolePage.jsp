@@ -9,7 +9,7 @@
 <%@ include file="/WEB-INF/include/taglib.jsp" %>
 <html>
 <head>
-    <title>chooseRolePage</title>
+    <title>角色身份选择界面</title>
 
     <script src="/static/js/jquery-1.8.3.js" type="text/javascript"></script>
 
@@ -28,6 +28,52 @@
     <link href="/static/css/jeesite.min.css" rel="stylesheet" type="text/css"/>
 
     <script type="text/javascript">
+
+        $(function () {
+
+
+            $("#inputForm").validate({
+
+                submitHandler: function (form) {
+
+
+                    var grade = $("#grade").val();
+
+                    var collegeid = $("#collegeid").val();
+
+                    var majorid = $("#majorid").val();
+
+                    var roleId = $("#roleId").val();
+
+                    // alert("grade:"+grade);
+                    //
+                    // alert("collegeid:"+collegeid);
+                    //
+                    // alert("majorid:"+majorid);
+                    //
+                    // alert("roleId:"+roleId);
+
+
+                    if (grade == 0) {
+                        alert("请选择年份");
+                        return;
+                    } else if (collegeid == 0) {
+                        alert("请选择学院");
+                        return;
+                    } else if (majorid == 0) {
+                        alert("请选择专业");
+                        return;
+                    }else if (roleId == 0){
+                        alert("请选择角色");
+                        return;
+                    }
+
+                    form.submit();
+
+
+                }
+            })
+        })
 
         function getTwo() {//如果第一个下拉列表的值改变则调用此方法
             // alert("1");
@@ -186,7 +232,7 @@
     </div>
     <div class="form-actions">
         <input id="btnSubmit" class="btn btn-primary" type="submit"
-               value="保 存"/>&nbsp;
+               value="登 录"/>&nbsp;
         <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
     </div>
 </form:form>

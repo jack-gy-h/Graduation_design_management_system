@@ -37,9 +37,9 @@
             }
             var row = selectedRows[0];
             // alert("row.id:"+row.id);
-            $("#dlg").dialog("open").dialog("setTitle", "添加学生指导成绩");
+            $("#dlg").dialog("open").dialog("setTitle", "添加评阅成绩");
             // // $("#fm").form("load", row);
-            url = "/task/teacher/set/score?id=" + row.id;
+            url = "/task/teacher/set/assessscoreforStudent?id=" + row.id;
         }
 
         function saveUser() {
@@ -75,7 +75,7 @@
         }
 
         function resetValue() {
-            $("#score").val("");
+            $("#assessScore").val("");
 
         }
 
@@ -86,9 +86,9 @@
                 return;
             }
             var row = selectedRows[0];
-            $("#dlg1").dialog("open").dialog("setTitle", "修改指导成绩信息");
+            $("#dlg1").dialog("open").dialog("setTitle", "修改评阅成绩信息");
             $("#fm1").form("load", row);
-            url = "/task/teacher/modify/score?id=" + row.id;
+            url = "/task/teacher/modify/assessScoreforStudent?id=" + row.id;
         }
 
         function saveUser1() {
@@ -121,11 +121,10 @@
         }
 
 
-
         function loadData() {
             $("#dg").datagrid({
-                title: "所有确认选题学生列表",
-                url: "/task/viewchosenstudentallForanypatternListData",
+                title: "所有待评阅的学生列表",
+                url: "/task/viewAllAssessStudentListData",
                 method: "POST",
                 pagination: true,
                 pageSize: 20,
@@ -141,13 +140,12 @@
                 //studentId
                 columns: [[
                     {field: 'ck', checkbox: true},
-                    {field: 'id', title: '选题ID', width: 200, hidden: true, align: 'center'},
+                    {field: 'id', title: '任务书id', width: 200, hidden: true, align: 'center'},
+                    {field: 'finalPaperid', title: '论文最终版id', width: 200, hidden: true, align: 'center'},
                     {field: 'topic', title: '题目名', width: 200, align: 'center'},
                     {field: 'studentname', title: '学生名', width: 200, align: 'center'},
-                    {field: 'pattern', title: '选题模式', width: 200, align: 'center'},
-                    {field: 'score', title: '成绩', width: 200, align: 'center'},
-                    {field: 'auditStatusId', title: "审核状态ID", width: 200, hidden: true, align: 'center'},
-                    {field: 'assignmentbookId', title: "课题任务书ID", width: 200, hidden: true, align: 'center'}
+                    {field: 'assessScore', title: '评阅成绩', width: 200, align: 'center'},
+                    {field: 'OperationItem', title: '操作列', width: 250, formatter: formatTitle}
 
 
 
@@ -163,25 +161,29 @@
             })
         }
 
-        function formatTitle(val, row) {
 
-
-            return "<a target = '_self'   style = 'text-decoration:none'href = '/task/downloadmaterial?id=" + row.id + "' > 提交学生成绩 </a> "
-            // if(row.materialName == null){
-            //
-            // }else if(row.materialName != null){
-            //     return "<a target = '_self'   style = 'text-decoration:none'href = '/task/downloadmaterial?id=" +row.id + "' > 下载相关材料 </a> "
-            // }
-
-
-            // return "<a target='_self' style='text-decoration:none' href='/user/addUserRoleForm?userid=" + row.id + "'>添加用户角色</a> <a target='_self' style='text-decoration:none' href='/user/deleteUserRoleForm?userid=" + row.id + "&identitysid=" + row.identitysid + "&grade=" + row.grade + "&collegeid=" + row.collegeid + "&majorid=" + row.majorid + "&roleid=" + row.roleId + "'>删除</a>"
-        }
 
 
         // function opentable() {
         //     // $("#home")[0].innerHTML = "<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='/index'></iframe>"
         //     window.location.href = '/user/form';
         // }<a target = '_self' style = 'text-decoration:none'href = '/teacher/task/doublechoosestudent?id="+row.id+"' > 进行双选 </a>
+
+        function formatTitle(val, row) {
+
+            if(row.finalPaperid == null){
+                return "学生尚未上传毕业设计最终版论文";
+
+            }else{
+                return "<a target='_self'  style='text-decoration:none' href='/task/view/studentfinalpaper?id=" + row.finalPaperid + "'>查看详情</a>"
+            }
+
+
+
+
+
+            // return "<a target='_self' style='text-decoration:none' href='/user/addUserRoleForm?userid=" + row.id + "'>添加用户角色</a> <a target='_self' style='text-decoration:none' href='/user/deleteUserRoleForm?userid=" + row.id + "&identitysid=" + row.identitysid + "&grade=" + row.grade + "&collegeid=" + row.collegeid + "&majorid=" + row.majorid + "&roleid=" + row.roleId + "'>删除</a>"
+        }
 
 
     </script>
@@ -193,9 +195,9 @@
 <div id="tb">
     <div>
 
-            <a href="javascript:openUserAddDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a>
-            <a href="javascript:openUserModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit"
-               plain="true">修改</a>
+        <a href="javascript:openUserAddDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a>
+        <a href="javascript:openUserModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit"
+           plain="true">修改</a>
 
 
     </div>
@@ -207,7 +209,7 @@
         <table cellspacing="8px">
             <tr>
                 <td>成绩</td>
-                <td><input type="text" id="score" name="score" class="easyui-validatebox" required="true"/>
+                <td><input type="text" id="assessScore" name="assessScore" class="easyui-validatebox" required="true"/>
                 </td>
             </tr>
 
@@ -231,7 +233,7 @@
         <table cellspacing="8px">
             <tr>
                 <td>成绩</td>
-                <td><input type="text" id="topicScore1" name="score" class="easyui-validatebox" required="true"/>
+                <td><input type="text" id="topicScore1" name="assessScore" class="easyui-validatebox" required="true"/>
                 </td>
             </tr>
 

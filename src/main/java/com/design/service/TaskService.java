@@ -101,6 +101,12 @@ public interface TaskService {
 
     int getteacherviewstudentfinalpaperCountListData(int page, int rows, String userId, String grade);
 
+    List<Task> gettaskallocateassessteacherListData(int page, int rows, String grade, String majorid, String studentname, String studentidentitynumber, String teachername, String teacheridentitynumber, String topic, String assessTeachername, String assessTeacheridentitynumber);
+
+    int gettaskallocateassessteacherCountListData(int page, int rows, String grade, String majorid, String studentname, String studentidentitynumber, String teachername, String teacheridentitynumber, String topic, String assessTeachername, String assessTeacheridentitynumber);
+
+    List<Task> gettaskviewAllAssessStudentListData(int page, int rows, String userId,String grade);
+
 //    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
 
 

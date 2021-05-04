@@ -2655,6 +2655,7 @@ public String tasksubmitgraduationproject() {
 
     }
 
+//    进入教师审核毕业设计论文最终版界面
     @RequestMapping(value = "/teacher/audit/finalpaper")
     public String taskteacherauditfinalpaper() {
 
@@ -2664,6 +2665,7 @@ public String tasksubmitgraduationproject() {
 
     }
 
+//    获取教师审核的毕业设计论文最终版学生的列表
     @RequestMapping(value = "/teacherviewstudentfinalpaperListData")
     @ResponseBody
     public Map<String, Object> taskteacherviewstudentfinalpaperListData(int page, int rows) {
@@ -2695,7 +2697,7 @@ public String tasksubmitgraduationproject() {
 
     }
 
-
+//审核毕业设计论文最终版操作
     @RequestMapping(value = "/audit/finalpaper")
     public String taskauditfinalpaper(HttpServletRequest request){
 
@@ -2722,6 +2724,237 @@ public String tasksubmitgraduationproject() {
 
 
 
+
+
+    }
+
+//    /allocate/assessteacher
+//进入分配评阅教师界面
+    @RequestMapping(value = "/allocate/assessteacher")
+    public String taskallocateassessteacher() {
+
+
+        return "allocateassessteacher";
+
+
+    }
+
+//    获取当前学年下t.grade = #{grade}
+//    本专业t.major_id = #{majorid}
+//    已确认选题学生的信息tc.teacher_choose_status = 2
+//    用于进行分配
+    @RequestMapping(value = "/allocate/assessteacherListData")
+    @ResponseBody
+    public Map<String, Object> taskallocateassessteacherListData(int page, int rows, String studentname, String studentidentitynumber, String teachername, String teacheridentitynumber, String topic, String assessTeachername, String assessTeacheridentitynumber) {
+
+
+        int Count = 0;
+
+        Map<String, Object> map = Maps.newHashMap();
+
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+//        System.out.print("studentname:"+studentname);
+//
+//        System.out.print("studentidentitynumber:" + studentidentitynumber);
+
+        List<Task> taskList = taskService.gettaskallocateassessteacherListData(page, rows, grade, majorid,studentname,studentidentitynumber,teachername,teacheridentitynumber,topic,assessTeachername,assessTeacheridentitynumber);
+
+        Count = taskService.gettaskallocateassessteacherCountListData(page, rows, grade, majorid, studentname, studentidentitynumber, teachername, teacheridentitynumber, topic, assessTeachername, assessTeacheridentitynumber);
+
+
+        map.put("total", Count);
+
+        map.put("rows", taskList);
+        return map;
+
+
+    }
+
+    //    添加/取消评阅教师操作
+    @RequestMapping(value = "/director/set/assessTeacher")
+    @ResponseBody
+    public String taskdirectorsetassessTeacher(HttpServletRequest request, Task task) {
+
+
+        String taskid = request.getParameter("taskid");
+
+        String idss = request.getParameter("idss");
+
+        String assessteacherstatus = request.getParameter("assessteacherstatus");
+
+//        获取该选题的所有信息，用于查看是否已经存在成绩
+//        以及作为update的载体
+//        task1:单个学生添加或修改评阅专家时的载体
+//        task2：多个学生同时添加评阅专家时的载体
+
+        Task task1 = taskService.getTaskByIdTrue(taskid);
+
+//        assessteacherstatus为1说明是添加操作
+        if(assessteacherstatus.equals("1")){
+//如果评阅教师字段不是空的且是空字符串的（取消评阅教师就是将评阅教师字段变为空字符串，但是空字符也可以添加）
+//         由于只有null，空字符串和字符三种情况
+//            因此，不能添加的情况便是除了字符外的两种情况同时不成立即可
+//说明已有数据，不能添加
+            if(idss !=null){
+
+                String[] strings = idss.split(",");
+
+                for (String str : strings){
+
+                    Task task2 = taskService.getTaskByIdTrue(str);
+
+                    if (task2.getAssessTeacher() != null && !task2.getAssessTeacher().equals("")) {
+                        return "falseadd";
+
+                    }
+                    //            对于指导老师就是评阅老师的情况也不予以提交
+                    else if (task.getAssessTeacher().equals(task2.getTeacherId())) {
+                        return "false";
+                    }
+                    task2.setAssessTeacher(task.getAssessTeacher());
+
+                    taskService.updateTask(task2);
+
+
+
+
+                }
+                return "success";
+
+
+
+
+            }else{
+                if (task1.getAssessTeacher() != null && !task1.getAssessTeacher().equals("")) {
+                    return "falseadd";
+
+                }
+                //            对于指导老师就是评阅老师的情况也不予以提交
+                else if (task.getAssessTeacher().equals(task1.getTeacherId())) {
+                    return "false";
+                }
+                task1.setAssessTeacher(task.getAssessTeacher());
+
+            }
+
+
+
+        }else if(assessteacherstatus.equals("2")){
+
+            task1.setAssessTeacher("");
+        }
+
+        taskService.updateTask(task1);
+        return "success";
+
+
+    }
+
+//
+//    教师进入评阅功能界面
+@RequestMapping(value = "/teacher/set/assessscore")
+public String taskteachersetassessscore() {
+
+
+    return "taskteachersetassessscore";
+
+
+}
+
+
+//由于能交给教师审阅的都是系主任的
+//    当前学年下t.grade = #{grade}
+//    本专业t.major_id = #{majorid}
+//    已确认选题学生tc.teacher_choose_status = 2
+//    因此这里获取列表只需要获取选题中属于自己的、当前学年的题目
+    @RequestMapping(value = "/viewAllAssessStudentListData")
+    @ResponseBody
+    public Map<String, Object> taskviewAllAssessStudentListData(int page, int rows) {
+
+
+        int Count = 0;
+
+
+        Map<String, Object> map = Maps.newHashMap();
+
+        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user1.getId();
+
+
+        String grade = user1.getGrade();
+
+        String majorid = user1.getMajorid();
+
+
+
+        List<Task> taskList = taskService.gettaskviewAllAssessStudentListData(page, rows, userId,grade);
+
+
+
+        map.put("total", Count);
+
+
+        map.put("rows", taskList);
+        return map;
+
+
+    }
+
+    //    添加评阅成绩操作
+    @RequestMapping(value = "/teacher/set/assessscoreforStudent")
+    @ResponseBody
+    public String taskteachersetassessscore(HttpServletRequest request, Task task) {
+
+
+        String id = request.getParameter("id");
+
+//        获取该选题的所有信息，用于查看是否已经存在成绩
+//        以及作为update的载体
+        Task task1 = taskService.getTaskByIdTrue(id);
+
+        if (task1.getAssessScore() != null) {
+            return "falseadd";
+
+        } else if (Integer.parseInt(task.getAssessScore()) < 0 || Integer.parseInt(task.getAssessScore()) > 100) {
+            return "illegal";
+        }
+        task1.setAssessScore(task.getAssessScore());
+
+        taskService.updateTask(task1);
+
+        return "success";
+
+
+    }
+
+    //修改评阅成绩操作
+    @RequestMapping(value = "/teacher/modify/assessScoreforStudent")
+    @ResponseBody
+    public String taskteachermodifyassessscore(HttpServletRequest request, Task task) {
+
+
+        String id = request.getParameter("id");
+
+//        获取该选题的所有信息，用于查看是否已经存在成绩
+//        以及作为update的载体
+        Task task1 = taskService.getTaskByIdTrue(id);
+
+        if (Integer.parseInt(task.getAssessScore()) < 0 || Integer.parseInt(task.getAssessScore()) > 100) {
+            return "illegal";
+        }
+        task1.setAssessScore(task.getAssessScore());
+
+        taskService.updateTask(task1);
+
+        return "success";
 
 
     }

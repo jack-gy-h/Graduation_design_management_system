@@ -273,6 +273,23 @@ public class TaskServiceImp implements TaskService {
         return taskMapper.getteacherviewstudentfinalpaperCountListData(page, rows, userId, grade);
     }
 
+    @Override
+    public List<Task> gettaskallocateassessteacherListData(int page, int rows, String grade, String majorid, String studentname, String studentidentitynumber, String teachername, String teacheridentitynumber, String topic, String assessTeachername, String assessTeacheridentitynumber) {
+        page = (page - 1) * rows;
+        return taskMapper.gettaskallocateassessteacherListData(page, rows, grade, majorid, studentname, studentidentitynumber, teachername, teacheridentitynumber, topic, assessTeachername, assessTeacheridentitynumber);
+    }
+
+    @Override
+    public int gettaskallocateassessteacherCountListData(int page, int rows, String grade, String majorid, String studentname, String studentidentitynumber, String teachername, String teacheridentitynumber, String topic, String assessTeachername, String assessTeacheridentitynumber) {
+        return taskMapper.gettaskallocateassessteacherCountListData(page, rows, grade, majorid, studentname, studentidentitynumber, teachername, teacheridentitynumber, topic, assessTeachername, assessTeacheridentitynumber);
+    }
+
+    @Override
+    public List<Task> gettaskviewAllAssessStudentListData(int page, int rows, String userId, String grade) {
+        page = (page - 1) * rows;
+        return taskMapper.gettaskviewAllAssessStudentListData(page, rows, userId, grade);
+    }
+
 //    @Override
 //    public List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid) {
 //        return taskMapper.getviewteacherassignListData(page, rows, grade, majorid);
