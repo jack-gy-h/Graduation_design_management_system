@@ -160,6 +160,7 @@ public class UserController {
     }
 
 //    删除单个角色的功能
+//    当该用户下的所有角色都删除之后，该用户也会被删除
     @RequestMapping(value = "/deleteUserRoleForm")
     public String deleteUserRoleForm(Model model, HttpServletRequest request, User user, Log log) {
 
@@ -195,6 +196,25 @@ public class UserController {
         user.setDelFlag("1");
 
         userService.deleteUserRoleForm("1",userid,identitysid,grade,collegeid,majorid,roleId);
+
+        int rolenumber = userService.getuserRoleCount(userid,"0");
+
+        if (rolenumber == 0){
+
+//            user1获取到的用户载体，用于update用户信息状态
+
+            User user1 = userService.getUserByUserId(userid);
+
+            user1.setDelFlag("1");
+
+            userService.updateuserByPrimaryKey(user1);
+
+
+
+
+
+
+        }
 
         String id = UUID.randomUUID().toString().replace("-", "");
 

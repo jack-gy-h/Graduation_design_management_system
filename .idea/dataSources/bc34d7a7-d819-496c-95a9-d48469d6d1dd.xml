@@ -33,7 +33,7 @@
     </schema>
     <schema id="10" parent="1" name="graduation_design_management_system1">
       <Current>1</Current>
-      <Collation>utf8mb4_general_ci</Collation>
+      <Collation>latin1_swedish_ci</Collation>
     </schema>
     <schema id="11" parent="1" name="information_schema">
       <Collation>utf8_general_ci</Collation>
@@ -799,38 +799,77 @@ SELECT|sys.sys_config:null
       <ObjectGrants>ALL PRIVILEGES!
 </ObjectGrants>
     </user>
-    <table id="249" parent="10" name="announcement"/>
-    <table id="250" parent="10" name="assignment_book"/>
-    <table id="251" parent="10" name="final_paper"/>
+    <table id="249" parent="10" name="announcement">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="250" parent="10" name="assignment_book">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="251" parent="10" name="final_paper">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
     <table id="252" parent="10" name="log">
       <Comment>菜单表</Comment>
+      <Collation>utf8mb4_general_ci</Collation>
     </table>
     <table id="253" parent="10" name="menu">
       <Comment>菜单表</Comment>
+      <Collation>utf8mb4_general_ci</Collation>
     </table>
     <table id="254" parent="10" name="office">
       <Comment>菜单表</Comment>
+      <Collation>utf8mb4_general_ci</Collation>
     </table>
     <table id="255" parent="10" name="role">
       <Comment>角色表</Comment>
+      <Collation>utf8mb4_general_ci</Collation>
     </table>
     <table id="256" parent="10" name="role_menu">
       <Comment>角色-菜单</Comment>
+      <Collation>utf8mb4_general_ci</Collation>
     </table>
-    <table id="257" parent="10" name="schedule"/>
-    <table id="258" parent="10" name="task"/>
-    <table id="259" parent="10" name="task_assignment_audit_status"/>
-    <table id="260" parent="10" name="task_audit_status"/>
-    <table id="261" parent="10" name="task_canbechosenmajor"/>
-    <table id="262" parent="10" name="task_canbechosentype"/>
-    <table id="263" parent="10" name="task_chosen"/>
-    <table id="264" parent="10" name="task_pattern"/>
-    <table id="265" parent="10" name="task_source"/>
-    <table id="266" parent="10" name="task_teacher_choose_status"/>
-    <table id="267" parent="10" name="task_type"/>
-    <table id="268" parent="10" name="user"/>
-    <table id="269" parent="10" name="user_identitys"/>
-    <table id="270" parent="10" name="user_info_all"/>
+    <table id="257" parent="10" name="schedule">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="258" parent="10" name="task">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="259" parent="10" name="task_assignment_audit_status">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="260" parent="10" name="task_audit_status">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="261" parent="10" name="task_canbechosenmajor">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="262" parent="10" name="task_canbechosentype">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="263" parent="10" name="task_chosen">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="264" parent="10" name="task_pattern">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="265" parent="10" name="task_source">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="266" parent="10" name="task_teacher_choose_status">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="267" parent="10" name="task_type">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="268" parent="10" name="user">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="269" parent="10" name="user_identitys">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
+    <table id="270" parent="10" name="user_info_all">
+      <Collation>utf8mb4_general_ci</Collation>
+    </table>
     <column id="271" parent="249" name="id">
       <Position>1</Position>
       <Comment>编号</Comment>

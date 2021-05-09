@@ -35,6 +35,8 @@ public interface UserService {
 
     String getrolenameByroleid(String roleId);
 
+    int getuserRoleCount(String userid, String delflag);
+
 //    String getofficenameById(String collegeid);
 
 //    Object getGradeById(User user);

@@ -116,5 +116,7 @@ public interface UserMapper {
 
     String getrolenameByroleid(@Param("roleId")String roleId);
 
+    int getuserRoleCount(@Param("userid")String userid, @Param("delflag") String delflag);
+
 //    User getUserByUserId(String userid);
 }

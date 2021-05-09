@@ -110,5 +110,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.getrolenameByroleid(roleId);
     }
 
+    @Override
+    public int getuserRoleCount(String userid, String delflag) {
+        return userMapper.getuserRoleCount(userid,delflag);
+    }
+
 
 }
