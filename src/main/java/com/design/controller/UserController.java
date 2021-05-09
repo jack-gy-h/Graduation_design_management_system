@@ -102,9 +102,29 @@ public class UserController {
     }
 
     @RequestMapping(value = "/form")
-    public String userForm(Model model, HttpServletRequest request, User user) {
+    public String userForm(Model model, HttpServletRequest request) {
 
-//        String id = request.getParameter("id");
+        String uiaid = request.getParameter("uiaid");
+
+
+        if (uiaid == null){
+
+            User user = new User();
+
+            model.addAttribute("user", user);
+
+
+        }else{
+
+            User userAllInfo = userService.getuiaAllByUiaId(uiaid);
+
+            User user = userService.getUserAllInfoByUserId(userAllInfo.getUserid());
+
+            model.addAttribute("user", user);
+
+        }
+
+
 //
 //        if (id == null) {
 //            user = new Role();
@@ -118,7 +138,7 @@ public class UserController {
 //        }
 
 
-        model.addAttribute("user", user);
+
 
 
         List<Office> officeList = officeService.getOfficeParentListById("1");
@@ -164,50 +184,60 @@ public class UserController {
     @RequestMapping(value = "/deleteUserRoleForm")
     public String deleteUserRoleForm(Model model, HttpServletRequest request, User user, Log log) {
 
-        String userid = request.getParameter("userid");
+//        String userid = request.getParameter("userid");
+//
+//        String identitysid = request.getParameter("identitysid");
+//
+//        String grade = request.getParameter("grade");
+//
+//        String collegeid = request.getParameter("collegeid");
+//
+//        String majorid = request.getParameter("majorid");
+//
+//        System.out.print("majorid"+majorid);
+//
+//        String roleId = request.getParameter("roleid");
 
-        String identitysid = request.getParameter("identitysid");
+        String uiaid = request.getParameter("uiaid");
 
-        String grade = request.getParameter("grade");
+        User user1 = userService.getuiaAllByUiaId(uiaid);
 
-        String collegeid = request.getParameter("collegeid");
+        user1.setDelFlag("1");
 
-        String majorid = request.getParameter("majorid");
-
-        System.out.print("majorid"+majorid);
-
-        String roleId = request.getParameter("roleid");
+        userService.deleteUserRoleForm(user1);
 
 //        用到了逆向工程提供的selectByPrimaryKey方法来取user。
 //        User user = userService.getUserByUserId(userid);
-        user.setId(userid);
-//        user.setRoleId("'" + user.getRoleId() + "'");
+//        user.setId(userid);
+////        user.setRoleId("'" + user.getRoleId() + "'");
+//
+//        user.setIdentitysid(identitysid);
+//
+//        user.setGrade(grade);
+//
+//        user.setCollegeid(collegeid);
+//
+////        user.setMajorid(majorid);
+//
+//        user.setRoleId(roleId);
+//
+//        user.setDelFlag("1");
 
-        user.setIdentitysid(identitysid);
+//        userService.deleteUserRoleForm("1",userid,identitysid,grade,collegeid,majorid,roleId);
 
-        user.setGrade(grade);
+//        userService.deleteUserRoleForm(uiaid);
 
-        user.setCollegeid(collegeid);
-
-//        user.setMajorid(majorid);
-
-        user.setRoleId(roleId);
-
-        user.setDelFlag("1");
-
-        userService.deleteUserRoleForm("1",userid,identitysid,grade,collegeid,majorid,roleId);
-
-        int rolenumber = userService.getuserRoleCount(userid,"0");
+        int rolenumber = userService.getuserRoleCount(user1.getUserid(),"0");
 
         if (rolenumber == 0){
 
 //            user1获取到的用户载体，用于update用户信息状态
 
-            User user1 = userService.getUserByUserId(userid);
+            User user2 = userService.getUserByUserId(user1.getUserid());
 
-            user1.setDelFlag("1");
+            user2.setDelFlag("1");
 
-            userService.updateuserByPrimaryKey(user1);
+            userService.updateuserByPrimaryKey(user2);
 
 
 
@@ -246,15 +276,15 @@ public class UserController {
 
         System.out.print("userid:"+user.getId());
 
-        System.out.print("identitysid:" + identitysid);
+        System.out.print("identitysid:" + user1.getIdentitysid());
 
-        System.out.print("grade:" + grade);
+        System.out.print("grade:" + user1.getGrade());
 
-        System.out.print("collegeid:" + collegeid);
+        System.out.print("collegeid:" + user1.getCollegeid());
 
-        System.out.print("majorid:" + user.getMajorid());
+        System.out.print("majorid:" + user1.getMajorid());
 
-        System.out.print("roleId:" + user.getRoleId());
+        System.out.print("roleId:" + user1.getRoleId());
 
 
 
@@ -353,11 +383,11 @@ public class UserController {
     @RequestMapping("/checkPassword")
     @ResponseBody
     public String checkPassword(String oldPassword, String password) {
-        String passwordMd5 = CryptographyUtil.md5(password, SALT);
+//        String passwordMd5 = CryptographyUtil.md5(password, SALT);
 //        String oldPasswordMd5 = CryptographyUtil.md5(password, SALT);
 //        添加时，任意密码均可
 //        修改时，原密码不能等于同一个账号下的密码
-        if (oldPassword == passwordMd5) {
+        if (oldPassword == password) {
             return "false";
         }
         return "true";
@@ -441,16 +471,19 @@ public class UserController {
 //
 //        System.out.print("roleId:" + roleId);
 //        没有id 说明是添加操作
-        if (user.getId() == null) {
-//            加入id
+        if (user.getId() == null||user.getId().equals("")) {
+//            加入Id:userid
             String Id = UUIDUtil.getUUID();
+
+//            角色Id1:userroleid
+            String Id1 = UUIDUtil.getUUID();
 
             user.setId(Id);
 //            由于密码系统使用的是md5，则需要将手打的密码转化为md5
 
-            String passwordmd5 = CryptographyUtil.md5(user.getPassword(), SALT);
+//            String passwordmd5 = CryptographyUtil.md5(user.getPassword(), SALT);
 
-            user.setPassword(passwordmd5);
+            user.setPassword(user.getPassword());
 
             user.setDelFlag("0");
 
@@ -461,6 +494,8 @@ public class UserController {
             user.setRoleId("'" + user.getRoleId() + "'");
 
             user.setIdentity("USER");
+
+            user.setUiaid(Id1);
 
             userService.insert(user);
 
@@ -478,6 +513,7 @@ public class UserController {
 
             userService.insertUserInfoAll(user);
 
+//            log日志id
             String id = UUID.randomUUID().toString().replace("-", "");
 
             String requestUri = request.getRequestURI();//请求的Uri
@@ -505,6 +541,18 @@ public class UserController {
             log.setLcreatetime(new Date());
 
             logServiceI.insertSelective(log);
+
+
+        }else {
+
+            user.setDelFlag("0");
+
+            userService.updateuserByPrimaryKey(user);
+
+            userService.updateUserAllInfoByPrimaryKey(user);
+
+
+
 
 
         }
@@ -560,6 +608,10 @@ public class UserController {
 //        user.setMajorid("'" + user.getMajorid() + "'");
 
         user.setRoleId("'" + user.getRoleId() + "'");
+
+        String Id1 = UUIDUtil.getUUID();
+
+        user.setUiaid(Id1);
 
 //            userService.insert(user);
 

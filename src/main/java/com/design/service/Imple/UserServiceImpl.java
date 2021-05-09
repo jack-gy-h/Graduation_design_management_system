@@ -90,9 +90,14 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByPrimaryKey(userid);
     }
 
+//    @Override
+//    public void deleteUserRoleForm(String delflag, String userid, String identitysid, String grade, String collegeid, String majorid, String roleId) {
+//        userMapper.deleteUserRoleForm(delflag, userid, identitysid, grade, collegeid, majorid, roleId);
+//    }
+
     @Override
-    public void deleteUserRoleForm(String delflag, String userid, String identitysid, String grade, String collegeid, String majorid, String roleId) {
-        userMapper.deleteUserRoleForm(delflag, userid, identitysid, grade, collegeid, majorid, roleId);
+    public void deleteUserRoleForm(User user1) {
+        userMapper.deleteUserRoleForm(user1);
     }
 
     @Override
@@ -113,6 +118,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public int getuserRoleCount(String userid, String delflag) {
         return userMapper.getuserRoleCount(userid,delflag);
+    }
+
+    @Override
+    public User getuiaAllByUiaId(String uiaid) {
+        return userMapper.getuiaAllByUiaId(uiaid);
+    }
+
+    @Override
+    public User getUserAllInfoByUserId(String userid) {
+        return userMapper.getUserAllInfoByUserId(userid);
+    }
+
+    @Override
+    public void updateUserAllInfoByPrimaryKey(User user) {
+        userMapper.updateUserAllInfoByPrimaryKey(user);
     }
 
 

@@ -27,7 +27,9 @@ public interface UserService {
 
     User getUserByUserId(String userid);
 
-    void deleteUserRoleForm(String delflag,String userid,String identitysid,String grade,String collegeid,String majorid,String roleId);
+//    void deleteUserRoleForm(String delflag,String userid,String identitysid,String grade,String collegeid,String majorid,String roleId);
+
+    void deleteUserRoleForm(User user1);
 
     List<User> getGradeListById(String userid);
 
@@ -36,6 +38,12 @@ public interface UserService {
     String getrolenameByroleid(String roleId);
 
     int getuserRoleCount(String userid, String delflag);
+
+    User getuiaAllByUiaId(String uiaid);
+
+    User getUserAllInfoByUserId(String userid);
+
+    void updateUserAllInfoByPrimaryKey(User user);
 
 //    String getofficenameById(String collegeid);
 

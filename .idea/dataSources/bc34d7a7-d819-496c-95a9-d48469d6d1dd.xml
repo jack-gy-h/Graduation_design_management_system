@@ -1716,14 +1716,20 @@ CanBeChosenMajor</ColNames>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="421" parent="270" name="user_id">
+    <column id="421" parent="270" name="uia_id">
       <Position>1</Position>
+      <Comment>用户角色id</Comment>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="422" parent="270" name="user_id">
+      <Position>2</Position>
       <Comment>用户id</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="422" parent="270" name="identitys_id">
-      <Position>2</Position>
+    <column id="423" parent="270" name="identitys_id">
+      <Position>3</Position>
       <Comment>身份id,用于看是否需要显示专业&#xd;
 1.学生&#xd;
 2.普通教师&#xd;
@@ -1731,43 +1737,45 @@ CanBeChosenMajor</ColNames>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="423" parent="270" name="grade">
-      <Position>3</Position>
+    <column id="424" parent="270" name="grade">
+      <Position>4</Position>
       <Comment>年级id</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="424" parent="270" name="college_id">
-      <Position>4</Position>
+    <column id="425" parent="270" name="college_id">
+      <Position>5</Position>
       <Comment>学院id,实际上是机构id</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="425" parent="270" name="major_id">
-      <Position>5</Position>
+    <column id="426" parent="270" name="major_id">
+      <Position>6</Position>
       <Comment>专业id,实际上是机构id</Comment>
       <DataType>varchar(64)|0s</DataType>
     </column>
-    <column id="426" parent="270" name="role_id">
-      <Position>6</Position>
+    <column id="427" parent="270" name="role_id">
+      <Position>7</Position>
       <Comment>角色id</Comment>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="427" parent="270" name="del_flag">
-      <Position>7</Position>
+    <column id="428" parent="270" name="del_flag">
+      <Position>8</Position>
       <Comment>删除标记</Comment>
       <DataType>char(1)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <key id="428" parent="270" name="PRIMARY">
+    <key id="429" parent="270" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>user_id
-college_id
+      <ColNames>uia_id
+user_id
 identitys_id
 grade
-role_id</ColNames>
+college_id
+role_id
+del_flag</ColNames>
       <Primary>1</Primary>
     </key>
   </database-model>

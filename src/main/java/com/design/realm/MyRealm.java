@@ -47,6 +47,11 @@ public class MyRealm extends AuthorizingRealm {
         if (user != null) {
 //            在这里用请求获取了当前的Session然后通过setAttribute的方法对
             SecurityUtils.getSubject().getSession().setAttribute("user", user);
+
+            System.out.print("username:"+ user.getUsername());
+
+            System.out.print("password:" + user.getPassword());
+
             AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), this.getName());
             return authcInfo;
         }

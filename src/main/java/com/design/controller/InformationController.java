@@ -113,7 +113,7 @@ public class InformationController {
 
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
-        String oldpasswordformd5 = CryptographyUtil.md5(oldpassword, SALT);
+//        String oldpasswordformd5 = CryptographyUtil.md5(oldpassword, SALT);
         System.out.println(((User) session.getAttribute("user")).getPassword());
 //        如果两个新密码不一样的话，就报错
         if (newpassword1.equals(newpassword2) == false) {
@@ -122,9 +122,9 @@ public class InformationController {
         } else if (oldpassword.equals(newpassword1)) {
             System.out.println("different:1");
             return "different";
-        } else if (oldpasswordformd5.equals(user.getPassword())) {
+        } else if (oldpassword.equals(user.getPassword())) {
             User user1 = userService.getUserByUserId(user.getId());
-            user1.setPassword(CryptographyUtil.md5(newpassword1, SALT));
+            user1.setPassword(newpassword1);
             userService.updateuserByPrimaryKey(user1);
             SecurityUtils.getSubject().getSession().setAttribute("user",user1);
             User user2 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");

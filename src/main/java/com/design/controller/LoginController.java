@@ -33,7 +33,7 @@ public class LoginController {
 
         String password = user.getPassword();
 //        对提交的用户名和密码进行封装
-        UsernamePasswordToken token = new UsernamePasswordToken(username, CryptographyUtil.md5(password, SALT));
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 
         try {
             //            核心代码

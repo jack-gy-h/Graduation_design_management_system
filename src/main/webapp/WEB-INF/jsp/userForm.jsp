@@ -31,6 +31,8 @@
 
         $(document).ready(function () {
 
+            // $("#majorid").show();
+
             $("#inputForm").validate({
                 rules:{
                     username: {remote: "/user/checkUsername?oldUsername=" + encodeURIComponent("${user.username}")},
@@ -150,10 +152,13 @@
 </head>
 <body>
 <ul class="nav nav-tabs">
-    <li class="active"><a href="">用户添加</a></li>
+    <li class="active"><a href="">用户${not empty user.id?'修改':'添加'}</a></li>
 </ul>
 
 <form:form id="inputForm" modelAttribute="user" action="/user/form/save" method="post" class="form-horizontal">
+    <form:hidden path="id"/>
+    <form:hidden path="identity"/>
+    <form:hidden path="uiaid"/>
     <div class="control-group">
         <div class="control-group">
             <label class="control-label">个人姓名:</label>
@@ -180,7 +185,7 @@
     <div class="control-group">
         <label class="control-label">确认密码:</label>
         <div class="controls">
-            <form:input path="confirmpassword" htmlEscape="false" maxlength="50" class="required input-xlarge"/>
+            <form:input path="confirmpassword" htmlEscape="false" maxlength="50" class="required input-xlarge" value = "${user.password}"/>
             <span class="help-inline"><font color="red">*</font> </span>
         </div>
     </div>
@@ -188,10 +193,10 @@
         <label class="control-label">身份:</label>
         <div class="controls">
             <form:select path="identitys" class="required input-xlarge" onchange="">
-                <option value="0">请选择</option>
-                <option value="1" <c:if test="${user.identitys == null}" > selected = "selected"</c:if>>学生</option>
-                <option value="2">普通教师</option>
-                <option value="3">系主任</option>
+                <form:option value="0" >请选择</form:option>
+                <form:option value="1" >学生</form:option>
+                <form:option value="2" >普通教师</form:option>
+                <form:option value="3" >系主任</form:option>
             </form:select>
         </div>
     </div>
@@ -243,7 +248,7 @@
     <div class = "control-group">
         <label class="control-label">所属专业:</label>
         <div class="controls">
-            <form:select path="majorid" class="required input-xlarge" onchange="">
+            <form:select path="majorid" class="required input-xlarge" value = "${user.majorid}">
                 <%--            <form:options items="${UserParentMenu}" itemLabel="name" itemValue="collegeid" htmlEscape="false"--%>
                 <%--                          class="required"/>--%>
                 <%--            <form:option value="1" label="系统用户"/>--%>

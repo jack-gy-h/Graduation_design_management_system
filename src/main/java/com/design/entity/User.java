@@ -138,6 +138,14 @@ public class User {
 
     private String majorid;
 
+
+
+    private String uiaid;
+
+
+
+    private String userid;
+
     public List<Office> getCollegeList() {
         return collegeList;
     }
@@ -155,6 +163,11 @@ public class User {
 //    }
 //
     private List<Office> collegeList = Lists.newArrayList();
+
+    public User() {
+
+        this.delFlag = "0";
+    }
 
 //    private List<Menu> officeList = Lists.newArrayList();
 
@@ -403,6 +416,22 @@ public class User {
 
     public void setMajorid(String majorid) {
         this.majorid = majorid;
+    }
+
+    public String getUiaid() {
+        return uiaid;
+    }
+
+    public void setUiaid(String uiaid) {
+        this.uiaid = uiaid;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
 

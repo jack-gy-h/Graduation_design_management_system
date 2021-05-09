@@ -153,7 +153,7 @@
 </head>
 <body>
 <ul class="nav nav-tabs">
-    <li class="active"><a href="">用户添加</a></li>
+    <li class="active"><a href="">用户角色添加</a></li>
 </ul>
 
 <form:form id="inputForm" modelAttribute="user" action="/user/form/saveUserRoleForm" method="post" class="form-horizontal">

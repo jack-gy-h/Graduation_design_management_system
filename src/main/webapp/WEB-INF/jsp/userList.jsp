@@ -59,7 +59,8 @@
                     {field: 'grade', title: "年级ID", width: 200, hidden: true, align: 'center'},
                     {field: 'collegeid', title: "学院ID", width: 200, hidden: true, align: 'center'},
                     {field: 'majorid', title: "专业ID", width: 200, hidden: true, align: 'center'},
-                    {field: 'roleId', title: "角色Id", width: 200, hidden: true, align: 'center'}
+                    {field: 'roleId', title: "角色Id", width: 200, hidden: true, align: 'center'},
+                    {field: 'uiaid', title: '用户角色id', width: 200, hidden: true, align: 'center'}
                     //identitysid
                     // {field: 'userAdmin', title: '身份', width: 200, align: 'center'}
                     //    ， formatter: btnDetailed
@@ -78,7 +79,7 @@
         }
 
         function formatTitle(val, row) {
-            return "<a target='_self' style='text-decoration:none' href='/user/addUserRoleForm?userid=" + row.id + "'>添加用户角色</a> <a target='_self' style='text-decoration:none' href='/user/deleteUserRoleForm?userid=" + row.id + "&identitysid=" + row.identitysid + "&grade=" + row.grade + "&collegeid=" + row.collegeid + "&majorid=" + row.majorid + "&roleid=" + row.roleId + "'>删除</a>"
+            return "<a target='_self' style='text-decoration:none' href='/user/addUserRoleForm?userid=" + row.id + "'>添加用户角色</a>  <a target='_self' style='text-decoration:none' href='/user/form?uiaid=" + row.uiaid + "'>修改</a> <a target='_self' style='text-decoration:none' href='/user/deleteUserRoleForm?uiaid=" + row.uiaid + "'>删除</a>"
         }
 
 

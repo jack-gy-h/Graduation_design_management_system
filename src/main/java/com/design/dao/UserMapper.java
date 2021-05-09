@@ -110,13 +110,21 @@ public interface UserMapper {
 
     int insertUserInfoAll(User user);
 
-    void deleteUserRoleForm(String delflag, String userid, String identitysid, String grade, String collegeid, String majorid, String roleId);
+//    void deleteUserRoleForm(String delflag, String userid, String identitysid, String grade, String collegeid, String majorid, String roleId);
+
+    void deleteUserRoleForm(User user1);
 
     List<User> getGradeListById(String userid);
 
     String getrolenameByroleid(@Param("roleId")String roleId);
 
     int getuserRoleCount(@Param("userid")String userid, @Param("delflag") String delflag);
+
+    User getuiaAllByUiaId(@Param("uiaid")String uiaid);
+
+    User getUserAllInfoByUserId(@Param("userid")String userid);
+
+    void updateUserAllInfoByPrimaryKey(User user);
 
 //    User getUserByUserId(String userid);
 }
