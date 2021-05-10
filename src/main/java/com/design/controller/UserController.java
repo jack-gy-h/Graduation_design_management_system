@@ -118,7 +118,7 @@ public class UserController {
 
             User userAllInfo = userService.getuiaAllByUiaId(uiaid);
 
-            User user = userService.getUserAllInfoByUserId(userAllInfo.getUserid());
+            User user = userService.getUserAllInfoByUserId(uiaid,userAllInfo.getUserid());
 
             model.addAttribute("user", user);
 

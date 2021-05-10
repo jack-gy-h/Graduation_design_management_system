@@ -41,7 +41,7 @@ public interface UserService {
 
     User getuiaAllByUiaId(String uiaid);
 
-    User getUserAllInfoByUserId(String userid);
+    User getUserAllInfoByUserId(String uiaid,String userid);
 
     void updateUserAllInfoByPrimaryKey(User user);
 

@@ -54,6 +54,21 @@
                         '</div>';
                     $("#assignmentBook").html(option);//将循环拼接的字符串插入第二个下拉列表
                     $("#assignmentBook").show();
+
+                    var option1 = '<form id="topic_tontent_forstudent_form" enctype="multipart/form-data">\n' +
+                        '\n' +
+                        '    请选择要提交的材料：\n' +
+                        '    <input type="file" id="file" name="file"/><br>\n' +
+                        '    已提交的文件名为：${materialfilename}<br>\n' +
+                        '    <input type="submit" onclick="chose()"/>\n' +
+                        '\n' +
+                        '\n' +
+                        '\n' +
+                        '</form>';
+
+                    $("#material").html(option1);//将循环拼接的字符串插入第二个下拉列表
+                    $("#material").show();
+
                 }
 
 
@@ -108,16 +123,12 @@
 
 </div>
 
-<form id="topic_tontent_forstudent_form" enctype="multipart/form-data">
-
-    请选择要提交的材料：
-    <input type="file" id="file" name="file"/><br>
-    已提交的文件名为：${materialfilename}<br>
-    <input type="submit" onclick="chose()"/>
+<div id="material">
 
 
+</div>
 
-</form>
+
 
 
 

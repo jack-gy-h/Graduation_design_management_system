@@ -511,6 +511,7 @@ where uia.uia_id = #{uiaid}
         FROM user_info_all uia
                  LEFT JOIN USER u ON u.id = uia.user_id
         WHERE uia.user_id = #{userid}
+AND uia.uia_id = #{uiaid}
     </select>
     <update id="updateUserAllInfoByPrimaryKey" parameterType="com.design.entity.User">
         <!--

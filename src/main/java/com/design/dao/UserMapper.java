@@ -122,7 +122,7 @@ public interface UserMapper {
 
     User getuiaAllByUiaId(@Param("uiaid")String uiaid);
 
-    User getUserAllInfoByUserId(@Param("userid")String userid);
+    User getUserAllInfoByUserId(@Param("uiaid") String uiaid,@Param("userid")String userid);
 
     void updateUserAllInfoByPrimaryKey(User user);
 

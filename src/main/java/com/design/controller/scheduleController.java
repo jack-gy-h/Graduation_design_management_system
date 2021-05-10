@@ -96,13 +96,26 @@ public class scheduleController {
 
         List<AssignmentBook> assignmentBookList = assignmentBookService.getAssignmentBookByUser(userId);
 
-        String majorid = assignmentBookList.get(0).getMajorId();
+        String majorid = "";
+        try{
+            majorid = assignmentBookList.get(0).getMajorId();
+
+        }catch (IndexOutOfBoundsException e){
+
+            majorid = "";
+        }
+
+
+
 
         System.out.print("majoeid11:"+majorid);
 
-        Task task1 = taskService.getreplytimeBymajorid(majorid);
+
 
         try {
+
+            Task task1 = taskService.getreplytimeBymajorid(majorid);
+
             model.addAttribute("starttime", task1.getStarttime());
 
             model.addAttribute("endtime", task1.getEndtime());

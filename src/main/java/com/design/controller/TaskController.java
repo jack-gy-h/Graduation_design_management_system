@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.NestedServletException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -1735,7 +1736,7 @@ public class TaskController {
         System.out.print("userId:" + userId);
 
 
-        List<Task> taskList = taskService.getviewchosenstudentallForanypatternListData(page, rows,userId,grade);
+        List<Task> taskList = taskService.getviewchosenstudentallForanypatternListData(page, rows, userId, grade);
 
 
         Count = taskService.getviewchosenstudentallListDataCountByPageAndRows(page, rows, userId, grade);
@@ -2029,7 +2030,15 @@ public class TaskController {
 
         List<Task> taskList = taskService.getbaseInformationForView(userId);
 
-        String materialfilename = taskList.get(0).getMaterialName();
+        String materialfilename = "";
+
+        try {
+            materialfilename = taskList.get(0).getMaterialName();
+
+        } catch (IndexOutOfBoundsException e) {
+            materialfilename = "";
+        }
+
 
         System.out.print("materialfilename:" + materialfilename);
 
@@ -2261,7 +2270,7 @@ public class TaskController {
 
     }
 
-//    提交专业答辩时间安排
+    //    提交专业答辩时间安排
     @RequestMapping(value = "/set/replytime")
     public String tasksetreplytime(Task task) {
 //        task用于传输页面传过来的数据的Task载体
@@ -2335,7 +2344,7 @@ public class TaskController {
 //
 //    }
 
-//    教师导出任务书功能
+    //    教师导出任务书功能
     @RequestMapping(value = "/teacher/exportExcelForAssignmentbook", method = RequestMethod.GET)
     public void export(HttpServletResponse response, HttpServletRequest request) {
 
@@ -2363,18 +2372,18 @@ public class TaskController {
 
     }
 
-//    进入学提交毕业设计（论文）最终版界面
+    //    进入学提交毕业设计（论文）最终版界面
 //    /task/submit/graduationproject
-@RequestMapping(value = "/submit/graduationproject")
-public String tasksubmitgraduationproject() {
+    @RequestMapping(value = "/submit/graduationproject")
+    public String tasksubmitgraduationproject() {
 
 
-    return "studentviewsubmitgraduationproject";
+        return "studentviewsubmitgraduationproject";
 
 
-}
+    }
 
-//进入提交毕业设计（论文）最终版表单 界面
+    //进入提交毕业设计（论文）最终版表单 界面
     @RequestMapping(value = "/submit/graduationproject/form")
     public String tasksubmitgraduationprojectform(HttpServletRequest request, Model model) {
 
@@ -2382,8 +2391,7 @@ public String tasksubmitgraduationproject() {
 
         Task task1 = new Task();
 
-        if (id !=null){
-
+        if (id != null) {
 
 
             task1.setFinalPaperid(id);
@@ -2393,20 +2401,12 @@ public String tasksubmitgraduationproject() {
 
             Task task = finalpaperList.get(0);
 
-            model.addAttribute("task",task);
+            model.addAttribute("task", task);
 
 
-
-
-
-
-
-        }else {
-            model.addAttribute("task",task1);
+        } else {
+            model.addAttribute("task", task1);
         }
-
-
-
 
 
         return "studentviewsubmitgraduationprojectform";
@@ -2415,12 +2415,12 @@ public String tasksubmitgraduationproject() {
     }
 
 
-//添加、修改提交毕业设计（论文）最终版 操作
+    //添加、修改提交毕业设计（论文）最终版 操作
     @RequestMapping(value = "/submit/graduationproject/save", method = RequestMethod.POST)
     @ResponseBody
-    public String upload(MultipartFile file,String finalPaperid,String keywords, String innovationpoint, String chineseabstract, String englishabstract, String other, HttpServletRequest request) throws IOException{
+    public String upload(MultipartFile file, String finalPaperid, String keywords, String innovationpoint, String chineseabstract, String englishabstract, String other, HttpServletRequest request) throws IOException {
 
-        System.out.print("finalPaperid:"+ finalPaperid);
+        System.out.print("finalPaperid:" + finalPaperid);
 
         String path = request.getServletContext().getRealPath(UPLOAD_PATH);
         if (file == null) {
@@ -2476,10 +2476,7 @@ public String tasksubmitgraduationproject() {
         task.setFilename(fileName);
 
 
-
-
-
-        if(finalPaperid == null||finalPaperid.equals("")){
+        if (finalPaperid == null || finalPaperid.equals("")) {
 
 
             String finalpaperid = UUIDUtil.getUUID();
@@ -2505,7 +2502,7 @@ public String tasksubmitgraduationproject() {
             return "success";
 
 
-        }else {
+        } else {
             task.setFinalPaperid(finalPaperid);
 
             task.setCreateDate(new Date());
@@ -2516,16 +2513,12 @@ public String tasksubmitgraduationproject() {
         }
 
 
-
         return "success";
-
-
-
 
 
     }
 
-//    获取学生本人毕业设计（论文）最终版
+    //    获取学生本人毕业设计（论文）最终版
     @RequestMapping(value = "/viewstudentfinalpaperListData")
     @ResponseBody
     public Map<String, Object> taskviewstudentfinalpaperListData(int page, int rows) {
@@ -2543,7 +2536,7 @@ public String tasksubmitgraduationproject() {
 
         String majorid = user1.getMajorid();
 
-        List<Task> taskList = taskService.getviewstudentfinalpaperListData(page, rows,userId);
+        List<Task> taskList = taskService.getviewstudentfinalpaperListData(page, rows, userId);
 
         map.put("total", Count);
 
@@ -2553,15 +2546,13 @@ public String tasksubmitgraduationproject() {
 
     }
 
-//查看毕业设计（论文）最终版详细页
+    //查看毕业设计（论文）最终版详细页
     @RequestMapping(value = "/view/studentfinalpaper")
     public String taskviewstudentfinalpaper(HttpServletRequest request, Model model) {
 
         String id = request.getParameter("id");
 
-        model.addAttribute("finalpaperid",id);
-
-
+        model.addAttribute("finalpaperid", id);
 
 
         return "viewstudentfinalpaper";
@@ -2569,10 +2560,10 @@ public String tasksubmitgraduationproject() {
 
     }
 
-//    根据paperid获取毕业设计（论文）最终版数据
+    //    根据paperid获取毕业设计（论文）最终版数据
     @RequestMapping(value = "/get/finalpaper")
     @ResponseBody
-    public List<Task> taskgetfinalpaper(String finalpaperid,Task task) {
+    public List<Task> taskgetfinalpaper(String finalpaperid, Task task) {
 
 
 //        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
@@ -2591,7 +2582,7 @@ public String tasksubmitgraduationproject() {
 
     }
 
-//    下载毕业设计（论文）最终版附带文件
+    //    下载毕业设计（论文）最终版附带文件
     @RequestMapping(value = "/downloadfinalpaperfile", method = RequestMethod.GET)
     @ResponseBody
     public void downloadfinalpaperfile(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -2607,7 +2598,7 @@ public String tasksubmitgraduationproject() {
 
         String Totalpath = taskList.get(0).getFileaddress();
 
-        System.out.print("Totalpath:"+Totalpath);
+        System.out.print("Totalpath:" + Totalpath);
 
 //        Task task = taskService.getTaskByIdTrue(id);
 
@@ -2655,7 +2646,7 @@ public String tasksubmitgraduationproject() {
 
     }
 
-//    进入教师审核毕业设计论文最终版界面
+    //    进入教师审核毕业设计论文最终版界面
     @RequestMapping(value = "/teacher/audit/finalpaper")
     public String taskteacherauditfinalpaper() {
 
@@ -2665,7 +2656,7 @@ public String tasksubmitgraduationproject() {
 
     }
 
-//    获取教师审核的毕业设计论文最终版学生的列表
+    //    获取教师审核的毕业设计论文最终版学生的列表
     @RequestMapping(value = "/teacherviewstudentfinalpaperListData")
     @ResponseBody
     public Map<String, Object> taskteacherviewstudentfinalpaperListData(int page, int rows) {
@@ -2688,7 +2679,6 @@ public String tasksubmitgraduationproject() {
         Count = taskService.getteacherviewstudentfinalpaperCountListData(page, rows, userId, grade);
 
 
-
         map.put("total", Count);
 
         map.put("rows", taskList);
@@ -2697,9 +2687,9 @@ public String tasksubmitgraduationproject() {
 
     }
 
-//审核毕业设计论文最终版操作
+    //审核毕业设计论文最终版操作
     @RequestMapping(value = "/audit/finalpaper")
-    public String taskauditfinalpaper(HttpServletRequest request){
+    public String taskauditfinalpaper(HttpServletRequest request) {
 
         String id = request.getParameter("id");
 
@@ -2708,7 +2698,6 @@ public String tasksubmitgraduationproject() {
         Task task = new Task();
 
         task.setFinalPaperid(id);
-
 
 
         List<Task> taskList = taskService.getfinalpaperByid(task);
@@ -2722,13 +2711,9 @@ public String tasksubmitgraduationproject() {
         return "redirect:/task/teacher/audit/finalpaper";
 
 
-
-
-
-
     }
 
-//    /allocate/assessteacher
+    //    /allocate/assessteacher
 //进入分配评阅教师界面
     @RequestMapping(value = "/allocate/assessteacher")
     public String taskallocateassessteacher() {
@@ -2739,7 +2724,7 @@ public String tasksubmitgraduationproject() {
 
     }
 
-//    获取当前学年下t.grade = #{grade}
+    //    获取当前学年下t.grade = #{grade}
 //    本专业t.major_id = #{majorid}
 //    已确认选题学生的信息tc.teacher_choose_status = 2
 //    用于进行分配
@@ -2764,7 +2749,7 @@ public String tasksubmitgraduationproject() {
 //
 //        System.out.print("studentidentitynumber:" + studentidentitynumber);
 
-        List<Task> taskList = taskService.gettaskallocateassessteacherListData(page, rows, grade, majorid,studentname,studentidentitynumber,teachername,teacheridentitynumber,topic,assessTeachername,assessTeacheridentitynumber);
+        List<Task> taskList = taskService.gettaskallocateassessteacherListData(page, rows, grade, majorid, studentname, studentidentitynumber, teachername, teacheridentitynumber, topic, assessTeachername, assessTeacheridentitynumber);
 
         Count = taskService.gettaskallocateassessteacherCountListData(page, rows, grade, majorid, studentname, studentidentitynumber, teachername, teacheridentitynumber, topic, assessTeachername, assessTeacheridentitynumber);
 
@@ -2797,16 +2782,16 @@ public String tasksubmitgraduationproject() {
         Task task1 = taskService.getTaskByIdTrue(taskid);
 
 //        assessteacherstatus为1说明是添加操作
-        if(assessteacherstatus.equals("1")){
+        if (assessteacherstatus.equals("1")) {
 //如果评阅教师字段不是空的且是空字符串的（取消评阅教师就是将评阅教师字段变为空字符串，但是空字符也可以添加）
 //         由于只有null，空字符串和字符三种情况
 //            因此，不能添加的情况便是除了字符外的两种情况同时不成立即可
 //说明已有数据，不能添加
-            if(idss !=null){
+            if (idss != null) {
 
                 String[] strings = idss.split(",");
 
-                for (String str : strings){
+                for (String str : strings) {
 
                     Task task2 = taskService.getTaskByIdTrue(str);
 
@@ -2823,15 +2808,11 @@ public String tasksubmitgraduationproject() {
                     taskService.updateTask(task2);
 
 
-
-
                 }
                 return "success";
 
 
-
-
-            }else{
+            } else {
                 if (task1.getAssessTeacher() != null && !task1.getAssessTeacher().equals("")) {
                     return "falseadd";
 
@@ -2845,8 +2826,7 @@ public String tasksubmitgraduationproject() {
             }
 
 
-
-        }else if(assessteacherstatus.equals("2")){
+        } else if (assessteacherstatus.equals("2")) {
 
             task1.setAssessTeacher("");
         }
@@ -2857,19 +2837,19 @@ public String tasksubmitgraduationproject() {
 
     }
 
-//
+    //
 //    教师进入评阅功能界面
-@RequestMapping(value = "/teacher/set/assessscore")
-public String taskteachersetassessscore() {
+    @RequestMapping(value = "/teacher/set/assessscore")
+    public String taskteachersetassessscore() {
 
 
-    return "taskteachersetassessscore";
+        return "taskteachersetassessscore";
 
 
-}
+    }
 
 
-//由于能交给教师审阅的都是系主任的
+    //由于能交给教师审阅的都是系主任的
 //    当前学年下t.grade = #{grade}
 //    本专业t.major_id = #{majorid}
 //    已确认选题学生tc.teacher_choose_status = 2
@@ -2894,9 +2874,7 @@ public String taskteachersetassessscore() {
         String majorid = user1.getMajorid();
 
 
-
-        List<Task> taskList = taskService.gettaskviewAllAssessStudentListData(page, rows, userId,grade);
-
+        List<Task> taskList = taskService.gettaskviewAllAssessStudentListData(page, rows, userId, grade);
 
 
         map.put("total", Count);
@@ -2958,9 +2936,6 @@ public String taskteachersetassessscore() {
 
 
     }
-
-
-
 
 
 }

@@ -126,8 +126,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserAllInfoByUserId(String userid) {
-        return userMapper.getUserAllInfoByUserId(userid);
+    public User getUserAllInfoByUserId(String uiaid,String userid) {
+        return userMapper.getUserAllInfoByUserId(uiaid,userid);
     }
 
     @Override
