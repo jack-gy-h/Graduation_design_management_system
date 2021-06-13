@@ -154,35 +154,47 @@
         }
 
         function jsmethod(taskid) {
-            // alert(1);
-            $.post("/task/student/judge/haschosenAndPass", {}, function (data) {
 
-                if(data > 0){
-                    alert("您已经有选题，无法重新选题");
-                    return ;
+
+            $.post("/task/student/judge/chosenpeople",{taskid:taskid},function (data) {
+
+                if(data>0){
+                    alert("该题目已经有人选择，请选择其他题目");
+
                 }else{
-                    $.post("/task/student/judge/haschosenThree", {}, function (data) {
 
-                        if (data >= 3) {
-                            alert("您已选择了三个题目，无法继续选题");
+                    $.post("/task/student/judge/haschosenAndPass", {}, function (data) {
+
+                        if (data > 0) {
+                            alert("您已经有选题，无法重复选题");
                             return;
-                        }else{
-                            $.post("/task/student/judge/haschosenPeople", {taskid: taskid}, function (data) {
+                        } else {
+                            $.post("/task/student/judge/haschosenThree", {}, function (data) {
 
-                                if (data > 3) {
-                                    alert("选择的人数超过三个，请选择其他题目");
+                                if (data >= 3) {
+                                    alert("您已选择了三个题目，无法继续选题");
                                     return;
-                                }else{
-                                    $.post("/task/student/judge/whetherchoosethistask",{taskid:taskid},function (data) {
-                                        if(data>0){
-                                            alert("您已选择过该题目，请勿重复选择");
-                                            return ;
-                                        }else {
-                                            window.location.href = '/task/student/double/choose?taskid=' + taskid;
+                                } else {
+                                    $.post("/task/student/judge/haschosenPeople", {taskid: taskid}, function (data) {
+
+                                        if (data > 3) {
+                                            alert("选择的人数超过三个，请选择其他题目");
+                                            return;
+                                        } else {
+                                            $.post("/task/student/judge/whetherchoosethistask", {taskid: taskid}, function (data) {
+                                                if (data > 0) {
+                                                    alert("您已选择过该题目，请勿重复选择");
+                                                    return;
+                                                } else {
+                                                    window.location.href = '/task/student/double/choose?taskid=' + taskid;
+                                                }
+
+                                            })
+
                                         }
 
-                                    })
 
+                                    });
                                 }
 
 
@@ -190,17 +202,16 @@
                         }
 
 
-
-
-
                     });
+
+
+
                 }
 
 
+            })
+            // alert(1);
 
-
-
-            });
 
 
 

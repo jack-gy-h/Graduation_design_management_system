@@ -135,5 +135,10 @@ public class UserServiceImpl implements UserService {
         userMapper.updateUserAllInfoByPrimaryKey(user);
     }
 
+//    @Override
+//    public void updateTaskByUserId(User user2) {
+//        userMapper.updateTaskByUserId(user2);
+//    }
+
 
 }

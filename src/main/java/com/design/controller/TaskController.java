@@ -9,6 +9,7 @@ import com.design.service.LogServiceI;
 import com.design.service.OfficeService;
 import com.design.service.TaskService;
 import com.google.common.collect.Maps;
+import javafx.css.StyleableStringProperty;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 @Controller
 @RequestMapping(value = "task")
@@ -472,12 +475,14 @@ public class TaskController {
 
     }
 
-    //学生双选列表加载
-//    只能看你能选的（tc.CanBeChosenMajor = #{majorid}）
-//    双选的（t.pattern = 1）
-//    通过审核的（t.audit_status = 1）
-//    该学年的（t.grade = #{grade}）
-//    正常的题目（AND t.del_flag = 0）
+    // 学生双选列表加载
+    /*
+    只能看你能选的（tc.CanBeChosenMajor = #{majorid}）
+    双选的（t.pattern = 1）
+    通过审核的（t.audit_status = 1）
+   该学年的（t.grade = #{grade}）
+   正常的题目（AND t.del_flag = 0）
+   */
     @RequestMapping(value = "/student/doubletaskListData")
     @ResponseBody
     public Map<String, Object> doubletaskListData(int page, int rows, String office, String topic, String teacher, String teacheridentitynumber, String type, String source) {
@@ -2933,6 +2938,26 @@ public class TaskController {
         taskService.updateTask(task1);
 
         return "success";
+
+
+    }
+
+    @RequestMapping(value = "/student/judge/chosenpeople")
+    @ResponseBody
+    public int taskstudentjudgechosenpeople(String taskid) {
+//        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+//
+//        String userId = user.getId();
+//
+//        String majorid = user.getMajorid();
+//
+//        String grade = user.getGrade();
+
+        int Count = taskService.gettaskstudentjudgechosenpeople(taskid);
+
+        System.out.print("aa:"+Count);
+
+        return Count;
 
 
     }

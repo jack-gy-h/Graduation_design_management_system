@@ -126,5 +126,7 @@ public interface UserMapper {
 
     void updateUserAllInfoByPrimaryKey(User user);
 
+//    void updateTaskByUserId(User user2);
+
 //    User getUserByUserId(String userid);
 }

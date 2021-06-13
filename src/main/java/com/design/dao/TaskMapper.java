@@ -188,6 +188,10 @@ public interface TaskMapper {
 
     List<Task> gettaskviewAllAssessStudentListData(@Param("page") int page, @Param("rows") int rows, @Param("userId") String userId, @Param("grade") String grade);
 
+    void updateTaskByUserId(@Param("userId")String userId);
+
+    int gettaskstudentjudgechosenpeople(@Param("taskid") String taskid);
+
 //    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
 
 

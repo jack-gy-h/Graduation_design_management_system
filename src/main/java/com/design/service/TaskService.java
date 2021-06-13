@@ -107,6 +107,10 @@ public interface TaskService {
 
     List<Task> gettaskviewAllAssessStudentListData(int page, int rows, String userId,String grade);
 
+    void updateTaskByUserId(String userId);
+
+    int gettaskstudentjudgechosenpeople(String taskid);
+
 //    List<Task> getviewteacherassignListData(int page, int rows, String grade, String majorid);
 
 

@@ -41,6 +41,9 @@ public class UserController {
     @Autowired
     private LogServiceI logServiceI;
 
+    @Autowired
+    private TaskService taskService;
+
     private final String SALT = "LOGIN";
 
     @RequestMapping(value = "")
@@ -238,6 +241,12 @@ public class UserController {
             user2.setDelFlag("1");
 
             userService.updateuserByPrimaryKey(user2);
+
+////            如果整个角色都删除了，就会删除她相应的题目
+//            taskService.updateTaskByUserId(user1.getUserid());
+
+
+
 
 
 
