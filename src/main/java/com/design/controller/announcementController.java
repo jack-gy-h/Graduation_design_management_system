@@ -2,6 +2,7 @@ package com.design.controller;
 
 
 import com.design.Util.UUIDUtil;
+import com.design.annotation.ControllerLog;
 import com.design.entity.Announcement;
 import com.design.entity.User;
 import com.design.service.AnnouncementService;
@@ -24,7 +25,7 @@ public class announcementController {
 
     @Autowired
     private AnnouncementService announcementService;
-
+//@ControllerLog(Action = "查看",Remark = "公告列表")
 //    查看公告列表
     @RequestMapping(value = "")
     public String announcement(Model model, Announcement announcement) {

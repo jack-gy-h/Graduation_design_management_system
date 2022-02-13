@@ -116,6 +116,7 @@
     <sql id="menuColumns">
         a.id,
 		a.parent_id AS "parent.id",
+#         a.parent_id,
 		a.parent_ids,
 		a.name,
         a.sort,

@@ -155,18 +155,18 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <update id="deleteUserRoleForm" >
+    <update id="deleteUserRoleForm"  parameterType="com.design.entity.User">
         update user_info_all uia
-        set uia.del_flag = #{param1}
-        WHERE uia.user_id = #{param2}
-          AND uia.identitys_id = #{param3}
-          AND uia.grade = #{param4}
-          AND uia.college_id = #{param5}
+        set uia.del_flag = #{delflag}
+        WHERE uia.user_id = #{userid}
+          AND uia.identitys_id = #{identitysid}
+          AND uia.grade = #{grade}
+          AND uia.college_id = #{collegeid}
           <if test="param6 == null">
-              AND uia.major_id = #{param6}
+              AND uia.major_id = #{majorid}
           </if>
 
-          AND uia.role_id = #{param7}
+          AND uia.role_id = #{roleid}
 
 
     </update>
@@ -400,7 +400,8 @@
         uia.identitys_id AS "identitysid",
         uia.grade AS "grade",
         uia.college_id AS "collegeid",
-        uia.major_id AS "majorid"
+        uia.major_id AS "majorid",
+        uia.uia_id AS "uiaid"
 
 
         FROM user u
@@ -465,6 +466,14 @@
           AND u.id = #{userid}
         order by uia.grade
     </select>
+    <select id="getrolenameByroleid" resultType="java.lang.String">
+
+        SELECT name
+        FROM role
+        WHERE id = #{roleId,jdbcType = VARCHAR}
+          AND del_flag = 0
+    </select>
+
     <!--    <select id="getUserByUserId" resultType="com.design.entity.User">-->
     <!--        select-->
     <!--        <include refid="Base_Column_List"/>-->

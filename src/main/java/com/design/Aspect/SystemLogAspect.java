@@ -1,33 +1,34 @@
-//package com.design.Aspect;
-//
-//
-//import com.design.annotation.ControllerLog;
-//import com.design.entity.Log;
-////import com.design.entity.LogDetail;
-//import com.design.entity.User;
-//import com.design.service.LogServiceI;
-//import org.apache.shiro.SecurityUtils;
-//import org.aspectj.lang.JoinPoint;
-//import org.aspectj.lang.annotation.After;
-//import org.aspectj.lang.annotation.AfterReturning;
-//import org.aspectj.lang.annotation.Before;
-//import org.aspectj.lang.annotation.Pointcut;
-//import org.aspectj.lang.reflect.MethodSignature;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.core.NamedThreadLocal;
-//import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-//import org.springframework.stereotype.Component;
-//
-//import javax.servlet.http.HttpServletRequest;
-//import javax.xml.crypto.Data;
-//import java.lang.reflect.Method;
-//import java.util.Date;
-//import java.util.HashMap;
-//import java.util.UUID;
-//
-//@Component
-//public class SystemLogAspect {
-//
+package com.design.Aspect;
+
+
+import com.design.Util.HttpContextUtils;
+import com.design.annotation.ControllerLog;
+import com.design.entity.Log;
+//import com.design.entity.LogDetail;
+import com.design.entity.User;
+import com.design.service.LogServiceI;
+import org.apache.shiro.SecurityUtils;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.NamedThreadLocal;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.crypto.Data;
+import java.lang.reflect.Method;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.UUID;
+
+@Component
+@Aspect
+public class SystemLogAspect {
+
 //    //因为这里使用的线程，所以我使用了ThreadLocal来保存信息
 //    //保存开始时间
 //    private static final ThreadLocal<Date> beginTimeThreadLocal = new NamedThreadLocal<Date>("ThreadLocal beginTime");
@@ -45,13 +46,82 @@
 //    //导入线程池
 //    @Autowired
 //    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
-//
-//    @Autowired
-//    private LogServiceI logService;
-//
-//    /**
-//     * Controller层切点 注解拦截
-//     */
+
+    @Autowired
+    private LogServiceI logService;
+
+    @Around("@annotation(com.design.annotation.ControllerLog)")
+    public Object aroundAdvice(ProceedingJoinPoint pjp) throws Throwable {
+
+        // 1.方法执行前的处理，相当于前置通知
+        // 获取方法签名
+        MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
+        // 获取方法
+        Method method = methodSignature.getMethod();
+        // 获取方法上面的注解
+        ControllerLog controllerLog = method.getAnnotation(ControllerLog.class);
+        // 获取操作描述的属性值
+        String id = UUID.randomUUID().toString().replace("-", "");
+
+        String action = controllerLog.Action();
+
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        String userId = user.getId();
+
+        HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
+
+        String requestUri = request.getRequestURI();//请求的Uri
+
+
+
+        String remark = controllerLog.Remark();
+
+        String taskid = request.getParameter("taskid");
+
+        String roleid = user.getRoleId();
+        // 创建一个日志对象(准备记录日志)
+        Log log = new Log();
+
+        log.setLid(id);
+
+        log.setLaction(action);
+
+        log.setLcreator(userId);
+
+        log.setIurl(requestUri);
+
+        log.setLremark(remark);
+
+        log.setLtask(taskid);
+
+        log.setLcreatorrole(roleid);
+
+        log.setLcreatetime(new Date());
+
+
+
+
+        Object result = null;
+        try {
+            //让代理方法执行
+            result = pjp.proceed();
+            // 2.相当于后置通知(方法成功执行之后走这里)
+            System.out.println("正常");// 设置操作结果
+        } catch (SQLException e) {
+            // 3.相当于异常通知部分
+            System.out.println("失败");// 设置操作结果
+        } finally {
+            // 4.相当于最终通知
+//            logtable.setOperatedate(new Date());// 设置操作日期
+            logService.insertSelective(log);;// 添加日志记录
+        }
+        return result;
+    }
+
+    /**
+     * Controller层切点 注解拦截
+     */
 //    @Pointcut("@annotation(com.design.annotation.ControllerLog)")
 //    public void controllerAspect() {
 //    }
@@ -195,4 +265,4 @@
 ////            logService.InsertLogDetail(logDetail);
 //        }
 //    }
-//}
+}

@@ -3,6 +3,7 @@ package com.design.controller;
 
 import com.design.Util.ExportExcel;
 import com.design.Util.UUIDUtil;
+import com.design.annotation.ControllerLog;
 import com.design.entity.*;
 import com.design.service.AssignmentBookService;
 import com.design.service.LogServiceI;
@@ -785,7 +786,7 @@ public class TaskController {
 
 
     }
-
+   @ControllerLog(Action = "选择",Remark = "课题")
     //    学生双选题目选择 插入操作
     @RequestMapping(value = "/student/double/choose")
     public String taskstudentdoublechoose(HttpServletRequest request, Log log) {
@@ -798,34 +799,34 @@ public class TaskController {
 
         taskService.studentdoublechoose(taskid, userId);
 
-        String id = UUID.randomUUID().toString().replace("-", "");
-
-        String requestUri = request.getRequestURI();//请求的Uri
-
-//        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
-
-//            String userId = loginUser.getId();
-
-        String roleid = user.getRoleId();
-
-
-        log.setLid(id);
-
-        log.setLaction("选择");
-
-        log.setLcreator(userId);
-
-        log.setIurl(requestUri);
-
-        log.setLremark("课题");
-
-        log.setLtask(taskid);
-
-        log.setLcreatorrole(roleid);
-
-        log.setLcreatetime(new Date());
-
-        logServiceI.insertSelective(log);
+//        String id = UUID.randomUUID().toString().replace("-", "");
+//
+//        String requestUri = request.getRequestURI();//请求的Uri
+//
+////        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+//
+////            String userId = loginUser.getId();
+//
+//        String roleid = user.getRoleId();
+//
+//
+//        log.setLid(id);
+//
+//        log.setLaction("选择");
+//
+//        log.setLcreator(userId);
+//
+//        log.setIurl(requestUri);
+//
+//        log.setLremark("课题");
+//
+//        log.setLtask(taskid);
+//
+//        log.setLcreatorrole(roleid);
+//
+//        log.setLcreatetime(new Date());
+//
+//        logServiceI.insertSelective(log);
 
         return "redirect:/task/student/doublechoselist";
 
@@ -876,14 +877,14 @@ public class TaskController {
         return map;
 
     }
-
+@ControllerLog(Action = "退选",Remark = "题目")
     //    学生取消选题
     @RequestMapping(value = "/student/deletehaschosentopic")
     public String taskstudentdeletehaschosentopic(HttpServletRequest request, Log log) {
 
         String taskid = request.getParameter("taskid");
 
-        System.out.print("taskid:" + taskid);
+//        System.out.print("taskid:" + taskid);
 
         User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
@@ -897,31 +898,31 @@ public class TaskController {
 //
 //        roleService.deleteRole(role);
 
-        String id1 = UUID.randomUUID().toString().replace("-", "");
-
-        String requestUri = request.getRequestURI();//请求的Uri
-
-
-        String roleid = loginUser.getRoleId();
-
-
-        log.setLid(id1);
-
-        log.setLaction("退选");
-
-        log.setLcreator(userId);
-
-        log.setIurl(requestUri);
-
-        log.setLremark("题目");
-
-        log.setLtask(taskid);
-
-        log.setLcreatorrole(roleid);
-
-        log.setLcreatetime(new Date());
-
-        logServiceI.insertSelective(log);
+//        String id1 = UUID.randomUUID().toString().replace("-", "");
+//
+//        String requestUri = request.getRequestURI();//请求的Uri
+//
+//
+//        String roleid = loginUser.getRoleId();
+//
+//
+//        log.setLid(id1);
+//
+//        log.setLaction("退选");
+//
+//        log.setLcreator(userId);
+//
+//        log.setIurl(requestUri);
+//
+//        log.setLremark("题目");
+//
+//        log.setLtask(taskid);
+//
+//        log.setLcreatorrole(roleid);
+//
+//        log.setLcreatetime(new Date());
+//
+//        logServiceI.insertSelective(log);
 
         return "redirect:/task/student/doublechoselist";
 

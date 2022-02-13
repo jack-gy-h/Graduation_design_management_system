@@ -11,6 +11,10 @@ public @interface ControllerLog {
     //模块名称
     String Module() default "";
 
+    //方法操作
+    String Action() default "";
+
+
     //方法描述
     String Remark() default "";
 }

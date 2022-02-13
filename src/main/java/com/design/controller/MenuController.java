@@ -406,9 +406,18 @@ public class MenuController {
         if (identity.equals("SUPERADMIN")) {
             list = Lists.newArrayList();
 
+//          获取到管理员相应的菜单数据
             List<Menu> sourcelist = menuService.findAllMenu();
 
+            sourcelist.size();
+
+
+
+//          将获取到的菜单数据进行分类化处理达到排列的要求
+
             Menu.sortList(list, sourcelist, Menu.getRootId(), true);
+
+            list.size();
 
             System.out.println("list.get(0).getId():" + list.get(0).getId());
         } else {
@@ -420,6 +429,8 @@ public class MenuController {
 
             Menu.sortList(list, sourcelist, Menu.getRootId(), true);
         }
+
+
 
         return list;
 

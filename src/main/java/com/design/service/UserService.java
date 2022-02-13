@@ -37,6 +37,7 @@ public interface UserService {
 
     String getrolenameByroleid(String roleId);
 
+//
     int getuserRoleCount(String userid, String delflag);
 
     User getuiaAllByUiaId(String uiaid);
