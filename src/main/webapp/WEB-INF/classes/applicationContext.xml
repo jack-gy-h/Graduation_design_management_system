@@ -15,9 +15,12 @@
        http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
-
+    <!--  Spring配置：事务管理、通知aop  -->
     <!--  读取db.properties  -->
     <context:property-placeholder location="classpath:db.properties"/>
+
+
+
     <!--  配置数据源  -->
     <bean id="dataSource"
           class="org.apache.commons.dbcp2.BasicDataSource">
@@ -66,6 +69,8 @@
                      pointcut="execution(* com.design.service.*.*(..))"/>
     </aop:config>
 
+
+    <!--  MyBatis配置 -->
     <!--    配置MyBatis的工厂-->
     <bean class="org.mybatis.spring.SqlSessionFactoryBean">
         <!--      数据源         -->
@@ -77,6 +82,12 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.design.dao"/>
     </bean>
+
+    <!-- 6.开启注解AOP (前提是引入aop命名空间和相关jar包) -->
+    <aop:aspectj-autoproxy expose-proxy="true" proxy-target-class="true"></aop:aspectj-autoproxy>
+
+    <!-- 7.开启aop，对类代理强制使用cglib代理 -->
+    <aop:config proxy-target-class="true"></aop:config>
     <!--  配置扫描@Service注解  -->
     <context:component-scan base-package="com.design.service"></context:component-scan>
 

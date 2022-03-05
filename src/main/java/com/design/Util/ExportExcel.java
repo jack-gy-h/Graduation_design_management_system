@@ -85,6 +85,11 @@ public class ExportExcel<T> {
                 write(0,1,row,fields,t);
                 write(1,2,row,fields,t);
                 write(2,3,row,fields,t);
+                write(3, 4, row, fields, t);
+                write(4, 5, row, fields, t);
+                write(5, 6, row, fields, t);
+                write(6, 7, row, fields, t);
+                write(7, 8, row, fields, t);
 //                }
             }
             getExportedFile(workbook, fileName, response);

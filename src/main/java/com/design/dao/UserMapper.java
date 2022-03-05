@@ -126,6 +126,8 @@ public interface UserMapper {
 
     void updateUserAllInfoByPrimaryKey(User user);
 
+    List<User> findAllUser();
+
 //    void updateTaskByUserId(User user2);
 
 //    User getUserByUserId(String userid);

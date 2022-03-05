@@ -95,6 +95,14 @@
 身份码：<input class="easyui-textbox" id="btnSearchName" style="width:150px;height:32px;">
 <input type="button" value="搜索" onclick="search()"/>
 <input type="button" value="添加用户" onclick="opentable()"></input>
+<form action="/user/exportExcel" method="get">
+<%--            <a href="javascript:openUserAddDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a>--%>
+<%--            <a href="javascript:openUserModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit"--%>
+<%--               plain="true">修改</a>--%>
+<%--            <a href="javascript:deleteUser()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>--%>
+<%--            &lt;%&ndash;        <a href="javascript:batchaddUser()" class="easyui-linkbutton" iconCls="icon-add" plain="true">导出成绩</a>&ndash;%&gt;--%>
+            <input type="submit" value="导出用户信息">
+</form>
 <table id="dg"></table>
 </body>
 </html>

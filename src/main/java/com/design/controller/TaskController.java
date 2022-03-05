@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.sql.Array;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -2084,26 +2085,52 @@ public class TaskController {
 
 
         String path = request.getServletContext().getRealPath(UPLOAD_PATH);
+//        1.先判断有无文件
         if (file == null) {
             return "filenull";
         }
         String fileName = file.getOriginalFilename();
         File dir = new File(path, fileName);
+//        dir.delete();
 //        System.out.println("filename" + fileName);
 //        System.out.println(dir.exists());
 //        System.out.println("file_status:" + file.isEmpty());
 
-//判断文件内容是否为空
+//      2.判断文件内容是否为空
         if (file.isEmpty() == true) {
             return "fileempty";
         }
-//         判断指定文件夹是否存在
+//         3.判断指定文件夹是否存在
+//         不存在则先创建文件夹再
         else if (!dir.exists()) {
             System.out.println("111111111111111111111111111111111111111111111");
+            //        不存在则为其创建文件夹
+//            transferTo函数自行封装了对于
+//            系统对文件的操作的一场判断
+//            文件上传时文件是否在内存中的IllegalStateException
+//            判断文件已经存在上传位置时，是否能被覆写（是否存在过的）且是否能被删除IOException
             dir.mkdirs();
             file.transferTo(dir);
         } else {
-            file.transferTo(dir);
+//            file不空
+            try{
+                file.transferTo(dir);
+//                int a[]=new int[5];
+//
+//                a[6]=0;
+//
+//
+//                System.out.println(a[6]);
+
+
+            }catch(Exception e){
+
+                System.out.println("Exception:"+e.getMessage());
+//
+                return e.getMessage();
+
+            }
+
 
         }
         User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");

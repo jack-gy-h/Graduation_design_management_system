@@ -2,6 +2,7 @@ package com.design.controller;
 
 
 import com.design.Util.CryptographyUtil;
+import com.design.Util.ExportExcel;
 import com.design.Util.UUIDUtil;
 import com.design.entity.Log;
 import com.design.entity.Office;
@@ -14,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -730,6 +733,22 @@ public class UserController {
 
 
 
+    }
+
+    @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
+    public void export(HttpServletResponse response) {
+//        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+//        String TeacherName = user.getName();
+//        System.out.println(TeacherName + "111111111111111");
+        List<User> topicList = userService.findAllUser();
+        System.out.println("22222");
+//        System.out.println(topicList.get(33).getTopicSource() +"--------------------------------------------------------");
+        ExportExcel<User> ee = new ExportExcel<User>();
+//        1,2,3,4,5,6,7,8
+        String[] headers = {"序号", "姓名", "用户名", "密码", "身份识别码", "性别","邮件","身份"};
+        String fileName = "用户导出表";
+//        headers为第一行标题行，toplist为取出的相应的位置，fileName为文件名
+        ee.exportExcel(headers, topicList, fileName, response);
     }
 
 

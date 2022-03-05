@@ -46,6 +46,8 @@ public interface UserService {
 
     void updateUserAllInfoByPrimaryKey(User user);
 
+    List<User> findAllUser();
+
 //    void updateTaskByUserId(User user2);
 
 //    String getofficenameById(String collegeid);

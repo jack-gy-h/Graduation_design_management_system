@@ -104,8 +104,8 @@
                         alert("上传的任务书不能为空!");
                     } else if (result == "fileempty") {
                         alert("上传的任务书内容不能为空!");
-                    } else {
-                        alert("上传任务书失败!");
+                    }else{
+                        alert("错误为："+result);
                     }
                 }
             })
