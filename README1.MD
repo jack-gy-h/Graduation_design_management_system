@@ -633,6 +633,11 @@
 ##然后再放到相应的位置（由于传入了列row参数，则用row.getCell获取到cell对象后进行数据的插入cell.setCellValue(xx)）
 
 
+##v39.0
+
+##将登录时候的bug修复了，重写了下拦截器
+
+
 
 
 

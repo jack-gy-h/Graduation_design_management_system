@@ -11,6 +11,8 @@ import com.design.service.*;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -113,18 +115,18 @@ public class UserController {
         String uiaid = request.getParameter("uiaid");
 
 
-        if (uiaid == null){
+        if (uiaid == null) {
 
             User user = new User();
 
             model.addAttribute("user", user);
 
 
-        }else{
+        } else {
 
             User userAllInfo = userService.getuiaAllByUiaId(uiaid);
 
-            User user = userService.getUserAllInfoByUserId(uiaid,userAllInfo.getUserid());
+            User user = userService.getUserAllInfoByUserId(uiaid, userAllInfo.getUserid());
 
             model.addAttribute("user", user);
 
@@ -142,9 +144,6 @@ public class UserController {
 ////            System.out.println("id:"+id);
 ////            System.out.println("role.getMenuIds():"+role.getMenuList());
 //        }
-
-
-
 
 
         List<Office> officeList = officeService.getOfficeParentListById("1");
@@ -185,7 +184,7 @@ public class UserController {
 
     }
 
-//    删除单个角色的功能
+    //    删除单个角色的功能
 //    当该用户下的所有角色都删除之后，该用户也会被删除
     @RequestMapping(value = "/deleteUserRoleForm")
     public String deleteUserRoleForm(Model model, HttpServletRequest request, User user, Log log) {
@@ -233,9 +232,9 @@ public class UserController {
 
 //        userService.deleteUserRoleForm(uiaid);
 
-        int rolenumber = userService.getuserRoleCount(user1.getUserid(),"0");
+        int rolenumber = userService.getuserRoleCount(user1.getUserid(), "0");
 
-        if (rolenumber == 0){
+        if (rolenumber == 0) {
 
 //            user1获取到的用户载体，用于update用户信息状态
 
@@ -249,13 +248,6 @@ public class UserController {
 //            taskService.updateTaskByUserId(user1.getUserid());
 
 
-
-
-
-
-
-
-
         }
 
         String id = UUID.randomUUID().toString().replace("-", "");
@@ -267,7 +259,6 @@ public class UserController {
         String userId = loginUser.getId();
 
         String roleid = loginUser.getRoleId();
-
 
 
         log.setLid(id);
@@ -286,7 +277,7 @@ public class UserController {
 
         logServiceI.insertSelective(log);
 
-        System.out.print("userid:"+user.getId());
+        System.out.print("userid:" + user.getId());
 
         System.out.print("identitysid:" + user1.getIdentitysid());
 
@@ -299,14 +290,7 @@ public class UserController {
         System.out.print("roleId:" + user1.getRoleId());
 
 
-
 //        userService.deleteUserRoleForm(user);
-
-
-
-
-
-
 
 
 //        System.out.print("user.getId():" + user.getId());
@@ -330,7 +314,6 @@ public class UserController {
     }
 
 
-
     //    这里的获取专业是通过学院来获取的，本质上是对office表的操作
     @RequestMapping(value = "/getMajor")
     @ResponseBody
@@ -349,9 +332,9 @@ public class UserController {
 
     @RequestMapping(value = "/getCollegeByUserIdAndGradeId")
     @ResponseBody
-    public List<Office> getCollegeByUserIdAndGradeId(String userid,String gradeid) {
+    public List<Office> getCollegeByUserIdAndGradeId(String userid, String gradeid) {
         System.out.println("gradeid:" + gradeid);
-        List<Office> collegeList = officeService.getCollegeByUserIdAndGradeId(userid,gradeid);
+        List<Office> collegeList = officeService.getCollegeByUserIdAndGradeId(userid, gradeid);
 
         for (int i = 0; i < collegeList.size(); i++) {
             System.out.println("collegeList.get(" + i + ").getName():" + collegeList.get(i).getName());
@@ -364,9 +347,9 @@ public class UserController {
 
     @RequestMapping(value = "/getMajorByUserIdAndGradeIdAndCollegeid")
     @ResponseBody
-    public List<Office> getMajorByUserIdAndGradeIdAndCollegeid(String userid,String gradeid,String collegeid) {
+    public List<Office> getMajorByUserIdAndGradeIdAndCollegeid(String userid, String gradeid, String collegeid) {
         System.out.println("gradeid:" + gradeid);
-        List<Office> majorList = officeService.getMajorByUserIdAndGradeIdAndCollegeid(userid, gradeid,collegeid);
+        List<Office> majorList = officeService.getMajorByUserIdAndGradeIdAndCollegeid(userid, gradeid, collegeid);
 
         for (int i = 0; i < majorList.size(); i++) {
             System.out.println("majorList.get(" + i + ").getName():" + majorList.get(i).getName());
@@ -379,9 +362,9 @@ public class UserController {
 
     @RequestMapping(value = "/getMajorByUserIdAndGradeIdAndCollegeidAndMajorId")
     @ResponseBody
-    public List<Office> getMajorByUserIdAndGradeIdAndCollegeidAndMajorId(String userid, String gradeid, String collegeid,String majorid) {
+    public List<Office> getMajorByUserIdAndGradeIdAndCollegeidAndMajorId(String userid, String gradeid, String collegeid, String majorid) {
         System.out.println("gradeid:" + gradeid);
-        List<Office> roleList = officeService.getMajorByUserIdAndGradeIdAndCollegeidAndMajorId(userid, gradeid, collegeid,majorid);
+        List<Office> roleList = officeService.getMajorByUserIdAndGradeIdAndCollegeidAndMajorId(userid, gradeid, collegeid, majorid);
 
         for (int i = 0; i < roleList.size(); i++) {
             System.out.println("roleList.get(" + i + ").getName():" + roleList.get(i).getName());
@@ -483,7 +466,7 @@ public class UserController {
 //
 //        System.out.print("roleId:" + roleId);
 //        没有id 说明是添加操作
-        if (user.getId() == null||user.getId().equals("")) {
+        if (user.getId() == null || user.getId().equals("")) {
 //            加入Id:userid
             String Id = UUIDUtil.getUUID();
 
@@ -537,7 +520,6 @@ public class UserController {
             String roleid = loginUser.getRoleId();
 
 
-
             log.setLid(id);
 
             log.setLaction("添加");
@@ -555,7 +537,7 @@ public class UserController {
             logServiceI.insertSelective(log);
 
 
-        }else {
+        } else {
 
             user.setDelFlag("0");
 
@@ -564,11 +546,7 @@ public class UserController {
             userService.updateUserAllInfoByPrimaryKey(user);
 
 
-
-
-
         }
-
 
 
         return "redirect:/user";
@@ -653,7 +631,6 @@ public class UserController {
         String roleid = loginUser.getRoleId();
 
 
-
         log.setLid(id);
 
         log.setLaction("添加");
@@ -680,39 +657,68 @@ public class UserController {
     }
 
     @RequestMapping(value = "/enter")
-    public String enter(User user,Model model){
-//        user传过来的参数
+    public String enter(User user, Model model) {
 
-        String grade = user.getGrade();
 
-        String collegeid = user.getCollegeid();
+        if (user != null) {
 
-        String majorid = user.getMajorid();
+            if (user.getGrade() == null || user.getCollegeid() == null || user.getMajorid() == null || user.getRoleId() == null){
 
-        String roleId = user.getRoleId();
+                  }else {
+                //        user传过来的参数
 
+                String grade = user.getGrade();
+
+                String collegeid = user.getCollegeid();
+
+                String majorid = user.getMajorid();
+
+                String roleId = user.getRoleId();
+
+//        先获取到已登录的用户名和密码以备后用
+                Subject subject = SecurityUtils.getSubject();
+
+                User user2 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+
+//        String username = user2.getUsername();
+//
+//        String password = user2.getPassword();
+//
+//
+////        先登出
+//
+//
+//        SecurityUtils.getSubject().logout();
+////        对提交的用户名和密码进行封装
+//        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+//
+//        subject.login(token);
 
 
 //        user1 session中的参数
 
-        User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+                User user1 = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
-        user1.setGrade(grade);
+                user1.setGrade(grade);
 
-        user1.setCollegeid(collegeid);
+                user1.setCollegeid(collegeid);
 
-        user1.setMajorid(majorid);
+                user1.setMajorid(majorid);
 
-        user1.setRoleId(roleId);
+                user1.setRoleId(roleId);
 
-        user1.setRoleCnName(userService.getrolenameByroleid(roleId));
+                user1.setRoleCnName(userService.getrolenameByroleid(roleId));
 
-        SecurityUtils.getSubject().getSession().setAttribute("user",user1);
+                SecurityUtils.getSubject().getSession().setAttribute("user", user1);
 
-        System.out.print("((User) SecurityUtils.getSubject().getSession().getAttribute(\"user\")).getName():"+((User) SecurityUtils.getSubject().getSession().getAttribute("user")).getName());
+                System.out.print("((User) SecurityUtils.getSubject().getSession().getAttribute(\"user\")).getName():" + ((User) SecurityUtils.getSubject().getSession().getAttribute("user")).getName());
+
+            }
+
+        }
+
 
 //        model.addAttribute("user",user1);
-
 
 
 //        user2更新后的user
@@ -729,8 +735,7 @@ public class UserController {
 //
 //        System.out.print("user2.getUsername():" + user2.getUsername());
 
-        return "/UserloginPage";
-
+        return "redirect:/UserloginPage";
 
 
     }
@@ -745,7 +750,7 @@ public class UserController {
 //        System.out.println(topicList.get(33).getTopicSource() +"--------------------------------------------------------");
         ExportExcel<User> ee = new ExportExcel<User>();
 //        1,2,3,4,5,6,7,8
-        String[] headers = {"序号", "姓名", "用户名", "密码", "身份识别码", "性别","邮件","身份"};
+        String[] headers = {"序号", "姓名", "用户名", "密码", "身份识别码", "性别", "邮件", "身份"};
         String fileName = "用户导出表";
 //        headers为第一行标题行，toplist为取出的相应的位置，fileName为文件名
         ee.exportExcel(headers, topicList, fileName, response);
