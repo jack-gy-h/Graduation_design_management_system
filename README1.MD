@@ -639,6 +639,36 @@
 
 
 
+##v40.0
+
+##servlet-->filter
+
+##springmvc-->interceptor
+
+##shiro优先级比springmvc自带的interceptor拦截器的优先级高，但是注解的优先级比interceptor的优先级低（属于未解决的问题，在39.0版本下可以一虚调试）
+
+##统一使用shiro进行登陆验证和权限验证，并自定义了filter
+
+##        <property name="filters">
+
+##           <map>
+##                <entry key="rolechosenfilter">
+
+##                    <bean class="com.design.filter.rolechosenfilter">
+
+##                    </bean>
+##                </entry>
+##            </map>
+##        </property>
+
+
+##引用的bean为自定义实现的filter，该filter继承了其中一个授权规则的类(AccessControlFilter类)并重写了它的
+
+## onAccessDenied方法（认证规则在这里写）
+
+##还修复了修改用户信息的功能
+
+
 
 
 

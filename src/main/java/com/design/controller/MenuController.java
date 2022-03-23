@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,9 +34,10 @@ public class MenuController {
     @Autowired
     private LogServiceI logServiceI;
 
+    @RequiresPermissions("view:menu")
     @RequestMapping(value = {""})
 //    @ControllerLog(Module = "日志管理", Remark = "查看菜单列表")
-    public String list(Model model, Log log,HttpServletRequest request) {
+    public String list(Model model, Log log, HttpServletRequest request) {
         List<Menu> list = Lists.newArrayList();
         List<Menu> sourcelist = menuService.findAllMenu();
 //        Menu menu = menuService.selectById("61");
@@ -102,7 +104,6 @@ public class MenuController {
         String id = UUID.randomUUID().toString().replace("-", "");
 
 
-
         String requestUri = request.getRequestURI();//请求的Uri
 
         User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
@@ -110,7 +111,6 @@ public class MenuController {
         String userId = loginUser.getId();
 
         String roleid = loginUser.getRoleId();
-
 
 
         log.setLid(id);
@@ -238,7 +238,7 @@ public class MenuController {
 
     //    保存菜单
     @RequestMapping(value = "/form/save")
-    public String form(Menu menu, HttpServletRequest request,Log log) {
+    public String form(Menu menu, HttpServletRequest request, Log log) {
 //        主要有两种形式的提交：
 //         一种是只获取到了menu的parent,相当于新插入一个menu到数据库中(insert操作)
 //        另外一种是获取到了整个menu，相当于update menu
@@ -285,7 +285,6 @@ public class MenuController {
             User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
             String roleid = loginUser.getRoleId();
-
 
 
 //            String userId = loginUser.getId();
@@ -351,7 +350,6 @@ public class MenuController {
             String roleid = loginUser.getRoleId();
 
 
-
             log.setLid(id);
 
             log.setLaction("修改");
@@ -412,7 +410,6 @@ public class MenuController {
             sourcelist.size();
 
 
-
 //          将获取到的菜单数据进行分类化处理达到排列的要求
 
             Menu.sortList(list, sourcelist, Menu.getRootId(), true);
@@ -423,13 +420,12 @@ public class MenuController {
         } else {
             List<Menu> sourcelist = menuService.getAllMenuByRole(roleid);
 
-            System.out.print("sourcelist.get(0).getName():"+sourcelist.get(0).getName());
+            System.out.print("sourcelist.get(0).getName():" + sourcelist.get(0).getName());
 
             System.out.print("sourcelist.get(0).getName():" + sourcelist.get(0).getParent().getName());
 
             Menu.sortList(list, sourcelist, Menu.getRootId(), true);
         }
-
 
 
         return list;
@@ -439,7 +435,7 @@ public class MenuController {
 
     @RequestMapping(value = "delete")
 
-    public String delete(HttpServletRequest request,Log log) {
+    public String delete(HttpServletRequest request, Log log) {
 
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
@@ -495,7 +491,6 @@ public class MenuController {
         String roleid = loginUser.getRoleId();
 
 
-
         log.setLid(id1);
 
         log.setLaction("删除");
@@ -524,7 +519,7 @@ public class MenuController {
     }
 
     @RequestMapping(value = "updateSort")
-    public String updateSort(String[] ids, Integer[] sorts,HttpServletRequest request,Log log) {
+    public String updateSort(String[] ids, Integer[] sorts, HttpServletRequest request, Log log) {
 
         System.out.println("ids[0]:" + ids[0]);
 

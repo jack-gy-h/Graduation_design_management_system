@@ -73,9 +73,9 @@
     <!--  MyBatis配置 -->
     <!--    配置MyBatis的工厂-->
     <bean class="org.mybatis.spring.SqlSessionFactoryBean">
-        <!--      数据源         -->
+        <!--      数据源    连接池     -->
         <property name="dataSource" ref="dataSource"/>
-        <!--    配置MyBatis的核心配置文件所在位置    -->
+        <!--    配置MyBatis的核心配置文件所在位置   别名 -->
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
     </bean>
     <!--  接口开发，扫描 com.design.dao包，写在此包下的接口即可被扫描到  -->
@@ -108,13 +108,33 @@
         <property name="securityManager" ref="securityManager"/>
         <!-- 身份认证失败，则跳转到登录页面的配置 -->
         <property name="loginUrl" value="/login"/>
+
         <!-- Shiro连接约束配置,即过滤链的定义 -->
         <property name="filterChainDefinitions">
             <value>
+
+                / = anon
+                /index = anon
+                /login = anon
+                /static/** = anon
+                /user/logout = anon
                 /superadminPage=roles[SUPERADMIN]
                 /chooseRolePage=roles[USER]
-                /studentloginPage=roles[USER]
+                /** = authc,rolechosenfilter
+
             </value>
+        </property>
+
+        <property name="filters">
+
+            <map>
+                <entry key="rolechosenfilter">
+
+                    <bean class="com.design.filter.rolechosenfilter">
+
+                    </bean>
+                </entry>
+            </map>
         </property>
     </bean>
 
@@ -124,6 +144,8 @@
     <!-- 开启Shiro注解 -->
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
           depends-on="lifecycleBeanPostProcessor"/>
+<!--        <property name="proxyTargetClass" value="true"/>-->
+<!--    </bean>-->
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>

@@ -3,6 +3,7 @@ package com.design.controller;
 import com.design.entity.User;
 import com.design.service.UserService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +38,7 @@ public class PageController {
         return "UserloginPage";
     }
 
+//    @RequiresRoles("SUPERADMIN")
     @RequestMapping("/superadminPage")
     public String superadminPage() {
 
@@ -53,9 +55,16 @@ public class PageController {
         String userid = user.getId();
 
 
-        model.addAttribute("GradeList",userService.getGradeListById(userid));
+        model.addAttribute("GradeList", userService.getGradeListById(userid));
 
         model.addAttribute("user", user);
         return "chooseRolePage";
+    }
+
+    @RequestMapping("/UnAuthc")
+    public String UnAuthc() {
+
+
+        return "401";
     }
 }
