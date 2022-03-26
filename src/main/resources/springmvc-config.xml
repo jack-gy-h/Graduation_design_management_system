@@ -114,16 +114,16 @@
     </mvc:annotation-driven>
 
 
-<!--    <bean-->
-<!--            class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
-<!--        <property name="exceptionMappings">-->
-<!--            <props>-->
-<!--                <prop key="org.apache.shiro.authz.UnauthorizedException">-->
-<!--                    401-->
-<!--                </prop>-->
-<!--            </props>-->
-<!--        </property>-->
-<!--    </bean>-->
+    <bean
+            class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.apache.shiro.authz.UnauthorizedException">
+                    401
+                </prop>
+            </props>
+        </property>
+    </bean>
 
 
 

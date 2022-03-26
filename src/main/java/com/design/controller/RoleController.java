@@ -35,13 +35,13 @@ public class RoleController {
     @Autowired
     private LogServiceI logServiceI;
 
-
+//    @RequiresPermissions("role:view")
     @RequestMapping(value = "")
-    public String role(Role role, Model model, HttpServletRequest request, Log log){
+    public String role(Role role, Model model, HttpServletRequest request, Log log) {
 
         List<Role> Rolelist = roleService.findAllRole();
 
-        System.out.print("Rolelist.get(0).getMenuIdList():"+Rolelist.get(0).getMenuIdList());
+        System.out.print("Rolelist.get(0).getMenuIdList():" + Rolelist.get(0).getMenuIdList());
 
         String id = UUID.randomUUID().toString().replace("-", "");
 
@@ -52,7 +52,6 @@ public class RoleController {
         String userId = loginUser.getId();
 
         String roleid = loginUser.getRoleId();
-
 
 
         log.setLid(id);
@@ -71,35 +70,33 @@ public class RoleController {
 
         logServiceI.insertSelective(log);
 
-        model.addAttribute("Rolelist",Rolelist);
+        model.addAttribute("Rolelist", Rolelist);
         return "roleList";
 
 
     }
 
-//    这里的添加角色只需要加入menulist，其他的都是非必须的
+    //    这里的添加角色只需要加入menulist，其他的都是非必须的
 //
     @RequestMapping(value = "/form")
-    public String role(Model model, HttpServletRequest request){
+    public String role(Model model, HttpServletRequest request) {
 
         String id = request.getParameter("id");
 
-        if(id == null){
+        if (id == null) {
             Role role = new Role();
             model.addAttribute("role", role);
-        }else {
+        } else {
 
             Role role = roleService.getRoleById(id);
-            model.addAttribute("role",role);
+            model.addAttribute("role", role);
 //            System.out.println("id:"+id);
-            System.out.println("role.getMenuList():"+role.getMenuList());
+            System.out.println("role.getMenuList():" + role.getMenuList());
 
-            System.out.print("role.getMenuIdList():"+role.getMenuIdList());
+            System.out.print("role.getMenuIdList():" + role.getMenuIdList());
 
-            System.out.print("role.getMenuIds()"+role.getMenuIds());
+            System.out.print("role.getMenuIds()" + role.getMenuIds());
         }
-
-
 
 
         List<Menu> list = Lists.newArrayList();
@@ -109,9 +106,7 @@ public class RoleController {
         Menu.sortList(list, sourcelist, Menu.getRootId(), true);
 
 
-        model.addAttribute("menuList",list);
-
-
+        model.addAttribute("menuList", list);
 
 
 //        System.out.println("roleService.getRoleByName(\"部门管理员\"):"+roleService.getRoleCountByEnName("b"));
@@ -121,11 +116,11 @@ public class RoleController {
 
     }
 
-//    @RequiresPermissions("user")
+    //    @RequiresPermissions("user")
     @ResponseBody
     @RequestMapping(value = "checkName")
     public String checkName(String oldName, String name) {
-        System.out.println("oldName:"+oldName);
+        System.out.println("oldName:" + oldName);
         System.out.println("name:" + name);
         if (name != null && name.equals(oldName)) {
             return "true";
@@ -177,7 +172,7 @@ public class RoleController {
             return "true";
         }
 //		如果英文名不为空而且根据填写的英文名获取到的角色不为空，则说明英文名是重复的
-        else if (enname != null && roleService.getRoleCountByEnName(enname) == 0 ) {
+        else if (enname != null && roleService.getRoleCountByEnName(enname) == 0) {
             return "true";
         }
 //		经过这两重判断后皆没有被拦下，则说明英文名不是重复的，可以提交
@@ -185,7 +180,7 @@ public class RoleController {
     }
 
     @RequestMapping(value = "/form/save")
-    public String saveRole(Role role, HttpServletRequest request, Log log){
+    public String saveRole(Role role, HttpServletRequest request, Log log) {
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
         String userId = user.getId().toString();
@@ -193,7 +188,7 @@ public class RoleController {
         Date date = new Date();
 
 //        如果id是空的，则说明是添加操作
-        if(role.getId().equals("")){
+        if (role.getId().equals("")) {
 
             String Id = UUIDUtil.getUUID();
 
@@ -236,23 +231,21 @@ public class RoleController {
             logServiceI.insertSelective(log);
 
 
-
             roleService.insertrole(role);
-
 
 
         }
 //        如果id不是空的，说明是修改操作
-        else{
+        else {
 
             role.setUpdateBy(userId);
 
             role.setUpdateDate(date);
 
-            if(role.getCreateBy() == null){
+            if (role.getCreateBy() == null) {
                 role.setCreateBy(userId);
             }
-            if(role.getCreateDate() == null){
+            if (role.getCreateDate() == null) {
 
                 role.setCreateDate(date);
 
@@ -269,7 +262,6 @@ public class RoleController {
 //            String userId = loginUser.getId();
 
             String roleid = loginUser.getRoleId();
-
 
 
             log.setLid(id);
@@ -289,14 +281,13 @@ public class RoleController {
             logServiceI.insertSelective(log);
 
 
-
         }
 
         System.out.print("role.getMenuList()1:" + role.getMenuList());
 
         System.out.print("role.getMenuIdList()1:" + role.getMenuIdList());
 
-        System.out.print("role.getMenuIds()1:"+role.getMenuIds());
+        System.out.print("role.getMenuIds()1:" + role.getMenuIds());
 
         roleService.deleteRoleMenu(role);
 
@@ -308,13 +299,11 @@ public class RoleController {
         return "redirect:/role";
 
 
-
-
     }
 
-
+//
     @RequestMapping(value = "/delete")
-    public String deleteRole(HttpServletRequest request, Log log){
+    public String deleteRole(HttpServletRequest request, Log log) {
 
         String id = request.getParameter("id");
 
@@ -335,7 +324,6 @@ public class RoleController {
         String roleid = loginUser.getRoleId();
 
 
-
         log.setLid(id1);
 
         log.setLaction("删除");
@@ -353,8 +341,6 @@ public class RoleController {
         logServiceI.insertSelective(log);
 
         return "redirect:/role";
-
-
 
 
     }

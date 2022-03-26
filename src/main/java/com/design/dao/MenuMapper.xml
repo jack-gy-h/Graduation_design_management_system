@@ -639,6 +639,8 @@
                  LEFT JOIN menu m ON rm.menu_id = m.id
                  LEFT JOIN menu p ON p.id = m.parent_id
         WHERE rm.role_id = #{roleid}
+        AND m.del_flag = 0
+        AND p.del_flag = 0
         ORDER BY m.sort
 
 

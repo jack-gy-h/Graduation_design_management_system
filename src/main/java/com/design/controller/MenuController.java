@@ -34,7 +34,7 @@ public class MenuController {
     @Autowired
     private LogServiceI logServiceI;
 
-    @RequiresPermissions("view:menu")
+//    @RequiresPermissions("view:menu")
     @RequestMapping(value = {""})
 //    @ControllerLog(Module = "日志管理", Remark = "查看菜单列表")
     public String list(Model model, Log log, HttpServletRequest request) {

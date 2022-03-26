@@ -670,6 +670,16 @@
 
 
 
+##v41.0
+
+##更新了shiro的细粒度权限permission
+
+##主要要点是通过角色获得的菜单的权限字段和需要权限的注解进行对比
+
+![Image text](https://github.com/jack-gy-h/Graduation_design_management_system/blob/v41.0/src/main/webapp/static/noteimage/v41.0%20notpicture1.png)
+
+
+
 
 
 

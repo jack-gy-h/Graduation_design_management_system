@@ -79,7 +79,7 @@
             <th>链接</th>
             <th style="text-align:center;">排序</th>
             <th>可见</th>
-<%--            <th>权限标识</th>--%>
+            <th>权限标识</th>
                 <th>操作</th>
         </thead>
         <tbody><c:forEach items="${list}" var="menu">
@@ -94,6 +94,7 @@
 <%--                        ${menu.parentIds}--%>
                 </td>
                 <td>${menu.isShow eq '1'?'显示':'隐藏'}</td>
+                <td title="${menu.permission}">${menu.permission}</td>
 <%--                <td title="${menu.permission}">${menu.permission}</td>--%>
                     <td nowrap>
                         <a href="/menu/form?id=${menu.id}">修改</a>

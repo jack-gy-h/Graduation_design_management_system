@@ -1,6 +1,7 @@
 package com.design.controller;
 
 import com.design.Util.UUIDUtil;
+import com.design.annotation.ControllerLog;
 import com.design.entity.Log;
 import com.design.entity.Office;
 import com.design.entity.User;
@@ -9,6 +10,8 @@ import com.design.service.OfficeService;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,107 +33,17 @@ public class OfficeController {
     @Autowired
     private LogServiceI logServiceI;
 
-
+    @ControllerLog(Action = "查看", Remark = "机构列表")
+    @RequiresPermissions("office:view")
     @RequestMapping(value = {""})
     public String list(Model model, HttpServletRequest request, Log log) {
         List<Office> list = Lists.newArrayList();
-        System.out.println("111111111111111111111");
+
         List<Office> sourcelist = officeService.findAllOffice();
-        System.out.println("22222222222222222222");
-//        Office office = officeService.selectById("61");
-//        System.out.println("office.getDelFlag():" + office.getDelFlag());
-//        System.out.println("sourcelist.get(0):" + sourcelist.get(0).getSort());
-//        System.out.println("sourcelist.get(1):" + sourcelist.get(1).getSort());
-//        System.out.println("sourcelist.get(2):" + sourcelist.get(2).getSort());
-//        System.out.println("sourcelist.get(3):" + sourcelist.get(3).getSort());
-//        System.out.println("sourcelist.get(4):" + sourcelist.get(4).getSort());
-//        System.out.println("sourcelist.get(4).getIsShow():" + sourcelist.get(4).getIsShow());
-//        System.out.println("sourcelist.get(4).getCreateBy():" + sourcelist.get(4).getCreateBy());
-//        System.out.println("sourcelist.get(4).getDelFlag():" + sourcelist.get(4).getDelFlag());
-//        System.out.println("sourcelist.get(4).getHref():" + sourcelist.get(4).getHref());
-//        System.out.println("sourcelist.get(4).getIcon():" + sourcelist.get(4).getIcon());
-//        System.out.println("sourcelist.get(4).getId():" + sourcelist.get(4).getId());
-        System.out.println("sourcelist.get(0).getName():" + sourcelist.get(0).getName());
-//        System.out.println("sourcelist.get(4).getParentId():" + sourcelist.get(4).getParentId());
-//        System.out.println("sourcelist.get(4).getParent():" + sourcelist.get(4).getParent());
-//        System.out.println("sourcelist.get(4).getParentIds():" + sourcelist.get(4).getParentIds());
-//        System.out.println("sourcelist.get(4).getPermission():" + sourcelist.get(4).getPermission());
-//        System.out.println("sourcelist.get(4).getRemarks():" + sourcelist.get(4).getRemarks());
-//        System.out.println("sourcelist.get(4).getTarget():" + sourcelist.get(4).getTarget());
-//        System.out.println("sourcelist.get(4).getUpdateBy():" + sourcelist.get(4).getUpdateBy());
-//        System.out.println("sourcelist.get(4).getCreateDate():" + sourcelist.get(4).getCreateDate());
-//        System.out.println("sourcelist.get(4).getSort():" + sourcelist.get(4).getSort());
-//        System.out.println("sourcelist.get(4).getUpdateDate():" + sourcelist.get(4).getUpdateDate());
 
 
         Office.sortList(list, sourcelist, Office.getRootId(), true);
-//        for (int i = 0; i < sourcelist.size(); i++) {
-//            System.out.println("sourcelist.get(" + i + ").getName():" + sourcelist.get(i).getName());
-//
-//        }
-//        for (int i = 0; i < list.size(); i++) {
-//            System.out.println("list.get(" + i + ").getName():" + list.get(i).getName());
-//
-//        }
 
-//        System.out.println("list.get(0):" + list.get(0).getIsShow());
-//        System.out.println("list.get(1):" + list.get(1).getIsShow());
-//        System.out.println("list.get(2):" + list.get(2).getIsShow());
-//        System.out.println("list.get(3):" + list.get(3).getIsShow());
-//        System.out.println("list.get(4):" + list.get(4).getIsShow());
-//        System.out.println("list.get(61):" + list.get(61).getSort());
-//        System.out.println("list.get(61).getIsShow():" + list.get(61).getIsShow());
-//        System.out.println("list.get(61).getCreateBy():" + list.get(61).getCreateBy());
-//        System.out.println("list.get(61).getDelFlag():" + list.get(61).getDelFlag());
-//        System.out.println("list.get(61).getHref():" + list.get(61).getHref());
-//        System.out.println("list.get(61).getIcon():" + list.get(61).getIcon());
-//        System.out.println("list.get(61).getId():" + list.get(61).getId());
-//        System.out.println("list.get(61).getName():" + list.get(61).getName());
-//        System.out.println("list.get(61).getParentId():" + list.get(61).getParentId());
-//        System.out.println("list.get(61).getParent():" + list.get(61).getParent());
-//        System.out.println("list.get(61).getParentIds():" + list.get(61).getParentIds());
-//        System.out.println("list.get(61).getPermission():" + list.get(61).getPermission());
-//        System.out.println("list.get(61).getRemarks():" + list.get(61).getRemarks());
-//        System.out.println("list.get(61).getTarget():" + list.get(61).getTarget());
-//        System.out.println("list.get(61).getUpdateBy():" + list.get(61).getUpdateBy());
-//        System.out.println("list.get(61).getCreateDate():" + list.get(61).getCreateDate());
-//        System.out.println("list.get(61).getSort():" + list.get(61).getSort());
-//        System.out.println("list.get(61).getUpdateDate():" + list.get(61).getUpdateDate());
-//        System.out.println("UUIDUtil.getUUID():"+UUIDUtil.getUUID());
-
-        String id = UUID.randomUUID().toString().replace("-", "");
-
-
-        String requestUri = request.getRequestURI();//请求的Uri
-
-        User loginUser = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
-
-        String userId = loginUser.getId();
-
-        String roleid = loginUser.getRoleId();
-
-
-
-        log.setLid(id);
-
-        log.setLaction("查看");
-
-        log.setLcreator(userId);
-
-        log.setIurl(requestUri);
-
-
-//        log.setLip(remoteAddr);
-//        log.setLmodule(controllerMethodDescription.get("module"));
-        log.setLremark("机构");
-
-        log.setLcreatorrole(roleid);
-//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
-//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
-//        Date operateDate = beginTimeThreadLocal.get();
-        log.setLcreatetime(new Date());
-
-        logServiceI.insertSelective(log);
         model.addAttribute("list", list);
         return "officeList";
     }
@@ -154,6 +67,7 @@ public class OfficeController {
         return "parentOfficeSelect";
     }
 
+    @RequiresPermissions(value = {"office:view", "office:add"}, logical = Logical.AND)
     //菜单操作功能
     @RequestMapping(value = "form")
     public String form(Office office, Model model, HttpServletRequest request) {
@@ -190,9 +104,9 @@ public class OfficeController {
                 } else {
 //                没有pid也没有id的话，只能返回添加菜单
                     office.setParent(new Office(Office.getRootId()));
-                    System.out.println("office.getParent().getId():"+office.getParent().getId());
+                    System.out.println("office.getParent().getId():" + office.getParent().getId());
                     office.setParent(officeService.getOffice(office.getParent().getId()));
-                    System.out.println("office.getParentId():"+ office.getParent().getId());
+                    System.out.println("office.getParentId():" + office.getParent().getId());
 
                 }
             }
@@ -234,11 +148,10 @@ public class OfficeController {
         return "officeFormAdd";
     }
 
-
-
-//    保存菜单
+    @RequiresPermissions(value = {"office:view", "office:add"}, logical = Logical.AND)
+    //    保存菜单
     @RequestMapping(value = "/form/save")
-    public String form(Office office, HttpServletRequest request,Log log){
+    public String form(Office office, HttpServletRequest request, Log log) {
 //        主要有两种形式的提交：
 //         一种是只获取到了office的parent,相当于新插入一个office到数据库中(insert操作)
 //        另外一种是获取到了整个office，相当于update office
@@ -250,7 +163,7 @@ public class OfficeController {
 
         String oldIds = officeService.getOffice(office.getParent().getId()).getParentIds();
 
-        System.out.println("oldIds:"+oldIds);
+        System.out.println("oldIds:" + oldIds);
 
         String newIds = oldIds + office.getParent().getId() + ",";
 
@@ -258,11 +171,11 @@ public class OfficeController {
 
         office.setParentIds(newIds);
 
-        System.out.println("office.getId():"+office.getId());
+        System.out.println("office.getId():" + office.getId());
 
 
 //        如果id是空的，说明是一个新插入操作(insert操作)
-        if(office.getId().equals("")){
+        if (office.getId().equals("")) {
             String Id = UUIDUtil.getUUID();
 
             office.setId(Id);
@@ -314,9 +227,7 @@ public class OfficeController {
             logServiceI.insertSelective(log);
 
 
-
-
-        }else{
+        } else {
 //            如果不是空，则说明是修改操作
             office.setUpdateBy(userId);
 
@@ -326,14 +237,14 @@ public class OfficeController {
 
             System.out.println("2222222222222222222222222");
 
-            if(office.getCreateBy() == null){
+            if (office.getCreateBy() == null) {
 
                 System.out.println("33333333333333333333333");
 
                 office.setCreateBy(userId);
 
             }
-            if(office.getCreateDate() == null){
+            if (office.getCreateDate() == null) {
 
                 System.out.println("44444444444444444444444");
 
@@ -355,7 +266,6 @@ public class OfficeController {
 
 //            String userId = loginUser.getId();
             String roleid = loginUser.getRoleId();
-
 
 
             log.setLid(id);
@@ -382,33 +292,34 @@ public class OfficeController {
         }
 
         String UUID = UUIDUtil.getUUID();
-        System.out.println("UUID:"+UUID);
+        System.out.println("UUID:" + UUID);
         return "redirect:/office";
 
 
     }
 
-//获取菜单数据实现动态加载
+    @RequiresPermissions("office:view")
+    //获取菜单数据实现动态加载
 //    需要返回json数据时，记得加上@ResponseBody
     @RequestMapping(value = "/listData")
     @ResponseBody
-    public List<Office> listData(){
+    public List<Office> listData() {
         List<Office> list = Lists.newArrayList();
 
         List<Office> sourcelist = officeService.findAllOffice();
 
         Office.sortList(list, sourcelist, Office.getRootId(), true);
 
-        System.out.println("list.get(0).getId():"+list.get(0).getId());
+        System.out.println("list.get(0).getId():" + list.get(0).getId());
 
         return list;
 
     }
 
-
+    @RequiresPermissions(value = {"office:view", "office:delete"}, logical = Logical.AND)
     @RequestMapping(value = "delete")
 
-    public String delete(HttpServletRequest request,Log log){
+    public String delete(HttpServletRequest request, Log log) {
 
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 
@@ -420,13 +331,13 @@ public class OfficeController {
 
         String id = request.getParameter("id");
 
-        System.out.println("officeService.selectByPrimaryKey(id).getParentId():"+officeService.selectByPrimaryKey(id).getParentId());
+        System.out.println("officeService.selectByPrimaryKey(id).getParentId():" + officeService.selectByPrimaryKey(id).getParentId());
 
         Office office = officeService.getOffice(id);
 
         office.setDelFlag("1");
 
-        System.out.println("office.getDelFlag():"+office.getDelFlag());
+        System.out.println("office.getDelFlag():" + office.getDelFlag());
 //        System.out.println("office.getIsShow():" + office.getIsShow());
         System.out.println("office.getCreateBy():" + office.getCreateBy());
         System.out.println("office.getDelFlag():" + office.getDelFlag());
@@ -465,7 +376,6 @@ public class OfficeController {
         String roleid = loginUser.getRoleId();
 
 
-
         log.setLid(id1);
 
         log.setLaction("删除");
@@ -491,12 +401,13 @@ public class OfficeController {
 
     }
 
+    @RequiresPermissions(value = {"office:view", "office:updatesort"}, logical = Logical.AND)
     @RequestMapping(value = "updateSort")
-    public String updateSort(String[] ids,Integer[] sorts,HttpServletRequest request,Log log){
+    public String updateSort(String[] ids, Integer[] sorts, HttpServletRequest request, Log log) {
 
-        System.out.println("ids[0]:"+ids[0]);
+        System.out.println("ids[0]:" + ids[0]);
 
-        for (int i = 0;i < ids.length;i++){
+        for (int i = 0; i < ids.length; i++) {
             Office office = officeService.getOffice(ids[i]);
             office.setSort(sorts[i]);
             officeService.updateoffice(office);
@@ -513,7 +424,6 @@ public class OfficeController {
         String userId = loginUser.getId();
 
         String roleid = loginUser.getRoleId();
-
 
 
         log.setLid(id);
@@ -536,7 +446,7 @@ public class OfficeController {
         log.setLcreatetime(new Date());
 
         logServiceI.insertSelective(log);
-        return "redirect:/office" ;
+        return "redirect:/office";
     }
 
 

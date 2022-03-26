@@ -3,6 +3,7 @@ package com.design.controller;
 import com.design.entity.User;
 import com.design.service.UserService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,7 @@ public class PageController {
         return "UserloginPage";
     }
 
-//    @RequiresRoles("SUPERADMIN")
+    @RequiresRoles("SUPERADMIN")
     @RequestMapping("/superadminPage")
     public String superadminPage() {
 
@@ -46,6 +47,7 @@ public class PageController {
         return "superadminPage";
     }
 
+    @RequiresRoles(value={"SUPERADMIN","USER"},logical = Logical.OR)
     @RequestMapping("/chooseRolePage")
     public String chooseRolePage(Model model) {
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");

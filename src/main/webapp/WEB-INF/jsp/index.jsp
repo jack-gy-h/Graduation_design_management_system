@@ -1,17 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%--<%@ page isELIgnored="false" %>--%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <title>登陆</title>
-<%--    <meta charset="utf-8">--%>
-<%--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">--%>
-<%--    <meta name="description" content="">--%>
-<%--    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">--%>
-<%--    <meta name="generator" content="Jekyll v4.1.1">--%>
-<%--    <link rel="shortcut icon" href="#"/>--%>
-<%--    <link href="/static/css/bootstrap.min.css" rel="stylesheet">--%>
-<%--    --%>
+    <%--    <meta charset="utf-8">--%>
+    <%--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">--%>
+    <%--    <meta name="description" content="">--%>
+    <%--    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">--%>
+    <%--    <meta name="generator" content="Jekyll v4.1.1">--%>
+    <%--    <link rel="shortcut icon" href="#"/>--%>
+    <%--    <link href="/static/css/bootstrap.min.css" rel="stylesheet">--%>
+    <%--    --%>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link rel="canonical" href="/static/html/jumbotron-index.html">
     <link href="/static/css/jumbotron.css" rel="stylesheet">
@@ -37,10 +38,10 @@
 
 
 <main role="main">
-    <form class="form-signin" action="${pageContext.request.contextPath}/login" method="post">
+    <form class="form-signin" action="/login" method="post">
         <div class="text-center mb-4">
-<%--            <img class="mb-4" src="/static/bootstrap-4.5.3-examples/assets/brand/bootstrap-solid.svg" alt="" width="72"--%>
-<%--                 height="72">--%>
+            <%--            <img class="mb-4" src="/static/bootstrap-4.5.3-examples/assets/brand/bootstrap-solid.svg" alt="" width="72"--%>
+            <%--                 height="72">--%>
             <h1 class="h3 mb-3 font-weight-normal">用户登录</h1>
             <%--        <p></p>--%>
         </div>
@@ -48,22 +49,21 @@
         <%--  <label for=""> 中for的作用是和哪个表单元素绑定 --%>
         <%--    <label for="inputEmail">则是与<input type="text" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>来进行绑定--%>
         <div class="form-label-group">
-            <input type="text" id="username" name="username" class="form-control" placeholder="Email address" required
-                   autofocus>
+            <input type="text" id="username" name="username" class="form-control">
             <label for="username">请输入用户名</label>
         </div>
 
         <div class="form-label-group">
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+            <input type="password" id="password" name="password" class="form-control" required>
             <label for="password">请输入密码</label>
         </div>
 
         <div>
             <h6><a>&nbsp;</a></h6>
-            <span><font color="red" id="error">${errorInfo }</font></span>
+            <span><font color="red" id="error">${errorInfo}</font></span>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-<%--        <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2020</p>--%>
+        <%--        <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2020</p>--%>
     </form>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
