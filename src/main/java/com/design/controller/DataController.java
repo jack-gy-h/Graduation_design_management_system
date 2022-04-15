@@ -1,5 +1,7 @@
 package com.design.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.design.dao.OfficeMapper1;
 import com.design.entity.Office;
 import com.design.service.OfficeService;
@@ -9,7 +11,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -72,23 +73,45 @@ public class DataController {
 
 
     @RequestMapping(value = "/test1")
-    public void datatest1(@Validated  Office office) {
+    @ResponseBody
+    public List<Office> datatest1(@Validated  Office office) {
 
 
         office.setId("1212");
 
 //        office.setCreateDate(new Date());
 
-        officeMapper1.insert(office);
+        QueryWrapper<Office> wrapper = new QueryWrapper<Office>();
+
+        wrapper.eq("del_flag","0")
+                .gt("sort","150");
+
+
+        return officeMapper1.selectList(wrapper);
 
 
 
 
     }
 
+    @RequestMapping(value = "/test2")
+    @ResponseBody
+    public Page<Office> datatest2(@Validated Office office) {
 
 
 
+        QueryWrapper<Office> wrapper = new QueryWrapper<Office>();
+
+        wrapper.eq("del_flag", "0")
+                .gt("sort", "150");
+
+        Page<Office> page = new Page<>(1,5);
+
+
+        return officeMapper1.selectPage(page,wrapper);
+
+
+    }
 
 
 }

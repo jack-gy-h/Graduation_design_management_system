@@ -692,6 +692,9 @@
 ##问题：无法扫描handler上的Component注解
 
 
+##分页拦截器要配置上本质上是引用PaginationInnerInterceptor并定义数据库类型
+
+
 
 
 
