@@ -685,6 +685,13 @@
 
 ##主要的点就是新增了crud的插件和自定义mybatis
 
+##更新了lombok使用自动注入getter/setter等的方法。
+
+
+##spring和springmvc配置文件的全局扫描策略：
+
+## https://blog.csdn.net/qq_35571554/article/details/82464236
+
 ##还新增了可以自动写入公共字段的插件，见office.java和MyMetaObjectHandler.java
 
 ##和需要在applicationcontext中为handler配置globalconfiguration指向定义的handler。
