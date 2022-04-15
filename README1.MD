@@ -688,7 +688,7 @@
 ##更新了lombok使用自动注入getter/setter等的方法。
 
 
-##spring和springmvc配置文件的全局扫描策略：
+##spring和springmvc注解的全局扫描策略：
 
 ## https://blog.csdn.net/qq_35571554/article/details/82464236
 
