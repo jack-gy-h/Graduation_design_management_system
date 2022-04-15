@@ -59,7 +59,6 @@ public class OfficeController {
 
         String a = request.getParameter("url");
 
-        System.out.println("a:" + a);
 
         model.addAttribute("list", list);
 
@@ -72,20 +71,11 @@ public class OfficeController {
     @RequestMapping(value = "form")
     public String form(Office office, Model model, HttpServletRequest request) {
         if (office.getParent() == null || office.getParent().getId() == null) {
-
-//                        if (request.getParameter("pid") != null){
-////                office.setParent(new Office(Office.getRootId()));
-//                office.setParent(new Office(request.getParameter("pid")));
-//            }else if(request.getParameter("id") != null){
-//                office.setParent(new Office(Office.getRootId()));
-//            }else{
-//                office.setParent(new Office(Office.getRootId()));
             if (request.getParameter("pid") != null) {
                 if (request.getParameter("id") != null) {
 //                   同时具有pid和id则只能返回添加菜单
                     office.setParent(new Office(Office.getRootId()));
                     office.setParent(officeService.getOffice(office.getParent().getId()));
-//                office.setParent(new Office(request.getParameter("pid")));
                 } else {
 //                只有pid没有id则是选择菜单后的跳转
                     office.setParent(new Office(request.getParameter("pid")));
@@ -104,37 +94,14 @@ public class OfficeController {
                 } else {
 //                没有pid也没有id的话，只能返回添加菜单
                     office.setParent(new Office(Office.getRootId()));
-                    System.out.println("office.getParent().getId():" + office.getParent().getId());
+
                     office.setParent(officeService.getOffice(office.getParent().getId()));
-                    System.out.println("office.getParentId():" + office.getParent().getId());
 
                 }
             }
-//            System.out.println("office.getSort():"+office.getSort());
-//            System.out.println("office.getIsShow():" + office.getIsShow());
-//            System.out.println("office.getDelFlag():" + office.getDelFlag());
-
-//      Office.getRootId()获取到的是数值1
-//      new Office(Office.getRootId())指的是构造了一个id为1的Office
-//
-//            System.out.println("11111111111111111111111111111111111111");
-
-//            System.out.println("22222222222222222222222222222222222222");
         }
-//        System.out.println("333333333333333333333333333333333333333");
-        System.out.println(officeService.getOffice(office.getParent().getId()));
-//        System.out.println("444444444444444444444444444444444444444");
+
 //        这一步主要根据parent的id在数据库中获取到整个完整的、实际的Office parent
-//        为后面显示office.parent.id or office.parent.name做准备
-
-
-//        office.setParent(officeService.getOffice(office.getParent().getId()));
-
-
-//        System.out.println("55555555555555555555555555555555");
-
-
-//        System.out.println("officeService.getOffice(office.getParent().getId()):"+ officeService.getOffice(office.getParent().getId()));
         // 获取排序号，最末节点排序号+30
         if (StringUtils.isBlank(office.getId())) {
             List<Office> list = Lists.newArrayList();
@@ -211,17 +178,11 @@ public class OfficeController {
 
             log.setIurl(requestUri);
 
-
-//        log.setLip(remoteAddr);
-//        log.setLmodule(controllerMethodDescription.get("module"));
             log.setLremark("机构");
 
 
             log.setLcreatorrole(roleid);
 
-//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
-//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
-//        Date operateDate = beginTimeThreadLocal.get();
             log.setLcreatetime(new Date());
 
             logServiceI.insertSelective(log);
@@ -231,22 +192,17 @@ public class OfficeController {
 //            如果不是空，则说明是修改操作
             office.setUpdateBy(userId);
 
-            System.out.println("1111111111111111111111");
 
             office.setUpdateDate(date);
 
-            System.out.println("2222222222222222222222222");
 
             if (office.getCreateBy() == null) {
-
-                System.out.println("33333333333333333333333");
 
                 office.setCreateBy(userId);
 
             }
             if (office.getCreateDate() == null) {
 
-                System.out.println("44444444444444444444444");
 
                 office.setCreateDate(date);
 
@@ -254,7 +210,6 @@ public class OfficeController {
 
             officeService.updateoffice(office);
 
-            System.out.println("5555555555555555555555555555");
 
 
             String id = UUID.randomUUID().toString().replace("-", "");
@@ -277,14 +232,10 @@ public class OfficeController {
             log.setIurl(requestUri);
 
 
-//        log.setLip(remoteAddr);
-//        log.setLmodule(controllerMethodDescription.get("module"));
             log.setLremark("机构");
 
             log.setLcreatorrole(roleid);
-//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
-//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
-//        Date operateDate = beginTimeThreadLocal.get();
+
             log.setLcreatetime(new Date());
 
             logServiceI.insertSelective(log);
@@ -310,7 +261,6 @@ public class OfficeController {
 
         Office.sortList(list, sourcelist, Office.getRootId(), true);
 
-        System.out.println("list.get(0).getId():" + list.get(0).getId());
 
         return list;
 
@@ -327,39 +277,13 @@ public class OfficeController {
 
         Date date = new Date();
 
-        System.out.println();
 
         String id = request.getParameter("id");
 
-        System.out.println("officeService.selectByPrimaryKey(id).getParentId():" + officeService.selectByPrimaryKey(id).getParentId());
 
         Office office = officeService.getOffice(id);
 
         office.setDelFlag("1");
-
-        System.out.println("office.getDelFlag():" + office.getDelFlag());
-//        System.out.println("office.getIsShow():" + office.getIsShow());
-        System.out.println("office.getCreateBy():" + office.getCreateBy());
-        System.out.println("office.getDelFlag():" + office.getDelFlag());
-//        System.out.println("office.getHref():" + office.getHref());
-//        System.out.println("office.getIcon():" + office.getIcon());
-        System.out.println("office.getId():" + office.getId());
-        System.out.println("office.getName():" + office.getName());
-        System.out.println("office.getParentId():" + office.getParentId());
-        System.out.println("office.getParent():" + office.getParent());
-        System.out.println("office.getParentIds():" + office.getParentIds());
-//        System.out.println("office.getPermission():" + office.getPermission());
-        System.out.println("office.getRemarks():" + office.getRemarks());
-//        System.out.println("office.getTarget():" + office.getTarget());
-        System.out.println("office.getUpdateBy():" + office.getUpdateBy());
-        System.out.println("office.getCreateDate():" + office.getCreateDate());
-        System.out.println("office.getSort():" + office.getSort());
-        System.out.println("office.getUpdateDate():" + office.getUpdateDate());
-//        if(office.getCreateDate() == null){
-//
-//            office.setCreateDate();
-//
-//        }
 
         officeService.updateoffice(office);
 
@@ -384,15 +308,10 @@ public class OfficeController {
 
         log.setIurl(requestUri);
 
-
-//        log.setLip(remoteAddr);
-//        log.setLmodule(controllerMethodDescription.get("module"));
         log.setLremark("机构");
 
         log.setLcreatorrole(roleid);
-//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
-//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
-//        Date operateDate = beginTimeThreadLocal.get();
+
         log.setLcreatetime(new Date());
 
         logServiceI.insertSelective(log);
@@ -405,7 +324,6 @@ public class OfficeController {
     @RequestMapping(value = "updateSort")
     public String updateSort(String[] ids, Integer[] sorts, HttpServletRequest request, Log log) {
 
-        System.out.println("ids[0]:" + ids[0]);
 
         for (int i = 0; i < ids.length; i++) {
             Office office = officeService.getOffice(ids[i]);
@@ -434,15 +352,10 @@ public class OfficeController {
 
         log.setIurl(requestUri);
 
-
-//        log.setLip(remoteAddr);
-//        log.setLmodule(controllerMethodDescription.get("module"));
         log.setLremark("机构排序");
 
         log.setLcreatorrole(roleid);
-//        System.out.print("controllerMethodDescription.get(\"module\"):"+controllerMethodDescription.get("module"));
-//        System.out.print("controllerMethodDescription.get(\"remark\"):"+controllerMethodDescription.get("remark"));
-//        Date operateDate = beginTimeThreadLocal.get();
+
         log.setLcreatetime(new Date());
 
         logServiceI.insertSelective(log);

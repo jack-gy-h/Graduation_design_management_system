@@ -140,6 +140,34 @@ public class UserServiceImpl implements UserService {
         return userMapper.findAllUser();
     }
 
+    @Override
+    public List<User> getallSessionIdByAllInformation(String uiaid, String delFlag) {
+
+
+
+        return userMapper.getallSessionIdByAllInformation(uiaid, delFlag);
+    }
+
+    @Override
+    public String getuiaIdByAllInformation(String userid,String grade, String collegeid, String majorid, String roleId) {
+        return userMapper.getuiaIdByAllInformation(userid,grade,collegeid,majorid,roleId);
+    }
+
+    @Override
+    public void insertUserOnLineSession(String uiaid, String Sessionid) {
+
+        userMapper.insertUserOnLineSession(uiaid, Sessionid);
+
+    }
+
+    @Override
+    public void deleteSessionid(String Sessionid) {
+
+        userMapper.deleteSessionid(Sessionid);
+
+    }
+
+
 //    @Override
 //    public void updateTaskByUserId(User user2) {
 //        userMapper.updateTaskByUserId(user2);

@@ -679,6 +679,21 @@
 ![Image text](https://github.com/jack-gy-h/Graduation_design_management_system/blob/v41.0/src/main/webapp/static/noteimage/v41.0%20notpicture1.png)
 
 
+##v42.0
+
+##更新了一个mybatis-plus控件，主要是加入了mybatis-plus的maven依赖和更改了配置文件
+
+##主要的点就是新增了crud的插件和自定义mybatis
+
+##还新增了可以自动写入公共字段的插件，见office.java和MyMetaObjectHandler.java
+
+##和需要在applicationcontext中为handler配置globalconfiguration指向定义的handler。
+
+##问题：无法扫描handler上的Component注解
+
+
+
+
 
 
 

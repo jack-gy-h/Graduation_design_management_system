@@ -6,6 +6,7 @@ import com.design.entity.User;
 import com.design.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.testng.annotations.Test;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @Controller
 public class LoginController {
@@ -26,6 +28,7 @@ public class LoginController {
 //登录请求
     @RequestMapping("/login")
     public String login(User user, HttpSession session){
+
 
         Subject subject = SecurityUtils.getSubject();
 
@@ -71,6 +74,8 @@ public class LoginController {
             session.setAttribute("errorInfo", "用户名或密码错误");
 
         }
+
+//        long date =SecurityUtils.getSubject().getPreviousPrincipals().;
 //        TestUtil.Test("2");
         return "index";
 

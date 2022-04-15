@@ -19,6 +19,13 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener
     </listener-class>
   </listener>
+  <listener>
+    <listener-class>com.design.Listener.SessionListener</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>com.design.Listener.SessionAttributeListener</listener-class>
+  </listener>
 
   <!--编码过滤器-->
   <filter>

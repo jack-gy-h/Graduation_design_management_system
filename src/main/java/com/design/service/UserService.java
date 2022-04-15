@@ -48,6 +48,15 @@ public interface UserService {
 
     List<User> findAllUser();
 
+    List<User> getallSessionIdByAllInformation(String uiaid, String delFlag);
+
+    String getuiaIdByAllInformation(String userid,String grade, String collegeid, String majorid, String roleId);
+
+    void insertUserOnLineSession(String uiaid, String Sessionid);
+
+    void deleteSessionid(String Sessionid);
+
+
 //    void updateTaskByUserId(User user2);
 
 //    String getofficenameById(String collegeid);

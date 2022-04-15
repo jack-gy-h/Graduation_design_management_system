@@ -102,6 +102,10 @@ public class MyRealm extends AuthorizingRealm {
 //            在这里用请求获取了当前的Session然后通过setAttribute的方法对
             SecurityUtils.getSubject().getSession().setAttribute("user", user);
 
+            SecurityUtils.getSubject().getSession().setAttribute("kickout", "false");
+
+
+
             System.out.print("username:" + user.getUsername());
 
             System.out.print("password:" + user.getPassword());

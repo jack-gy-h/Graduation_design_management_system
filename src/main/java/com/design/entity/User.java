@@ -139,12 +139,13 @@ public class User {
     private String majorid;
 
 
-
     private String uiaid;
 
 
-
     private String userid;
+
+
+    private String sessionid;
 
     public List<Office> getCollegeList() {
         return collegeList;
@@ -432,6 +433,14 @@ public class User {
 
     public void setUserid(String userid) {
         this.userid = userid;
+    }
+
+    public String getSessionid() {
+        return sessionid;
+    }
+
+    public void setSessionid(String sessionid) {
+        this.sessionid = sessionid;
     }
 
 

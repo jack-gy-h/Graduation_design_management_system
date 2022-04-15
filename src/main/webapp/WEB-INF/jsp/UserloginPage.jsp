@@ -56,6 +56,36 @@
 
 
     <script type="text/javascript">
+
+        window.setInterval("shownote();", 1000);
+
+        function shownote() {
+
+            $.post("/kickout",{},function (data) {
+
+                if (data == "true"){
+                    alert("有另一用户登录");
+
+
+                }else {
+
+
+                    alert("22");
+                }
+
+                }
+
+
+
+
+
+            )
+
+
+
+
+
+        }
         //登出操作
         function showsignoutmodal() {
 

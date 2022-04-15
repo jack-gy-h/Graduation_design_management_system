@@ -72,12 +72,31 @@
 
     <!--  MyBatis配置 -->
     <!--    配置MyBatis的工厂-->
-    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
         <!--      数据源    连接池     -->
         <property name="dataSource" ref="dataSource"/>
+        <property name="globalConfig" ref="globalConfiguration"/>
         <!--    配置MyBatis的核心配置文件所在位置   别名 -->
-        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+<!--        <property name="configLocation" value="classpath:mybatis-config.xml"/>-->
     </bean>
+<!--mybatis-plus 扫描配置-->
+    <bean id="globalConfiguration" class="com.baomidou.mybatisplus.core.config.GlobalConfig">
+        <property name="metaObjectHandler" ref="myMetaObjectHandler"/>
+    </bean>
+
+    <bean id="myMetaObjectHandler" class="com.design.Handler.MyMetaObjectHandler" />
+
+
+
+<!--    <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">-->
+<!--        &lt;!&ndash; 注入公共字段填充处理器 &ndash;&gt;-->
+<!--        &lt;!&ndash; 注入公共字段填充处理器 &ndash;&gt;-->
+<!--        -->
+<!--    </bean>-->
+
+
+
+
     <!--  接口开发，扫描 com.design.dao包，写在此包下的接口即可被扫描到  -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.design.dao"/>
@@ -89,7 +108,20 @@
     <!-- 7.开启aop，对类代理强制使用cglib代理 -->
     <aop:config proxy-target-class="true"></aop:config>
     <!--  配置扫描@Service注解  -->
-    <context:component-scan base-package="com.design.service"></context:component-scan>
+    <context:component-scan base-package="com.design">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+
+
+
+
+
+
+
+
+
+
 
     <!--  shiro相关  -->
 
@@ -107,7 +139,7 @@
         <!-- Shiro的核心安全接口,这个属性是必须的 -->
         <property name="securityManager" ref="securityManager"/>
         <!-- 身份认证失败，则跳转到登录页面的配置 -->
-        <property name="loginUrl" value="/login"/>
+        <property name="loginUrl" value="/index"/>
 
         <!-- Shiro连接约束配置,即过滤链的定义 -->
         <property name="filterChainDefinitions">
@@ -118,6 +150,7 @@
                 /login = anon
                 /static/** = anon
                 /user/logout = anon
+                /data/** = anon
                 /** = authc,rolechosenfilter
 <!--                /superadminPage=roles[SUPERADMIN]-->
 <!--                /chooseRolePage=roles[USER]-->
@@ -150,6 +183,10 @@
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.baomidou.mybatisplus.samples.quickstart.mapper"/>
+    </bean>
+
 
 
 </beans>

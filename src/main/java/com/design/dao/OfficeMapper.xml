@@ -98,14 +98,14 @@
     <sql id="officeColumns">
         a.id,
     a.parent_id AS "parent.id",
-    a.parent_ids, 
-    a.name, 
+    a.parent_ids,
+    a.name,
     a.sort,
-    a.create_by, 
-    a.create_date, 
-    a.update_by, 
-    a.update_date, 
-    a.remarks, 
+    a.create_by,
+    a.create_date,
+    a.update_by,
+    a.update_date,
+    a.remarks,
     a.del_flag,
     p.name AS "parent.name"
     </sql>
@@ -479,7 +479,7 @@
         where id = #{id,jdbcType=VARCHAR}
     </select>
     <select id="getCollegeByUserIdAndGradeId" resultType="com.design.entity.Office">
-        select distinct co.name ,co.id
+        select distinct co.name, co.id
 
         from user_info_all uia
                  left join office co ON uia.college_id = co.id
@@ -515,16 +515,16 @@
     </select>
     <select id="getUserBymajorIdAndIdentitys" resultType="com.design.entity.Office">
         select u.*
-FROM user u
-LEFT JOIN user_info_all uia on u.id = uia.user_id
-WHERE uia.major_id = #{majorId}
-AND uia.identitys_id = #{identitys}
-AND uia.grade = #{usergrade}
-AND u.del_flag = 0
+        FROM user u
+                 LEFT JOIN user_info_all uia on u.id = uia.user_id
+        WHERE uia.major_id = #{majorId}
+          AND uia.identitys_id = #{identitys}
+          AND uia.grade = #{usergrade}
+          AND u.del_flag = 0
     </select>
     <select id="getOfficeCnNameById" resultType="java.lang.String">
         select name
-FROM office
-WHERE id = #{Id}
+        FROM office
+        WHERE id = #{Id}
     </select>
 </mapper>

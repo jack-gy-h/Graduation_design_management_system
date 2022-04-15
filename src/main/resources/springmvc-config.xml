@@ -18,8 +18,14 @@
 
     <!--    加载属性文件-->
     <context:property-placeholder location="classpath:resource.properties"/>
+
+<!--    <context:component-scan base-package="com.design.controller"/>-->
     <!--    配置扫描器-->
-    <context:component-scan base-package="com.design.controller"/>
+    <context:component-scan base-package="com.design">
+<!--        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+
+    </context:component-scan>
 
     <!-- 2.开启aop，对类代理强制使用cglib代理 -->
     <aop:config proxy-target-class="true"/>
@@ -91,9 +97,9 @@
         <property name="WaitForTasksToCompleteOnShutdown" value="true"/>
     </bean>
 
-    <context:component-scan base-package="com.design">
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
+<!--    <context:component-scan base-package="com.design">-->
+<!--        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+<!--    </context:component-scan>-->
 
     <mvc:annotation-driven>
         <mvc:message-converters>

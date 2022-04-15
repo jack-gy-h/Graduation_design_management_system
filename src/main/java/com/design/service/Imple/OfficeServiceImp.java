@@ -1,6 +1,7 @@
 package com.design.service.Imple;
 
 import com.design.dao.OfficeMapper;
+import com.design.dao.OfficeMapper1;
 import com.design.entity.Office;
 import com.design.service.OfficeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ public class OfficeServiceImp implements OfficeService {
 
     @Autowired
     private OfficeMapper officeMapper;
+
+    @Autowired
+    private OfficeMapper1 officeMapper1;
 
     @Override
     public List<Office> findAllOffice() {
@@ -73,6 +77,11 @@ public class OfficeServiceImp implements OfficeService {
     @Override
     public String getOfficeCnNameById(String Id) {
         return officeMapper.getOfficeCnNameById(Id);
+    }
+
+    @Override
+    public String getOfficeCnNameById1(String s) {
+        return officeMapper1.selectNameById(s);
     }
 
 //    @Override

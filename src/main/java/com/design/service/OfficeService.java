@@ -30,5 +30,7 @@ public interface OfficeService {
 
     String getOfficeCnNameById(String Id);
 
+    String getOfficeCnNameById1(String s);
+
 //    Office selectById(String i);
 }

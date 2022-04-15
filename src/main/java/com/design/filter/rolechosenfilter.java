@@ -1,15 +1,26 @@
 package com.design.filter;
 
+import com.design.common.MySessionContext;
 import com.design.entity.User;
+import com.design.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.web.filter.AccessControlFilter;
-import org.apache.shiro.web.filter.authc.AuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public class rolechosenfilter extends AccessControlFilter {
+
+    @Autowired
+    private UserService userService;
+
+
+    private MySessionContext myc = MySessionContext.getInstance();
 
 
 
@@ -59,6 +70,67 @@ public class rolechosenfilter extends AccessControlFilter {
 
 
                 } else {
+
+                    if(request.getRequestURI().equals("/kickout")){
+
+                    }else {
+
+                        List<User> allSessionId = userService.getallSessionIdByAllInformation(user.getUiaid(), "0");
+
+                        if (allSessionId.size() == 0) {
+
+                            userService.insertUserOnLineSession(user.getUiaid(), request.getSession().getId());
+
+
+                        } else {
+
+                            String Sessionid = allSessionId.get(0).getSessionid();
+                            String NowSessionid = request.getSession().getId();
+                            if (Sessionid.equals(NowSessionid)) {
+
+
+                            } else {
+
+                                HttpSession session = myc.getSession(Sessionid);
+
+                                session.setAttribute("kickout", "true");
+//
+//                                System.out.println("myc.getSession(request.getSession().getId()).getAttribute(\"kickout\"):"+myc.getSession(request.getSession().getId()).getAttribute("kickout"));
+//
+//                                System.out.println("SecurityUtils.getSubject().getSession().getAttribute(\"kickout\"):"+SecurityUtils.getSubject().getSession().getAttribute("kickout"));
+
+//                                        HttpSession session = myc.getSession(httpServletRequest.getSession().getId());
+//
+////        model.addAttribute("announcement", announcement);
+//
+//        Session session1 = SecurityUtils.getSubject().getSession();
+
+
+
+                                userService.deleteSessionid(Sessionid);
+
+                                userService.insertUserOnLineSession(user.getUiaid(), NowSessionid);
+
+
+                            }
+
+
+                        }
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                 }

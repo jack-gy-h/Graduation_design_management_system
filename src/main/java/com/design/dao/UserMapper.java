@@ -128,6 +128,15 @@ public interface UserMapper {
 
     List<User> findAllUser();
 
+    String getuiaIdByAllInformation(@Param("userid")String userid,@Param("grade")String grade, @Param("collegeid") String collegeid, @Param("majorid")String majorid, @Param("roleId")String roleId);
+
+    List<User> getallSessionIdByAllInformation(@Param("uiaid")String uiaid, @Param("delFlag")String delFlag);
+
+    void insertUserOnLineSession(@Param("uiaid")String uiaid, @Param("Sessionid") String Sessionid);
+
+    void deleteSessionid(@Param("Sessionid")String Sessionid);
+
+
 //    void updateTaskByUserId(User user2);
 
 //    User getUserByUserId(String userid);

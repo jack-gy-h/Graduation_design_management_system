@@ -711,6 +711,10 @@ public class UserController {
 
                 user1.setRoleCnName(userService.getrolenameByroleid(roleId));
 
+                String uiaid = userService.getuiaIdByAllInformation(user.getId(),grade, collegeid, majorid, roleId);
+
+                user1.setUiaid(uiaid);
+
                 SecurityUtils.getSubject().getSession().setAttribute("user", user1);
 
                 System.out.print("((User) SecurityUtils.getSubject().getSession().getAttribute(\"user\")).getName():" + ((User) SecurityUtils.getSubject().getSession().getAttribute("user")).getName());

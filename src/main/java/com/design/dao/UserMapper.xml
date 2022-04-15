@@ -155,6 +155,9 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
+    <delete id="deleteSessionid">
+        delete from uia_sessionid where session_id = #{Sessionid}
+    </delete>
     <update id="deleteUserRoleForm" parameterType="com.design.entity.User">
         update user_info_all uia
         set uia.del_flag = #{delflag}
@@ -373,6 +376,10 @@
                 ${identitys}, ${grade}, ${roleId}, 0)
 
     </insert>
+    <insert id="insertUserOnLineSession">
+        insert into uia_sessionid(uia_id, session_id, del_flag)
+        VALUES (#{uiaid}, #{Sessionid}, 0)
+    </insert>
     <!--    <select id="getuserListByPageAndRows" resultType="com.design.entity.User">-->
     <!--        select *-->
     <!--        FROM user-->
@@ -540,5 +547,23 @@
           AND uia.del_flag = 0
 
 
+    </select>
+    <select id="getuiaIdByAllInformation" resultType="java.lang.String">
+        select uia.uia_id AS "uiaid"
+        FROM user_info_all uia
+        WHERE uia.user_id = #{userid}
+          AND uia.grade = #{grade}
+          AND uia.college_id = #{collegeid}
+          AND uia.major_id = #{majorid}
+          AND uia.role_id = #{roleId}
+          AND uia.del_flag = 0
+
+
+    </select>
+    <select id="getallSessionIdByAllInformation" resultType="com.design.entity.User">
+        select session_id AS "sessionid"
+        FROM uia_sessionid
+        WHERE uia_id = #{uiaid}
+          AND del_flag = #{delFlag}
     </select>
 </mapper>

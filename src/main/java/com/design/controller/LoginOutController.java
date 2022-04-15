@@ -16,6 +16,8 @@ public class LoginOutController {
 //      通过源码可知shiro是通过置空session来达到退出用户的功能
 //        Test test = new Test();
         SecurityUtils.getSubject().logout();
+
+
 //        test.SessionTest(request,session);
 //        User task = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 //        System.out.println("退出后session为："+user1.getIdentity());
