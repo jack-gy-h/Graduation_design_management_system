@@ -1,7 +1,7 @@
 package com.design.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.internal.NotNull;
+//import com.sun.istack.internal.NotNull;
 
 import java.util.Date;
 import java.util.List;
@@ -223,7 +223,7 @@ public class Office {
      * @return the value of office.sort
      * @mbggenerated
      */
-    @NotNull
+//    @NotNull
     public Integer getSort() {
         return sort;
     }
